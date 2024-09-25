@@ -4,11 +4,9 @@
   </button>
   <span>My App</span>
   <span class="example-spacer"></span>
-  <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
-    <mat-icon>favorite</mat-icon>
-  </button>
-  <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
-    <mat-icon>share</mat-icon>
+
+  <button mat-icon-button class="example-icon" (click)="goToProfile()">
+    <mat-icon>account_circle</mat-icon>
   </button>
 </mat-toolbar>
 <mat-sidenav-container class="sidenav-container">
@@ -17,15 +15,17 @@
     <mat-nav-list class="sidenav">
       <mat-list-item
         class="listItem"
+        routerLink="home"
       >
-        <mat-icon matListItemIcon>Google</mat-icon>
-        <h3 mat-line>Google login</h3>
+        <mat-icon matListItemIcon>home</mat-icon>
+        <h3 mat-line >Home</h3>
       </mat-list-item>
       <mat-list-item
         class="listItem"
+        routerLink="games"
       >
-        <mat-icon matListItemIcon>home</mat-icon>
-        <h3 mat-line >Login with credentials</h3>
+        <mat-icon matListItemIcon>videogame_asset</mat-icon>
+        <h3 mat-line >Games</h3>
       </mat-list-item>
     </mat-nav-list>
   </mat-sidenav>
