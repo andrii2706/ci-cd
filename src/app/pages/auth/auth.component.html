@@ -1,0 +1,25 @@
+<section>
+  <form class="flex-direction-columns" [formGroup]="authForm">
+    <mat-form-field class="example-full-width">
+      <mat-label>Email</mat-label>
+      <input type="email" matInput formControlName="email"
+             placeholder="Ex. pat@example.com">
+      <mat-hint>Errors appear instantly!</mat-hint>
+      @if (authForm.hasError('email') && !authForm.hasError('required')) {
+        <mat-error>Please enter a valid email address</mat-error>
+      }
+      @if (authForm.hasError('required')) {
+        <mat-error>Email is <strong>required</strong></mat-error>
+      }
+    </mat-form-field>
+    <mat-form-field class="example-full-width">
+      <mat-label>Password</mat-label>
+      <input type="password" matInput formControlName="password"
+             placeholder="Ex. pat@example.com">
+    </mat-form-field>
+  </form>
+  <div class="flex-block">
+    <button mat-flat-button class="" (click)="cancelSubmitAuthForm()">Cancel</button>
+    <button mat-flat-button [disabled]="!authForm.valid" (click)="submitAuth()">Submit</button>
+  </div>
+</section>
