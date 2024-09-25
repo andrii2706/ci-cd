@@ -4,17 +4,28 @@
   </button>
   <span>My App</span>
   <span class="example-spacer"></span>
-  <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
-    <mat-icon>favorite</mat-icon>
-  </button>
+
   <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
-    <mat-icon>share</mat-icon>
+    <mat-icon>account_circle</mat-icon>
+
   </button>
 </mat-toolbar>
 <mat-sidenav-container class="sidenav-container">
   <mat-sidenav #sidenav mode="side" [(opened)]="opened" (opened)="events.push('open!')"
                (closed)="events.push('close!')">
     <mat-nav-list class="sidenav">
+      <mat-list-item
+        class="listItem"
+      >
+        <mat-icon matListItemIcon>home</mat-icon>
+        <h3 mat-line >Home</h3>
+      </mat-list-item>
+      <mat-list-item
+        class="listItem"
+      >
+        <mat-icon matListItemIcon>videogame_asset</mat-icon>
+        <h3 mat-line >Games</h3>
+      </mat-list-item>
       <mat-list-item
         class="listItem"
       >
@@ -28,6 +39,7 @@
         <h3 mat-line >Login with credentials</h3>
       </mat-list-item>
     </mat-nav-list>
+
   </mat-sidenav>
 
   <mat-sidenav-content>
