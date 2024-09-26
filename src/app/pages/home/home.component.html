@@ -1,5 +1,11 @@
 <section>
-  <div></div>
-  <div></div>
-  <div></div>
+  <div>
+    @for(game of games; track game.name){
+      <app-games-cards></app-games-cards>
+    }
+
+  </div>
+  <pagination-controls
+    class="pagination"
+    (pageChange)="navigateTo($event)"></pagination-controls>
 </section>
