@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import {Router, RouterLink, RouterOutlet} from '@angular/router';
 import {AppMaterialModule} from "./app-material/app-material.module";
+import {AuthService} from "./shared/services/auth.service";
 
 @Component({
   selector: 'app-root',
@@ -18,4 +19,5 @@ export class AppComponent {
   goToProfile() {
     this.router.navigateByUrl('profile');
   }
+
 }

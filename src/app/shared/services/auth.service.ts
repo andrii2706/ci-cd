@@ -1,51 +1,72 @@
 import { Injectable } from '@angular/core';
-import firebase from "firebase/compat";
-import Firestore = firebase.firestore.Firestore;
-import { AngularFireAuth } from "@angular/fire/compat/auth"
+import { AngularFireAuth } from "@angular/fire/compat/auth";
+import { AngularFirestore } from "@angular/fire/compat/firestore";
+import { BehaviorSubject, Observable } from "rxjs";
+import { UserInterface } from "../models/user.interface";
+import firebase from "firebase/compat/app";
 import GoogleAuthProvider = firebase.auth.GoogleAuthProvider;
-import {BehaviorSubject, Observable} from "rxjs";
-import {UserInterface} from "../models/user.interface";
+import {Router} from "@angular/router";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-
+  userLoggingWithFireBase = new BehaviorSubject<UserInterface | null>(null);
+  private userLoggingWithFireBase$: Observable<UserInterface | null> = this.userLoggingWithFireBase.asObservable();
+  private loggedInStatus: boolean;
 
   constructor(
     private afAuth: AngularFireAuth,
-    private fireStore: Firestore
-  ) { }
-
-  userLoggingWithFireBase = new BehaviorSubject<UserInterface | null>(null);
-  private userLoggingWithFireBase$: Observable<UserInterface | null> =
-    this.userLoggingWithFireBase.asObservable();
-
-  googleLogin(){
-    this.afAuth.signInWithPopup(new GoogleAuthProvider()).then(
-      userInfo => {
-        this.userLoggingWithFireBase.next(userInfo.user)
-      }
-    )
+    private router: Router,
+    private afs: AngularFirestore
+  ) {}
+  setLoginStatus(value: boolean) {
+    this.loggedInStatus = value;
+    localStorage.setItem('loggedIn', 'false');
   }
-  loginWithCredentials(email: string, password: string){
-    return this.afAuth.signInWithEmailAndPassword(email, password).then(
-      userInfo => {
-        this.userLoggingWithFireBase.next(userInfo.user)
-      },
-      err => {
-        if (err) {
-          console.error('Error');
-        }
-      }
+
+  changeLoginStatus(status: boolean, userInfo: any) {
+    this.loggedInStatus = status;
+    localStorage.setItem('loggedIn', `${this.loggedInStatus}`);
+    localStorage.setItem('user', JSON.stringify({ ...userInfo, games: [] }));
+  }
+
+  get LoginStatus(): boolean {
+    return JSON.parse(
+      localStorage.getItem('loggedIn') || this.loggedInStatus.toString()
     );
   }
 
-  signInWithCredentials(email: string, password: string){
+  googleLogin() {
+    this.afAuth.signInWithPopup(new GoogleAuthProvider()).then(
+      userInfo => {
+        this.changeLoginStatus(true, userInfo.user)
+        this.userLoggingWithFireBase.next(userInfo.user)
+        console.log(this.loggedInStatus)
+      }
+    )
+  }
+
+  loginWithCredentials(email: string, password: string) {
+    return this.afAuth.signInWithEmailAndPassword(email, password).then(
+      userInfo => {
+        this.changeLoginStatus(true, userInfo.user)
+        this.userLoggingWithFireBase.next(userInfo.user);
+        this.router.navigate(['/home']);
+      }
+    ).catch(err => {
+      console.error('Помилка під час входу:', err);
+    });
+  }
+
+
+  signInWithCredentials(email: string, password: string) {
     this.afAuth.createUserWithEmailAndPassword(email, password).then(
       userInfo => {
-          this.userLoggingWithFireBase.next(userInfo.user)
-      })
+        this.changeLoginStatus(true, userInfo.user)
+        this.userLoggingWithFireBase.next(userInfo.user);
+      }
+    );
   }
 }

@@ -1,5 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {AbstractControl, FormControl, FormGroup, Validators} from "@angular/forms";
+import {AuthService} from "../../shared/services/auth.service";
+import {noop} from "rxjs";
 
 @Component({
   selector: 'app-auth',
@@ -8,25 +10,59 @@ import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 })
 export class AuthComponent implements OnInit{
      authForm: FormGroup;
+     registerForm: FormGroup;
+     signInForm: boolean;
 
-    constructor() {
+    constructor(private  authService: AuthService) {
     }
+
+  get emailInfo():AbstractControl {
+    return this.authForm.get('email') as AbstractControl;
+  }
+  get passwordInfo(): AbstractControl{
+    return this.authForm.get('password')?.value as AbstractControl;
+  }
+
     ngOnInit() {
-    this.initForm();
+      this.initAuthForm();
+      this.initRegisterForm();
     }
 
-    initForm(){
+    initAuthForm(){
       this.authForm = new FormGroup({
         email: new FormControl('', [Validators.required, Validators.email]),
         password: new FormControl('', [Validators.required])
       })
     }
 
-  submitAuth() {
+    initRegisterForm(){
+      this.registerForm = new FormGroup({
+        email: new FormControl('', [Validators.required, Validators.email]),
+        password: new FormControl('', [Validators.required])
+      })
+    }
 
+  submitAuth() {
+      const emailCreads = this.authForm.get('email')?.value;
+      const passwordCreads = this.authForm.get('password')?.value
+    console.log(emailCreads, passwordCreads)
+      this.authService.loginWithCredentials(emailCreads,passwordCreads ).then(() => noop());
   }
+
+  submitGoogleAuth(){
+      this.authService.googleLogin();
+  }
+
 
   cancelSubmitAuthForm() {
     this.authForm.reset();
+  }
+
+  submitRegister() {
+    this.authService.signInWithCredentials(this.registerForm.get('email')?.value,this.registerForm.get('password')?.value);
+  }
+
+  signUp() {
+    this.signInForm = true
   }
 }
