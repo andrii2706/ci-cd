@@ -24,16 +24,19 @@ export class HomeComponent implements OnInit{
   games: Game[] = []
   total: number;
   dates: string;
+  isLoading: boolean;
 
   constructor(private gamesService: GamesService , private router: ActivatedRoute) {
   }
 
   ngOnInit() {
+    this.isLoading = true
     this.gamesService.newGames.subscribe(games => {
       if(games){
         this.total = games.count;
         this.games = games.results;
       }
+      this.isLoading = false
     })
   }
 
