@@ -55,6 +55,9 @@ export class AuthComponent implements OnInit{
 
 
   cancelSubmitAuthForm() {
+      if (this.signInForm){
+        this.signInForm = false;
+      }
     this.authForm.reset();
   }
 
