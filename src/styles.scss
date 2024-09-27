@@ -30,3 +30,36 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .gap-4rem{
   gap:4rem;
 }
+.pagination .ngx-pagination .current {
+  background: #005cbb;
+  border-radius: 15px;
+  color: white;
+}
+.page-container {
+  width: 95%;
+  font-size: 30px;
+  background: #005cbb;
+  border-radius: 10px;
+  min-height: 80vh;
+}
+
+.pagination .ngx-pagination {
+  font-size: 15px;
+
+  li {
+    margin-right: 10px;
+  }
+
+  a {
+    color: white !important;
+  }
+
+  li > a:hover {
+    background: #005cbb;
+    border-radius: 15px;
+    color: white;
+  }
+}
+.mat-mdc-list-item .mdc-list-item__primary-text {
+  color: beige !important;
+}

@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {FilterParams, Games} from "../models/games.interface";
+import {FilterParams, Game, Games} from "../models/games.interface";
+import {addDoc, collection, Firestore} from "@angular/fire/firestore";
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,7 @@ export class GamesService {
   url = 'https://api.rawg.io/api';
   games = '/games';
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient, private fireStore: Firestore) { }
 
   getLastReleasedGames(page: number, dates: string): Observable<Games>{
     const query = (dates: string) =>
@@ -26,6 +27,7 @@ export class GamesService {
       params: query(dates),
     });
   }
+
   getAllGames(page: number): Observable<Games> {
     const filterParam = () =>
       new HttpParams({
@@ -39,6 +41,7 @@ export class GamesService {
       params: filterParam(),
     });
   }
+
   filterGames(page: number, filterParams: FilterParams): Observable<Games>{
     const paramsForFilter = this.getFilterQueryParameter(filterParams);
     return  this.httpClient.get<Games>(`${this.url}${this.games}?key=${this.key}&page=${page}`,
@@ -46,6 +49,7 @@ export class GamesService {
         params: paramsForFilter,
       })
   }
+
   private getFilterQueryParameter(filterParams: FilterParams): HttpParams {
     return Object.entries(filterParams).reduce<HttpParams>((acc, item) => {
       const key = item[0];
@@ -57,4 +61,7 @@ export class GamesService {
     }, new HttpParams());
   }
 
+  async addGamesToUser(userId: string, games: Game[]){
+    await addDoc(collection(this.fireStore , 'userGame'), {userId, games})
+  }
 }

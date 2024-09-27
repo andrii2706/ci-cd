@@ -2,18 +2,19 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from "@angular/fire/compat/auth";
 import { AngularFirestore } from "@angular/fire/compat/firestore";
 import { BehaviorSubject, Observable } from "rxjs";
-import { UserInterface } from "../models/user.interface";
 import firebase from "firebase/compat/app";
 import GoogleAuthProvider = firebase.auth.GoogleAuthProvider;
 import {Router} from "@angular/router";
+import User = firebase.User;
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  userLoggingWithFireBase = new BehaviorSubject<UserInterface | null>(null);
-  private userLoggingWithFireBase$: Observable<UserInterface | null> = this.userLoggingWithFireBase.asObservable();
+  userLoggingWithFireBase = new BehaviorSubject<User | null>(null);
+  private userLoggingWithFireBase$: Observable<User | null> = this.userLoggingWithFireBase.asObservable();
+
   private loggedInStatus: boolean;
 
   constructor(
