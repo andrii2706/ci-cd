@@ -1,6 +1,7 @@
 <section>
   <div class="games-grid">
-    @for(game of games; track game.name){
+    @for(game of games | paginate
+      : { itemsPerPage: 25, currentPage: page, totalItems: total }; track game.name){
       <app-games-cards [game]="game" (boughtedGame)="buyGame($event)"></app-games-cards>
     } @empty {
       <div>

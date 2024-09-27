@@ -18,7 +18,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 })
 export class HomeComponent implements OnInit{
 
-  private page = 1;
+  page = 1;
   private boughtGames: Game[] = [];
 
   games: Game[] = []

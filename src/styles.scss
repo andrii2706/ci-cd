@@ -51,15 +51,12 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   }
 
   a {
-    color: white !important;
+    color: #005cbb !important;
   }
 
   li > a:hover {
     background: #005cbb;
     border-radius: 15px;
-    color: white;
+    color: white !important;
   }
-}
-.mat-mdc-list-item .mdc-list-item__primary-text {
-  color: beige !important;
 }
