@@ -23,6 +23,10 @@ export class GamesCardsComponent implements OnInit{
       this.gameInfo = _game
     }
   }
+  @Input() set isGameBought(_isGameBought: boolean){
+    this.showLabel = _isGameBought ? _isGameBought : false
+  }
+
   @Output() boughtedGame = new EventEmitter<Game>()
 
   gameInfo: Game;
@@ -39,6 +43,7 @@ export class GamesCardsComponent implements OnInit{
 
       buyGame(game: Game){
          this.boughtedGame.emit(game)
+        this.showLabel = true
         if (this.showLabel)
           this.snackBar.openFromComponent(SnackbarComponent, {
             duration: 900,
@@ -62,6 +67,5 @@ export class GamesCardsComponent implements OnInit{
           relativeTo: this.activatedRoute,
         });
     }
-
 
 }

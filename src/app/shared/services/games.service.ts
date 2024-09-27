@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpParams} from "@angular/common/http";
-import {Observable} from "rxjs";
+import {BehaviorSubject, Observable} from "rxjs";
 import {FilterParams, Game, Games} from "../models/games.interface";
 import {addDoc, collection, Firestore} from "@angular/fire/firestore";
 
@@ -11,6 +11,10 @@ export class GamesService {
   key = '85d9905e7cd7443c8983e54b4733abf5'
   url = 'https://api.rawg.io/api';
   games = '/games';
+
+  newGames = new BehaviorSubject<Games | null>(null);
+  private newGames$: Observable<Games | null> = this.newGames.asObservable();
+
 
   constructor(private httpClient: HttpClient, private fireStore: Firestore) { }
 

@@ -6,6 +6,7 @@ import {NgxPaginationModule} from "ngx-pagination";
 import {Game} from "../../shared/models/games.interface";
 import {noop} from "rxjs";
 import moment from "moment";
+import {ActivatedRoute, Router} from "@angular/router";
 
 
 @Component({
@@ -24,14 +25,18 @@ export class HomeComponent implements OnInit{
   total: number;
   dates: string;
 
-  constructor(private gamesService: GamesService , private cdr: ChangeDetectorRef) {
+  constructor(private gamesService: GamesService , private router: ActivatedRoute) {
   }
 
   ngOnInit() {
-    this.getNewGames(this.page)
+    this.gamesService.newGames.subscribe(games => {
+      if(games){
+        this.total = games.count;
+        this.games = games.results;
+      }
+    })
   }
 
-  //TODO move to reducer
   getNewGames(page: number){
     const firstYearDay = moment().startOf('year').format('YYYY-MM-DD');
     const lastYearDay = moment().add(1, 'year').endOf('year').format('YYYY-MM-DD');
