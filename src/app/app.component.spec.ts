@@ -1,10 +1,12 @@
 import {TestBed} from '@angular/core/testing';
 import {AppComponent} from './app.component';
-//TODO write unit test
-xdescribe('AppComponent', () => {
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {RouterTestingModule} from "@angular/router/testing";
+
+describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AppComponent],
+      imports: [AppComponent, BrowserAnimationsModule, RouterTestingModule],
     }).compileComponents();
   });
 

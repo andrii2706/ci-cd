@@ -15,7 +15,7 @@ export class GamesComponent implements OnInit {
   games: Game[]
   total: string | number;
   isLoading: boolean
-  private boughtGames: Game[];
+  boughtGames: Game[];
   filterParams: FilterParams;
   totalGames: number;
 
@@ -35,8 +35,8 @@ export class GamesComponent implements OnInit {
   }
 
   getGames(page: number) {
-    this.gamesService.getAllGames(page).pipe(takeUntilDestroyed()).subscribe(games => {
-      console.log(games)
+    this.gamesService.getAllGames(page).pipe(take(1)).subscribe(games => {
+
     })
   }
 
@@ -83,7 +83,6 @@ export class GamesComponent implements OnInit {
     this.gamesService
       .filterGames(page, filter)
       .pipe(
-        takeUntilDestroyed(),
         finalize(() => {
           this.isLoading = false;
         })

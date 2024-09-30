@@ -1,18 +1,20 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {GamesFilrerComponent} from './games-filter.component';
+import {GamesFilterComponent} from './games-filter.component';
+import {NO_ERRORS_SCHEMA} from "@angular/core";
 
-describe('GamesFilrerComponent', () => {
-  let component: GamesFilrerComponent;
-  let fixture: ComponentFixture<GamesFilrerComponent>;
+describe('GamesFilterComponent', () => {
+  let component: GamesFilterComponent;
+  let fixture: ComponentFixture<GamesFilterComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [GamesFilrerComponent]
+      declarations: [GamesFilterComponent],
+      schemas: [NO_ERRORS_SCHEMA]
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(GamesFilrerComponent);
+    fixture = TestBed.createComponent(GamesFilterComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
