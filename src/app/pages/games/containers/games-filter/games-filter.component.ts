@@ -24,7 +24,7 @@ import {
 })
 export class GamesFilterComponent implements OnInit {
   filterForm: FormGroup;
-  dates: string = '';
+  dates = '';
   genres: GenresFilters[] = genresFilter;
   developers: DevelopersFilters[] = developersFilter;
   platforms: PlatformsFilters[] = platformsFilter;

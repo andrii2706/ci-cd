@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {GamesService} from "../../shared/services/games.service";
-import {takeUntilDestroyed} from "@angular/core/rxjs-interop";
 import { Game} from "../../shared/models/games.interface";
 import {finalize, noop, take} from "rxjs";
 import { FilterParams } from '../../shared/models/filter.interface';
@@ -36,7 +35,7 @@ export class GamesComponent implements OnInit {
 
   getGames(page: number) {
     this.gamesService.getAllGames(page).pipe(take(1)).subscribe(games => {
-
+        this.games = games.results
     })
   }
 

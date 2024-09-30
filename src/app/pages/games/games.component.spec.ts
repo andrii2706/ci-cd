@@ -3,12 +3,14 @@ import { GamesComponent } from './games.component';
 import { GamesService } from '../../shared/services/games.service';
 import { of } from 'rxjs';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import {Game} from "../../shared/models/games.interface";
-import {NgxPaginationModule, PaginatePipe} from "ngx-pagination";
+import {Game } from "../../shared/models/games.interface";
+import {NgxPaginationModule } from "ngx-pagination";
 
 describe('GamesComponent', () => {
   let component: GamesComponent;
   let fixture: ComponentFixture<GamesComponent>;
+  /* eslint-disable  @typescript-eslint/no-explicit-any */
+
   let mockGamesService: any;
 
   const mockGame = { id: 1, name: 'Test Game' };

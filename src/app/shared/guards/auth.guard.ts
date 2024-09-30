@@ -4,6 +4,7 @@ import {inject} from "@angular/core";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {SnackbarComponent} from "../components/snackbar/snackbar.component";
 
+/* eslint-disable  @typescript-eslint/no-unused-vars */
 export const authGuard: CanActivateFn = (route, state) => {
   const authService = inject(AuthService);
   const snackbar = inject(MatSnackBar);

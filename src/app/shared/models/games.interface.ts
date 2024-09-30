@@ -215,4 +215,3 @@ export interface FilterParams {
   dates: string;
 }
 
-interface Reactions {}
