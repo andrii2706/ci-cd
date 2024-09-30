@@ -3,6 +3,7 @@ import {AuthService} from "../services/auth.service";
 import {inject} from "@angular/core";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {SnackbarComponent} from "../components/snackbar/snackbar.component";
+import {noop} from "rxjs";
 
 /* eslint-disable  @typescript-eslint/no-unused-vars */
 export const authGuard: CanActivateFn = (route, state) => {
@@ -19,7 +20,7 @@ export const authGuard: CanActivateFn = (route, state) => {
       verticalPosition: 'top',
       horizontalPosition: 'end',
     });
-    router.navigate(['/login']);
+    router.navigate(['/login']).then(() =>noop());
     return false;
   }
 };
