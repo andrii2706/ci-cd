@@ -14,7 +14,7 @@ export class AppComponent {
   }
 
   events: string[] = [];
-  opened: boolean = false;
+  opened = false;
 
   goToProfile() {
     this.router.navigateByUrl('profile');

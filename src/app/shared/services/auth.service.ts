@@ -28,7 +28,7 @@ export class AuthService {
     this.loggedInStatus = value;
     localStorage.setItem('loggedIn', 'false');
   }
-
+  /* eslint-disable  @typescript-eslint/no-explicit-any */
   changeLoginStatus(status: boolean, userInfo: any) {
     this.loggedInStatus = status;
     localStorage.setItem('loggedIn', `${this.loggedInStatus}`);

@@ -4,6 +4,9 @@ import {GamesService} from "../../shared/services/games.service";
 import moment from "moment/moment";
 import {map} from "rxjs";
 
+/* eslint-disable  @typescript-eslint/no-explicit-any */
+/* eslint-disable  @typescript-eslint/no-unused-vars */
+/* eslint-disable  @typescript-eslint/no-unused-vars */
 export const homeResolver: ResolveFn<any> = (route, state) => {
   const gamesService = inject(GamesService);
 
