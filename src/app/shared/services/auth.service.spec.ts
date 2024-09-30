@@ -1,12 +1,19 @@
-import { TestBed } from '@angular/core/testing';
+import {TestBed} from '@angular/core/testing';
 
-import { AuthService } from './auth.service';
+import {AuthService} from './auth.service';
+import {environment} from "../../../environment/environment";
+import {AngularFireModule} from "@angular/fire/compat";
+//TODO write unit test
 
 describe('AuthService', () => {
   let service: AuthService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({
+      imports: [
+        AngularFireModule.initializeApp(environment.firebaseConfig)
+      ]
+    });
     service = TestBed.inject(AuthService);
   });
 

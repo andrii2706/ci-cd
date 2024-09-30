@@ -1,26 +1,29 @@
-import { Injectable } from '@angular/core';
-import { AngularFireAuth } from "@angular/fire/compat/auth";
-import { AngularFirestore } from "@angular/fire/compat/firestore";
-import { BehaviorSubject, Observable } from "rxjs";
-import { UserInterface } from "../models/user.interface";
+import {Injectable} from '@angular/core';
+import {AngularFireAuth} from "@angular/fire/compat/auth";
+import {AngularFirestore} from "@angular/fire/compat/firestore";
+import {BehaviorSubject, Observable} from "rxjs";
 import firebase from "firebase/compat/app";
-import GoogleAuthProvider = firebase.auth.GoogleAuthProvider;
 import {Router} from "@angular/router";
+import GoogleAuthProvider = firebase.auth.GoogleAuthProvider;
+import User = firebase.User;
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  userLoggingWithFireBase = new BehaviorSubject<UserInterface | null>(null);
-  private userLoggingWithFireBase$: Observable<UserInterface | null> = this.userLoggingWithFireBase.asObservable();
+  userLoggingWithFireBase = new BehaviorSubject<User | null>(null);
+  private userLoggingWithFireBase$: Observable<User | null> = this.userLoggingWithFireBase.asObservable();
+
   private loggedInStatus: boolean;
 
   constructor(
     private afAuth: AngularFireAuth,
     private router: Router,
     private afs: AngularFirestore
-  ) {}
+  ) {
+  }
+
   setLoginStatus(value: boolean) {
     this.loggedInStatus = value;
     localStorage.setItem('loggedIn', 'false');
@@ -29,7 +32,7 @@ export class AuthService {
   changeLoginStatus(status: boolean, userInfo: any) {
     this.loggedInStatus = status;
     localStorage.setItem('loggedIn', `${this.loggedInStatus}`);
-    localStorage.setItem('user', JSON.stringify({ ...userInfo, games: [] }));
+    localStorage.setItem('user', JSON.stringify({...userInfo, games: []}));
   }
 
   get LoginStatus(): boolean {
@@ -43,7 +46,6 @@ export class AuthService {
       userInfo => {
         this.changeLoginStatus(true, userInfo.user)
         this.userLoggingWithFireBase.next(userInfo.user)
-        console.log(this.loggedInStatus)
       }
     )
   }

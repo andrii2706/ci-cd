@@ -1,10 +1,9 @@
-import { NgModule } from '@angular/core';
+import {NgModule} from '@angular/core';
 import {CommonModule, NgOptimizedImage} from '@angular/common';
 import {AuthRouterModule} from "./auth.router.module";
 import {AuthComponent} from "./auth.component";
 import {AppMaterialModule} from "../../app-material/app-material.module";
 import {ReactiveFormsModule} from "@angular/forms";
-
 
 
 @NgModule({
@@ -19,4 +18,5 @@ import {ReactiveFormsModule} from "@angular/forms";
     NgOptimizedImage
   ]
 })
-export class AuthModule { }
+export class AuthModule {
+}

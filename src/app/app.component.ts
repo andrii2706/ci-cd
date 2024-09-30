@@ -1,7 +1,6 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {Router, RouterLink, RouterOutlet} from '@angular/router';
 import {AppMaterialModule} from "./app-material/app-material.module";
-import {AuthService} from "./shared/services/auth.service";
 
 @Component({
   selector: 'app-root',
@@ -13,6 +12,7 @@ import {AuthService} from "./shared/services/auth.service";
 export class AppComponent {
   constructor(private router: Router) {
   }
+
   events: string[] = [];
   opened: boolean = false;
 

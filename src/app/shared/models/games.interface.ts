@@ -35,6 +35,7 @@ export interface Game {
   metacritic: number;
   platforms: Platforms[];
 }
+
 export interface GameDetails {
   id: number;
   slug: string;
@@ -76,6 +77,7 @@ export interface GameDetails {
       percent: number;
     }
   ];
+  //TODO change to index interface (look into DAE)
   reactions: {
     '1': number;
     '2': number;
@@ -102,9 +104,9 @@ export interface GameDetails {
         id: number;
         name: string;
         slug: string;
-        image: null;
-        year_end: null;
-        year_start: null;
+        image: string;
+        year_end: string;
+        year_start: string;
         games_count: number;
         image_background: string;
       };
@@ -188,6 +190,7 @@ export interface GameTrailer {
   preview: string;
   date: object;
 }
+
 export interface IAchivments {
   count: number;
   next: null;
@@ -202,6 +205,7 @@ export interface IAchivments {
     }
   ];
 }
+
 export interface FilterParams {
   search: string;
   platforms: string;
@@ -210,3 +214,5 @@ export interface FilterParams {
   developers: string;
   dates: string;
 }
+
+interface Reactions {}

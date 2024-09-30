@@ -1,10 +1,10 @@
 export interface UserInterface {
-  displayName: string | null;
-  email: string | null;
-  emailVerified: boolean | null;
-  isAnonymous: boolean | null;
-  phoneNumber: string | null;
-  photoURL: string | null;
-  refreshToken: string | null;
-  uid: string | null;
+  displayName: string;
+  email: string;
+  emailVerified: boolean;
+  isAnonymous: boolean;
+  phoneNumber: string;
+  photoURL: string;
+  refreshToken: string;
+  uid: string;
 }

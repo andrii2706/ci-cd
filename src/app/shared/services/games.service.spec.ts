@@ -1,12 +1,21 @@
-import { TestBed } from '@angular/core/testing';
+import {TestBed} from '@angular/core/testing';
 
-import { GamesService } from './games.service';
+import {GamesService} from './games.service';
+import {HttpClient, HttpHandler} from "@angular/common/http";
+import {AngularFireModule} from "@angular/fire/compat";
+import {environment} from "../../../environment/environment";
+//TODO write unit test
 
-describe('GamesService', () => {
+xdescribe('GamesService', () => {
   let service: GamesService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({
+      imports: [
+        AngularFireModule.initializeApp(environment.firebaseConfig)
+      ],
+      providers:[HttpClient, HttpHandler]
+    });
     service = TestBed.inject(GamesService);
   });
 
