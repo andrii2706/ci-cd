@@ -14,7 +14,7 @@ export const authGuard: CanActivateFn = (route, state) => {
   } else {
     snackbar.openFromComponent(SnackbarComponent, {
       duration: 5000,
-      data: { text: 'You are not logged in yet.', status: 'error' },
+      data: {text: 'You are not logged in yet.', status: 'error'},
       verticalPosition: 'top',
       horizontalPosition: 'end',
     });

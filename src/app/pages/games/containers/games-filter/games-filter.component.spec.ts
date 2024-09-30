@@ -1,19 +1,18 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {ProfileComponent} from './profile.component';
-//TODO write unit test
+import {GamesFilrerComponent} from './games-filter.component';
 
-xdescribe('ProfileComponent', () => {
-  let component: ProfileComponent;
-  let fixture: ComponentFixture<ProfileComponent>;
+describe('GamesFilrerComponent', () => {
+  let component: GamesFilrerComponent;
+  let fixture: ComponentFixture<GamesFilrerComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ProfileComponent]
+      imports: [GamesFilrerComponent]
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(ProfileComponent);
+    fixture = TestBed.createComponent(GamesFilrerComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

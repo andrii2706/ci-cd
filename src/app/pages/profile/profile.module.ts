@@ -1,9 +1,8 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
 import {ProfileRouterModule} from "./profile.router.module";
 import {ProfileComponent} from "./profile.component";
 import {AppMaterialModule} from "../../app-material/app-material.module";
-
 
 
 @NgModule({
@@ -14,4 +13,5 @@ import {AppMaterialModule} from "../../app-material/app-material.module";
     CommonModule
   ]
 })
-export class ProfileModule { }
+export class ProfileModule {
+}

@@ -1,5 +1,5 @@
-import { TestBed } from '@angular/core/testing';
-import { AppComponent } from './app.component';
+import {TestBed} from '@angular/core/testing';
+import {AppComponent} from './app.component';
 //TODO write unit test
 xdescribe('AppComponent', () => {
   beforeEach(async () => {

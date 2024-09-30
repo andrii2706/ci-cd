@@ -1,5 +1,5 @@
 export const environment = {
-  firebaseConfig : {
+  firebaseConfig: {
     apiKey: "AIzaSyCvfszBr8SY_1dGf3qy1WLkavDYWgFdiPQ",
     authDomain: "ci-cd-test-c68d8.firebaseapp.com",
     projectId: "ci-cd-test-c68d8",
@@ -8,5 +8,5 @@ export const environment = {
     appId: "1:62981914512:web:1cf9bb17a3ed34c1bf7d15",
     measurementId: "G-JKRE9D00B4"
   }
-  ,production: false
+  , production: false
 }

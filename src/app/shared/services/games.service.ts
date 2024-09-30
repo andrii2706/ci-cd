@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {BehaviorSubject, Observable} from "rxjs";
 import {FilterParams, Game, Games} from "../models/games.interface";
@@ -14,11 +14,13 @@ export class GamesService {
 
   newGames = new BehaviorSubject<Games | null>(null);
   private newGames$: Observable<Games | null> = this.newGames.asObservable();
+  gamesData = new BehaviorSubject<Games | null>(null);
+  private gamesData$: Observable<Games | null> = this.gamesData.asObservable();
 
+  constructor(private httpClient: HttpClient, private fireStore: Firestore) {
+  }
 
-  constructor(private httpClient: HttpClient, private fireStore: Firestore) { }
-
-  getLastReleasedGames(page: number, dates: string): Observable<Games>{
+  getLastReleasedGames(page: number, dates: string): Observable<Games> {
     const query = (dates: string) =>
       new HttpParams({
         fromObject: {
@@ -46,9 +48,9 @@ export class GamesService {
     });
   }
 
-  filterGames(page: number, filterParams: FilterParams): Observable<Games>{
+  filterGames(page: number, filterParams: FilterParams): Observable<Games> {
     const paramsForFilter = this.getFilterQueryParameter(filterParams);
-    return  this.httpClient.get<Games>(`${this.url}${this.games}?key=${this.key}&page=${page}`,
+    return this.httpClient.get<Games>(`${this.url}${this.games}?key=${this.key}&page=${page}`,
       {
         params: paramsForFilter,
       })
@@ -65,7 +67,7 @@ export class GamesService {
     }, new HttpParams());
   }
 
-  async addGamesToUser(userId: string, games: Game[]){
-    await addDoc(collection(this.fireStore , 'userGame'), {userId, games})
+  async addGamesToUser(userId: string, games: Game[]) {
+    await addDoc(collection(this.fireStore, 'userGame'), {userId, games})
   }
 }

@@ -16,14 +16,15 @@ import {MatSnackBar} from "@angular/material/snack-bar";
   templateUrl: './games-cards.component.html',
   styleUrl: './games-cards.component.scss'
 })
-export class GamesCardsComponent implements OnInit{
+export class GamesCardsComponent implements OnInit {
 
-  @Input() set game(_game: Game){
-    if(_game){
+  @Input() set game(_game: Game) {
+    if (_game) {
       this.gameInfo = _game
     }
   }
-  @Input() set isGameBought(_isGameBought: boolean){
+
+  @Input() set isGameBought(_isGameBought: boolean) {
     this.showLabel = _isGameBought ? _isGameBought : false
   }
 
@@ -34,38 +35,38 @@ export class GamesCardsComponent implements OnInit{
   userStatus: boolean;
 
   constructor(private router: Router, private activatedRoute: ActivatedRoute, private snackBar: MatSnackBar) {
-    }
+  }
 
-    ngOnInit() {
-     const userInfo =  JSON.stringify(localStorage.getItem('user'))
-     this.userStatus = !!userInfo && !userInfo.length
-    }
+  ngOnInit() {
+    const userInfo = JSON.stringify(localStorage.getItem('user'))
+    this.userStatus = !!userInfo && !userInfo.length
+  }
 
-      buyGame(game: Game){
-         this.boughtedGame.emit(game)
-        this.showLabel = true
-        if (this.showLabel)
-          this.snackBar.openFromComponent(SnackbarComponent, {
-            duration: 900,
-            data: {
-              text: 'The game has been added to your list',
-              status: 'success',
-            },
-            verticalPosition: 'bottom',
-            horizontalPosition: 'center',
-          });
-      }
+  buyGame(game: Game) {
+    this.boughtedGame.emit(game)
+    this.showLabel = true
+    if (this.showLabel)
+      this.snackBar.openFromComponent(SnackbarComponent, {
+        duration: 900,
+        data: {
+          text: 'The game has been added to your list',
+          status: 'success',
+        },
+        verticalPosition: 'bottom',
+        horizontalPosition: 'center',
+      });
+  }
 
 
-    goToGameDetails(){
-      if (this.router.url === '/home') {
-        void this.router.navigate([`/games/${this.game.id}`], {
-          relativeTo: this.activatedRoute,
-        });
-      } else
-        void this.router.navigate([this.game.id], {
-          relativeTo: this.activatedRoute,
-        });
-    }
+  goToGameDetails() {
+    if (this.router.url === '/home') {
+      void this.router.navigate([`/games/${this.game.id}`], {
+        relativeTo: this.activatedRoute,
+      });
+    } else
+      void this.router.navigate([this.game.id], {
+        relativeTo: this.activatedRoute,
+      });
+  }
 
 }

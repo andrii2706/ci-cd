@@ -1,0 +1,16 @@
+.games-grid {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 30px;
+}
+.filter-btn {
+  margin-bottom: 50px;
+}
+.pagination-controllers {
+  margin-top: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

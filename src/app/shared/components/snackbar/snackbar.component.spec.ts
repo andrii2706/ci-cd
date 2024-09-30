@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { SnackbarComponent } from './snackbar.component';
+import {SnackbarComponent} from './snackbar.component';
 //TODO write unit test
 
 xdescribe('SnackbarComponent', () => {
@@ -11,7 +11,7 @@ xdescribe('SnackbarComponent', () => {
     await TestBed.configureTestingModule({
       imports: [SnackbarComponent]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(SnackbarComponent);
     component = fixture.componentInstance;

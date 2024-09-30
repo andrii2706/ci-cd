@@ -35,6 +35,7 @@ export interface Game {
   metacritic: number;
   platforms: Platforms[];
 }
+
 export interface GameDetails {
   id: number;
   slug: string;
@@ -214,6 +215,4 @@ export interface FilterParams {
   dates: string;
 }
 
-interface Reactions {
-
-}
+interface Reactions {}
