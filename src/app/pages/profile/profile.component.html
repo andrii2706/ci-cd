@@ -1,5 +1,44 @@
 <section>
-  <div></div>
-  <div></div>
-  <div></div>
+  <div class="user-info">
+    <img class="avatar" src="{{user?.photoURL | replaceNullImg}}" alt="User Icon">
+    <div>
+      <h3>{{user.displayName}}</h3>
+      <p>{{user.email}}</p>
+    </div>
+  </div>
+  <div class="wishList">
+    @for(gameInfo of userGames; track gameInfo.slug){
+        <div class="game-wishListCard">
+          <div>
+            <img class="img-card" src="{{ gameInfo.background_image }}" alt="" />
+          </div>
+          <div>
+            <h2>{{ gameInfo.name  }}</h2>
+            <p>Original Name: {{ gameInfo.name_original  }}</p>
+            <p>Metacritic: {{ gameInfo.metacritic  }}</p>
+            <p>Rating: {{ gameInfo.rating  }}</p>
+            <p>Release data: {{ gameInfo.released | date }}</p>
+            <p>Description: {{ gameInfo.description  }}</p>
+            <div class="buttons">
+              <button
+                mat-raised-button
+                [color]="'primary'"
+                matTooltip="See game details"
+                (click)="goToGame(gameInfo.id)">
+                See game details
+              </button>
+              <button
+                mat-raised-button
+                matTooltip="Delete Game from list"
+                [color]="'primary'"
+                (click)="removeGames(gameInfo)">
+                Delete Game from list
+              </button>
+            </div>
+          </div>
+        </div>
+    } @empty {
+      <div> Add your games to wishlist </div>
+    }
+  </div>
 </section>

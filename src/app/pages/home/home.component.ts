@@ -1,13 +1,13 @@
-import {Component, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {AppMaterialModule} from "../../app-material/app-material.module";
 import {GamesCardsComponent} from "../../shared/components/games-cards/games-cards.component";
 import {GamesService} from "../../shared/services/games.service";
 import {NgxPaginationModule} from "ngx-pagination";
 import {Game} from "../../shared/models/games.interface";
-import {noop} from "rxjs";
+import {noop, takeUntil} from "rxjs";
 import moment from "moment";
-import {ActivatedRoute} from "@angular/router";
 import {SpinnerComponent} from "../../shared/components/spinner/spinner.component";
+import {ClearObservableDirective} from "../../shared/classes";
 
 
 @Component({
@@ -17,17 +17,19 @@ import {SpinnerComponent} from "../../shared/components/spinner/spinner.componen
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent extends ClearObservableDirective implements OnInit {
 
   page = 1;
-  private boughtGames: Game[] = [];
+  boughtGames: Game[] = [];
 
   games: Game[] = []
   total: number;
   dates: string;
   isLoading: boolean;
+  isGameBoughtStatus = [];
 
-  constructor(private gamesService: GamesService, private router: ActivatedRoute) {
+  constructor(private gamesService: GamesService, private cdr: ChangeDetectorRef) {
+    super()
   }
 
   ngOnInit() {
@@ -37,28 +39,41 @@ export class HomeComponent implements OnInit {
         this.total = games.count;
         this.games = games.results;
       }
+      this.isGameBought()
       this.isLoading = false
     })
+
   }
 
   getNewGames(page: number) {
     const firstYearDay = moment().startOf('year').format('YYYY-MM-DD');
     const lastYearDay = moment().add(1, 'year').endOf('year').format('YYYY-MM-DD');
     this.dates = `${firstYearDay},${lastYearDay}`;
-    this.gamesService.getLastReleasedGames(page, this.dates).subscribe((games) => {
+    this.gamesService.getLastReleasedGames(page, this.dates).pipe(takeUntil(this.destroy$)).subscribe((games) => {
       this.total = games.count;
       this.games = games.results;
     });
   }
 
   buyGame(game: Game) {
-    this.boughtGames.push(game);
     const userInfo = localStorage.getItem('user')
     if (userInfo && userInfo.length) {
       const user = JSON.parse(userInfo)
       user.games.push(game)
       localStorage.setItem('user', JSON.stringify(user))
-      this.gamesService.addGamesToUser(user.multiFactor.user.uid, this.boughtGames).then(() => noop());
+      this.gamesService.updateUserData(user.multiFactor.user.uid, {games: user.games }).then(() => noop());
+    }
+    this.cdr.detectChanges();
+  }
+
+  isGameBought(){
+    const userInfo = localStorage.getItem('user')
+    if (userInfo && userInfo.length) {
+      const user = JSON.parse(userInfo)
+      this.gamesService.getGameById(user.multiFactor.user.uid).then((games) => {
+        const gamesId = user.games.map((game: Game) => game.id)
+        this.isGameBoughtStatus = games.games.filter((game: Game, index: number )=> game.id === gamesId[index])
+      })
     }
   }
 

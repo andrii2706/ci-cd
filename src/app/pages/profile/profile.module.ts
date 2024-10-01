@@ -3,6 +3,8 @@ import {CommonModule} from '@angular/common';
 import {ProfileRouterModule} from "./profile.router.module";
 import {ProfileComponent} from "./profile.component";
 import {AppMaterialModule} from "../../app-material/app-material.module";
+import {SpinnerComponent} from "../../shared/components/spinner/spinner.component";
+import {ReplaceNullImgPipe} from "../../shared/pipe/replace-null-img.pipe";
 
 
 @NgModule({
@@ -10,7 +12,9 @@ import {AppMaterialModule} from "../../app-material/app-material.module";
   imports: [
     ProfileRouterModule,
     AppMaterialModule,
-    CommonModule
+    CommonModule,
+    SpinnerComponent,
+    ReplaceNullImgPipe
   ]
 })
 export class ProfileModule {

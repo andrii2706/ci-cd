@@ -9,7 +9,7 @@ export class ReplaceNullImgPipe implements PipeTransform {
     'https://upload.wikimedia.org/wikipedia/en/thumb/a/a0/Grogu_%28Star_Wars%29.jpg/220px-Grogu_%28Star_Wars%29.jpg';
 
   transform(value: string, replaceImgUrl: string = this.defaultUrl): string {
-    return !value || !value.length ? replaceImgUrl : value;
+    return !value || !value.length || value.includes('https://lh3.googleusercontent.com') ? replaceImgUrl : value;
   }
 
 }

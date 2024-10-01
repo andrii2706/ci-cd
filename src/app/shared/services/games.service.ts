@@ -1,8 +1,9 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {BehaviorSubject, Observable} from "rxjs";
-import {FilterParams, Game, Games} from "../models/games.interface";
-import {addDoc, collection, Firestore} from "@angular/fire/firestore";
+import {FilterParams, Games} from "../models/games.interface";
+import {doc, Firestore, getDoc, updateDoc} from "@angular/fire/firestore";
+
 
 @Injectable({
   providedIn: 'root'
@@ -66,8 +67,29 @@ export class GamesService {
       return acc;
     }, new HttpParams());
   }
-
-  async addGamesToUser(userId: string, games: Game[]) {
-    await addDoc(collection(this.fireStore, 'userGame'), {userId, games})
+  /* eslint-disable  @typescript-eslint/no-explicit-any */
+  async updateUserData(userId: string, newData: any) {
+    const userRef = doc(this.fireStore, 'userGame', userId);
+    console.log(userRef.id)
+    try {
+      await updateDoc(userRef, newData);
+    } catch (error) {
+      console.error('Помилка оновлення даних: ', error);
+    }
   }
+  /* eslint-disable  @typescript-eslint/no-explicit-any */
+  async getGameById(id: string): Promise<any | undefined> {
+    const gameDoc = doc(this.fireStore, 'userGame', id);
+    const gameSnapshot = await getDoc(gameDoc);
+    if (gameSnapshot.exists()) {
+      return { id: +gameSnapshot.id, ...gameSnapshot.data() } ;
+    } else {
+      return null;
+    }
+  }
+  //TODO finish this logic for remove game
+  // async removeGameFromUser(userId: string, gameId: string) {
+  //
+  // }
+
 }

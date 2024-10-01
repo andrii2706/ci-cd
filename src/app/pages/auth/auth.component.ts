@@ -2,18 +2,21 @@ import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {AuthService} from "../../shared/services/auth.service";
 import {noop} from "rxjs";
+import {ClearObservableDirective} from "../../shared/classes";
+
 
 @Component({
   selector: 'app-auth',
   templateUrl: './auth.component.html',
   styleUrl: './auth.component.scss'
 })
-export class AuthComponent implements OnInit {
+export class AuthComponent extends ClearObservableDirective implements OnInit {
   authForm: FormGroup;
   registerForm: FormGroup;
   signInForm: boolean;
 
   constructor(private authService: AuthService) {
+    super()
   }
 
   ngOnInit() {
