@@ -1,19 +1,19 @@
 <section>
-  @if(isLoading){
-    <div class="filter-btn">
-      <mat-accordion>
-        <mat-expansion-panel hideToggle>
-          <mat-expansion-panel-header>
-            <mat-icon>filter_list</mat-icon>
-          </mat-expansion-panel-header>
-          <app-games-filter (filter)="getFilterQuery($event)"></app-games-filter>
-        </mat-expansion-panel>
-      </mat-accordion>
-    </div>
+  <div class="filter-btn">
+    <mat-accordion>
+      <mat-expansion-panel hideToggle>
+        <mat-expansion-panel-header>
+          <mat-icon>filter_list</mat-icon>
+        </mat-expansion-panel-header>
+        <app-games-filter (filter)="getFilterQuery($event)"></app-games-filter>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
+  @if(!isLoading){
     <div class="games-grid">
       @for(game of games | paginate
         : { itemsPerPage: 25, currentPage: page, totalItems: total }; track game.name){
-        <app-games-cards [game]="game" (boughtedGame)="buyGame($event)"></app-games-cards>
+        <app-games-cards [game]="game" [isGameBought]="isGameBoughtStatus" (boughtedGame)="buyGame($event)"></app-games-cards>
       } @empty {
         <div>
           Games not come wait a minute

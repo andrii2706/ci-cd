@@ -1,41 +1,46 @@
-import {Component, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {GamesService} from "../../shared/services/games.service";
 import { Game} from "../../shared/models/games.interface";
-import {finalize, noop, take} from "rxjs";
+import {finalize, noop, take, takeUntil} from "rxjs";
 import { FilterParams } from '../../shared/models/filter.interface';
+import {ClearObservableDirective} from "../../shared/classes";
 
 @Component({
   selector: 'app-games',
   templateUrl: './games.component.html',
   styleUrl: './games.component.scss'
 })
-export class GamesComponent implements OnInit {
+export class GamesComponent extends ClearObservableDirective implements OnInit {
   page = 1;
-  games: Game[]
+  games: Game[] = []
   total: string | number;
   isLoading: boolean
-  boughtGames: Game[];
+  boughtGames: Game[] = [];
   filterParams: FilterParams;
   totalGames: number;
+  isGameBoughtStatus: Game[] = [] ;
 
-  constructor(private gamesService: GamesService) {
+  constructor(private cdr:ChangeDetectorRef, private gamesService: GamesService) {
+    super()
   }
 
 
   ngOnInit() {
-    this.isLoading = false
+    this.isLoading = true
     this.gamesService.gamesData.pipe(take(1)).subscribe(games => {
       if (games) {
         this.games = games?.results;
         this.total = games.count;
       }
-      this.isLoading = true;
+      this.isLoading = false;
     })
+    this.isGameBought();
   }
 
   getGames(page: number) {
-    this.gamesService.getAllGames(page).pipe(take(1)).subscribe(games => {
+    this.gamesService.getAllGames(page).pipe(takeUntil(this.destroy$)).subscribe(games => {
         this.games = games.results
+      this.cdr.detectChanges();
     })
   }
 
@@ -47,8 +52,21 @@ export class GamesComponent implements OnInit {
       const user = JSON.parse(userInfo)
       user.games.push(game)
       localStorage.setItem('user', JSON.stringify(user))
-      this.gamesService.addGamesToUser(user.multiFactor.user.uid, this.boughtGames).then(() => noop());
+      this.gamesService.updateUserData(user.multiFactor.user.uid,  {games: user.games } ).then(() => noop());
     }
+    this.cdr.detectChanges();
+  }
+
+  isGameBought(){
+    const userInfo = localStorage.getItem('user')
+    if (userInfo && userInfo.length) {
+      const user = JSON.parse(userInfo)
+      this.gamesService.getGameById(user.multiFactor.user.uid).then((games) => {
+        const gamesId = user.games.map((game: Game) => game.id)
+       this.isGameBoughtStatus = games.games.filter((game: Game, index: number )=> game.id === gamesId[index])
+      })
+    }
+
   }
 
   navigateTo(PageNumber: number) {
@@ -61,6 +79,7 @@ export class GamesComponent implements OnInit {
   }
 
   getFilterQuery(fp: FilterParams) {
+    this.isLoading = true
     this.filterParams = fp;
     if (
       this.filterParams.search === '' &&
@@ -71,9 +90,14 @@ export class GamesComponent implements OnInit {
       this.filterParams.dates === '' &&
       this.filterParams.metacritic === ''
     ) {
+      this.isLoading = false;
+      this.cdr.detectChanges();
       return this.getGames(1);
     } else {
+      this.isLoading = false;
+      this.cdr.detectChanges();
       return this.filteredGames(1, this.filterParams);
+
     }
   }
 
@@ -82,6 +106,7 @@ export class GamesComponent implements OnInit {
     this.gamesService
       .filterGames(page, filter)
       .pipe(
+        takeUntil(this.destroy$),
         finalize(() => {
           this.isLoading = false;
         })
@@ -90,6 +115,7 @@ export class GamesComponent implements OnInit {
         this.totalGames = games.count;
         this.games = games.results;
         this.isLoading = false;
+        this.cdr.detectChanges();
       });
   }
 

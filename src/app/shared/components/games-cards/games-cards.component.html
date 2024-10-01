@@ -30,7 +30,7 @@
         <button
           matTooltip="Add Game To WishList"
           mat-raised-button
-          [disabled]="userStatus || showLabel"
+          [disabled]="showLabel"
           [color]="'primary'"
           (click)="buyGame(gameInfo)">
           <mat-icon>add_shopping_cart</mat-icon>

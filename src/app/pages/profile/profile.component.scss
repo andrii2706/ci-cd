@@ -1,0 +1,110 @@
+
+
+section {
+  min-height: 80vh;
+}
+
+.user-info {
+  width: 100%;
+  display: flex;
+  background: #c4c4c4;
+  color: #1d1d1e;
+  margin-top: 20px;
+  padding: 20px;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 10px;
+  box-shadow: 4px 3px 7px 7px rgb(13, 13, 22, 0.63);
+
+  div > p {
+    font-size: 15px;
+  }
+
+  .avatar {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    flex-direction: column;
+
+    > img {
+      width: 40rem;
+      height: 550px;
+      border-radius: 10px;
+    }
+
+    > mat-icon {
+      width: 60px;
+      height: 60px;
+    }
+  }
+}
+
+.default-avatar {
+  width: 200px !important;
+  height: 200px !important;
+}
+
+.wishList {
+  width: 100%;
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  background: #c4c4c4;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 4px 3px 7px 7px rgb(13, 13, 22, 0.63);
+
+  > div {
+    width: 100%;
+  }
+
+  h2 {
+    color: #005cbb;
+  }
+}
+
+.profile-navigation {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+
+  > button {
+    margin-right: 10px;
+  }
+}
+.deleteAllGames{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+
+
+.game-wishListCard {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding-top: 1rem;
+  padding-bottom: 1rem ;
+
+  .img-card {
+    width: 400px;
+    height: 250px;
+    border-radius: 10px;
+  }
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  > button {
+    &:nth-of-type(2) {
+      margin-left: 10px;
+    }
+  }
+}

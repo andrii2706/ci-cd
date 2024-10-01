@@ -24,15 +24,21 @@ export class GamesCardsComponent implements OnInit {
     }
   }
 
-  @Input() set isGameBought(_isGameBought: boolean) {
-    this.showLabel = _isGameBought ? _isGameBought : false
-  }
-
   @Output() boughtedGame = new EventEmitter<Game>()
 
   gameInfo: Game;
   showLabel: boolean;
   userStatus: boolean;
+
+  @Input() set isGameBought(_isGameBought: Game[]) {
+    _isGameBought.map(gameBoughted => {
+      if(gameBoughted.id === this.gameInfo.id){
+        this.showLabel = true;
+        console.log(this.showLabel, this.gameInfo.name)
+      }
+    })
+
+  }
 
   constructor(private router: Router, private activatedRoute: ActivatedRoute, private snackBar: MatSnackBar) {
   }
