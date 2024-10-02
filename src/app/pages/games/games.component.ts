@@ -52,7 +52,7 @@ export class GamesComponent extends ClearObservableDirective implements OnInit {
       const user = JSON.parse(userInfo)
       user.games.push(game)
       localStorage.setItem('user', JSON.stringify(user))
-      this.gamesService.updateUserData(user.multiFactor.user.uid,  {games: user.games } ).then(() => noop());
+      this.gamesService.updateUserData(user.multiFactor.user.uid,  {games: user.games } ).then(() => noop())
     }
     this.cdr.detectChanges();
   }

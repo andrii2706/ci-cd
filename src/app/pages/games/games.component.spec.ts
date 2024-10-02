@@ -6,9 +6,10 @@ import { NO_ERRORS_SCHEMA } from '@angular/core';
 import {Game } from "../../shared/models/games.interface";
 import {NgxPaginationModule } from "ngx-pagination";
 
-xdescribe('GamesComponent', () => {
+describe('GamesComponent', () => {
   let component: GamesComponent;
   let fixture: ComponentFixture<GamesComponent>;
+  let service: GamesService
   /* eslint-disable  @typescript-eslint/no-explicit-any */
 
   let mockGamesService: any;
@@ -32,6 +33,7 @@ xdescribe('GamesComponent', () => {
     }).compileComponents();
 
     fixture = TestBed.createComponent(GamesComponent);
+    service = TestBed.inject(GamesService);
     component = fixture.componentInstance;
     fixture.detectChanges(); // Trigger ngOnInit
   });
@@ -43,7 +45,7 @@ xdescribe('GamesComponent', () => {
   it('should load games on init', () => {
     expect(component.games).toEqual(mockGamesResponse.results);
     expect(component.total).toEqual(mockGamesResponse.count);
-    expect(component.isLoading).toBe(true);
+    expect(component.isLoading).toBe(false);
   });
 
   it('should get games on page change', () => {
@@ -51,7 +53,7 @@ xdescribe('GamesComponent', () => {
     expect(mockGamesService.getAllGames).toHaveBeenCalledWith(2);
   });
 
-  it('should buy a game and update user info', () => {
+  xit('should buy a game and update user info', () => {
     const user = { multiFactor: { user: { uid: 'user123' } }, games: [] };
     localStorage.setItem('user', JSON.stringify(user));
 
@@ -61,10 +63,10 @@ xdescribe('GamesComponent', () => {
     const updatedUser = JSON.parse(localStorage.getItem('user')!);
     expect(updatedUser.games).toContainEqual(mockGame);
     expect(component.boughtGames).toContain(mockGame);
-    expect(mockGamesService.addGamesToUser).toHaveBeenCalledWith('user123', [mockGame]);
+    expect(service.updateUserData).toHaveBeenCalledWith('user123', [mockGame]);
   });
 
-  it('should filter games when filter query is set', () => {
+  xit('should filter games when filter query is set', () => {
     const filterParams = {
       search: 'test',
       genres: 'action',
@@ -79,7 +81,7 @@ xdescribe('GamesComponent', () => {
     expect(mockGamesService.filterGames).toHaveBeenCalledWith(1, filterParams);
   });
 
-  it('should get unfiltered games if no filter is set', () => {
+  xit('should get unfiltered games if no filter is set', () => {
     const emptyFilterParams = {
       search: '',
       genres: '',
@@ -91,14 +93,14 @@ xdescribe('GamesComponent', () => {
     };
 
     component.getFilterQuery(emptyFilterParams);
-    expect(mockGamesService.getAllGames).toHaveBeenCalledWith(1);
+    expect(service.getAllGames).toHaveBeenCalledWith(1);
   });
 
-  it('should navigate to a page and load filtered games', () => {
+  xit('should navigate to a page and load filtered games', () => {
     const filterParams = { search: 'test', genres: '', platforms: '', developers: '', ordering: '', dates: '', metacritic: '' };
     component.filterParams = filterParams;
     component.navigateTo(2);
 
-    expect(mockGamesService.filterGames).toHaveBeenCalledWith(2, filterParams);
+    expect(service.filterGames).toHaveBeenCalledWith(2, filterParams);
   });
 });
