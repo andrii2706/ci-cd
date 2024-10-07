@@ -1,19 +1,31 @@
-import {TestBed} from '@angular/core/testing';
-import {AppComponent} from './app.component';
-import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import {RouterTestingModule} from "@angular/router/testing";
+import { render, screen } from '@testing-library/angular';
+import { AppComponent } from './app.component';
+import { RouterTestingModule } from '@angular/router/testing';
+import { AuthService } from './shared/services/auth.service';
+import { of } from 'rxjs';
 
 describe('AppComponent', () => {
+  let authServiceMock: any;
+
   beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [AppComponent, BrowserAnimationsModule, RouterTestingModule],
-    }).compileComponents();
+    // Мокаємо AuthService для Jest
+    authServiceMock = {
+      LoginStatus: true,
+      userLoginStatus: { next: jest.fn() }, // Мокаємо функцію next
+      logout: jest.fn().mockResolvedValue(Promise.resolve()) // Мокаємо метод logout
+    };
   });
 
-  it('should create the app', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app).toBeTruthy();
-  });
 
+  it('should call logout when logoutUser is triggered', async () => {
+    const { fixture } = await render(AppComponent, {
+      imports: [RouterTestingModule],
+      providers: [{ provide: AuthService, useValue: authServiceMock }]
+    });
+
+    const appInstance = fixture.componentInstance;
+    appInstance.logoutUser(); // Викликаємо метод logout
+
+    expect(authServiceMock.logout).toHaveBeenCalled(); // Перевіряємо виклик
+  });
 });
