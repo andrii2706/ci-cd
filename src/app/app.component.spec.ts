@@ -1,18 +1,18 @@
-import { render, screen } from '@testing-library/angular';
+import { render } from '@testing-library/angular';
 import { AppComponent } from './app.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AuthService } from './shared/services/auth.service';
-import { of } from 'rxjs';
+
 
 describe('AppComponent', () => {
+  /* eslint-disable  @typescript-eslint/no-explicit-any */
   let authServiceMock: any;
 
   beforeEach(async () => {
-    // Мокаємо AuthService для Jest
     authServiceMock = {
       LoginStatus: true,
-      userLoginStatus: { next: jest.fn() }, // Мокаємо функцію next
-      logout: jest.fn().mockResolvedValue(Promise.resolve()) // Мокаємо метод logout
+      userLoginStatus: { next: jest.fn() },
+      logout: jest.fn().mockResolvedValue(Promise.resolve())
     };
   });
 
@@ -24,8 +24,8 @@ describe('AppComponent', () => {
     });
 
     const appInstance = fixture.componentInstance;
-    appInstance.logoutUser(); // Викликаємо метод logout
+    appInstance.logoutUser();
 
-    expect(authServiceMock.logout).toHaveBeenCalled(); // Перевіряємо виклик
+    expect(authServiceMock.logout).toHaveBeenCalled();
   });
 });

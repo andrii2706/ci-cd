@@ -3,8 +3,7 @@ import { AuthService } from "../services/auth.service";
 import { inject } from "@angular/core";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { SnackbarComponent } from "../components/snackbar/snackbar.component";
-import { map, take } from 'rxjs/operators';
-import {noop} from "rxjs";
+import { map } from 'rxjs/operators';
 
 /* eslint-disable  @typescript-eslint/no-unused-vars */
 export const authGuard: CanActivateFn = (route, state) => {

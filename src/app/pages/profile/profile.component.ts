@@ -4,7 +4,7 @@ import {GamesService} from "../../shared/services/games.service";
 import {Game} from "../../shared/models/games.interface";
 import {ActivatedRoute, Router} from "@angular/router";
 import {UserInterface} from "../../shared/models/user.interface";
-import {FormControl, FormControlName, FormGroup, Validators} from "@angular/forms";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 
 
 
@@ -19,6 +19,7 @@ export class ProfileComponent extends ClearObservableDirective implements OnInit
   user: UserInterface;
   userGames: Game[] = [];
   isLoading: boolean;
+  /* eslint-disable  @typescript-eslint/no-explicit-any */
   userAvatar: any;
   showAvatar = false;
   updateUserInfoStatus = false;
@@ -46,10 +47,11 @@ export class ProfileComponent extends ClearObservableDirective implements OnInit
       }
     }
   }
-
+  /* eslint-disable  @typescript-eslint/no-explicit-any */
   getFile(event: any) {
     this.userAvatar = event.target.files[0];
     const reader = new FileReader();
+    /* eslint-disable  @typescript-eslint/no-explicit-any */
     reader.readAsDataURL(event.target.files[0]);
     reader.onload = (event: any) => {
       this.userAvatar = event.target.result;
