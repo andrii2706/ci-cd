@@ -7,6 +7,7 @@ import {getFirestore, provideFirestore} from "@angular/fire/firestore";
 import {environment} from "../environment/environment";
 import {getAuth, provideAuth} from "@angular/fire/auth";
 import {provideHttpClient} from "@angular/common/http";
+import {FIREBASE_OPTIONS} from "@angular/fire/compat";
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -17,6 +18,6 @@ export const appConfig: ApplicationConfig = {
     provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),
-    // Прибрав FIREBASE_OPTIONS, оскільки це дублює конфігурацію
+    {provide: FIREBASE_OPTIONS, useValue: environment.firebaseConfig}
   ],
 };
