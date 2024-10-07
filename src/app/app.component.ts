@@ -9,29 +9,26 @@ import {noop} from "rxjs";
   standalone: true,
   imports: [RouterOutlet, AppMaterialModule, RouterLink],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+  styleUrls: ['./app.component.scss'] // змінив на 'styleUrls' (зверни увагу на помилку в 'styleUrl')
 })
-export class AppComponent implements OnInit{
+export class AppComponent implements OnInit {
 
   events: string[] = [];
   opened = false;
 
-  constructor(private router: Router, private authService :AuthService) {
-  }
+  constructor(private router: Router, private authService: AuthService) {}
 
   ngOnInit() {
-    if (this.authService.LoginStatus){
-      this.authService.userLoginStatus.next(true)
+    if (this.authService.LoginStatus) { // Перевірка логіну
+      this.authService.userLoginStatus.next(true); // Оновлюємо статус логіну
     }
-
   }
 
-  logoutUser(){
-    this.authService.logout().then(() => noop());
+  logoutUser() {
+    this.authService.logout().then(() => noop()); // Виклик логауту
   }
 
   goToProfile() {
-    this.router.navigateByUrl('profile');
+    this.router.navigateByUrl('profile'); // Навігація до профілю
   }
-
 }
