@@ -5,7 +5,7 @@ import firebase from "firebase/compat/app";
 import {Router} from "@angular/router";
 import GoogleAuthProvider = firebase.auth.GoogleAuthProvider;
 import User = firebase.User;
-import {doc, Firestore, setDoc} from "@angular/fire/firestore";
+import {doc, Firestore, getDoc, setDoc} from "@angular/fire/firestore";
 import {Game} from "../models/games.interface";
 
 @Injectable({
@@ -15,6 +15,9 @@ export class AuthService {
 
   userLoggingWithFireBase = new BehaviorSubject<User | null>(null);
   private userLoggingWithFireBase$: Observable<User | null> = this.userLoggingWithFireBase.asObservable();
+
+  userLoginStatus = new BehaviorSubject<boolean>(false);
+  private userLoginStatus$: Observable<boolean> = this.userLoginStatus.asObservable();
 
   private loggedInStatus: boolean;
 
@@ -33,7 +36,9 @@ export class AuthService {
   changeLoginStatus(status: boolean, userInfo: any) {
     this.loggedInStatus = status;
     localStorage.setItem('loggedIn', `${this.loggedInStatus}`);
-    localStorage.setItem('user', JSON.stringify({...userInfo, games: []}));
+    this.getGameById(userInfo.uid).then((games) => {
+      localStorage.setItem('user', JSON.stringify({...userInfo, games: games.games}));
+    })
   }
 
   get LoginStatus(): boolean {
@@ -41,15 +46,16 @@ export class AuthService {
       localStorage.getItem('loggedIn') || this.loggedInStatus.toString()
     );
   }
+  proceedUserLoginStatus(status: boolean){
+    return this.userLoginStatus.next(status)
+  }
 
   googleLogin() {
     this.afAuth.signInWithPopup(new GoogleAuthProvider()).then(
       userInfo => {
         this.changeLoginStatus(true, userInfo.user)
+        this.proceedUserLoginStatus(true);
         this.userLoggingWithFireBase.next(userInfo.user)
-        if(userInfo.user){
-          this.addGamesToUser(userInfo.user.uid, []).then()
-        }
       }
     )
   }
@@ -59,9 +65,7 @@ export class AuthService {
       userInfo => {
         this.changeLoginStatus(true, userInfo.user)
         this.userLoggingWithFireBase.next(userInfo.user);
-        if(userInfo.user){
-          this.addGamesToUser(userInfo.user.uid, []).then()
-        }
+        this.proceedUserLoginStatus(true);
         this.router.navigate(['/home']);
       }
     ).catch(err => {
@@ -75,11 +79,21 @@ export class AuthService {
       userInfo => {
         this.changeLoginStatus(true, userInfo.user)
         this.userLoggingWithFireBase.next(userInfo.user);
+        this.proceedUserLoginStatus(true);
         if(userInfo.user){
           this.addGamesToUser(userInfo.user.uid, []).then()
         }
       }
     );
+  }
+
+  logout() {
+    return this.afAuth.signOut().then(() => {
+      // Перенаправлення після логауту (наприклад, на сторінку логіну)
+      this.router.navigate(['/']);
+    }).catch((error) => {
+      console.error('Logout error:', error);
+    });
   }
 
   getCurrentUser(): Observable<User | null> {
@@ -94,9 +108,21 @@ export class AuthService {
   async addGamesToUser(userId: string, games: Game[]) {
     const gameRef = doc(this.fireStore, 'userGame', userId);
     try {
+
       await setDoc(gameRef, {games });
     } catch (error) {
       console.error('Помилка створення документа: ', error);
+    }
+  }
+
+  /* eslint-disable  @typescript-eslint/no-explicit-any */
+  async getGameById(id: string): Promise<any | undefined> {
+    const gameDoc = doc(this.fireStore, 'userGame', id);
+    const gameSnapshot = await getDoc(gameDoc);
+    if (gameSnapshot.exists()) {
+      return { id: +gameSnapshot.id, ...gameSnapshot.data() } ;
+    } else {
+      return null;
     }
   }
 

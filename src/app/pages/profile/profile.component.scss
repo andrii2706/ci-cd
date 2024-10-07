@@ -86,6 +86,10 @@ section {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-direction: row;
+  @media (max-width: 1700px) {
+    flex-direction: column;
+  }
 
   padding-top: 1rem;
   padding-bottom: 1rem ;
@@ -107,4 +111,52 @@ section {
       margin-left: 10px;
     }
   }
+}
+
+.form-update{
+  width: 100%;
+  background: #c4c4c4;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 4px 3px 7px 7px rgba(13, 13, 22, 0.63);
+}
+
+
+.game-info {
+  min-width: 803px ;
+  @media (max-width: 1024px) {
+    width: 100%;
+    min-width: 0;
+  }
+}
+.avatar-filed{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0;
+  :nth-child(1){
+    margin-right: 30px;
+  }
+}
+.user-avatar-input-field {
+  background-color: #673ab7;
+  color: #fff;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  display: inline-block;
+}
+
+.avatar-file-name {
+  margin-left: 10px;
+  font-size: 14px;
+}
+
+input[type="file"] + .user-avatar-input-field + .avatar-file-name {
+  display: inline-block;
+}
+
+.user-info-form {
+  gap: 15px;
 }

@@ -4,6 +4,7 @@ import {GamesService} from "../../shared/services/games.service";
 import {Game} from "../../shared/models/games.interface";
 import {ActivatedRoute, Router} from "@angular/router";
 import {UserInterface} from "../../shared/models/user.interface";
+import {FormControl, FormControlName, FormGroup, Validators} from "@angular/forms";
 
 
 
@@ -13,11 +14,16 @@ import {UserInterface} from "../../shared/models/user.interface";
   styleUrl: './profile.component.scss'
 })
 export class ProfileComponent extends ClearObservableDirective implements OnInit {
+  updateUserInfoForm: FormGroup;
 
   user: UserInterface;
   userGames: Game[] = [];
   isLoading: boolean;
+  userAvatar: any;
+  showAvatar = false;
+  updateUserInfoStatus = false;
   private userId: string;
+
 
   constructor(private gamesService :GamesService, private router: Router, private activatedRoute: ActivatedRoute) {
     super();
@@ -25,10 +31,10 @@ export class ProfileComponent extends ClearObservableDirective implements OnInit
 
   ngOnInit() {
     this.getUser();
+    this.initUpdateForm();
   }
 
   getUser(){
-
     const localUserInfo = localStorage.getItem('user');
     if(localUserInfo){
       this.user = JSON.parse(localUserInfo).multiFactor.user
@@ -38,8 +44,24 @@ export class ProfileComponent extends ClearObservableDirective implements OnInit
           this.userGames = userGames.games;
         })
       }
-
     }
+  }
+
+  getFile(event: any) {
+    this.userAvatar = event.target.files[0];
+    const reader = new FileReader();
+    reader.readAsDataURL(event.target.files[0]);
+    reader.onload = (event: any) => {
+      this.userAvatar = event.target.result;
+    };
+    this.showAvatar = !this.showAvatar;
+  }
+
+  initUpdateForm(){
+    this.updateUserInfoForm = new FormGroup({
+      displayName: new FormControl('', [Validators.required]),
+      email: new FormControl('', [Validators.required, Validators.email])
+    })
   }
 
   goToGame(id: number) {
@@ -47,8 +69,17 @@ export class ProfileComponent extends ClearObservableDirective implements OnInit
       relativeTo: this.activatedRoute,
     });
   }
-    //TODO Add logic for remove
-  // removeGames(gameInfo: Game) {
-  //
-  // }
+
+  changeUserInfo(status: boolean){
+    this.updateUserInfoStatus = status
+  }
+
+
+  removeGames(gameInfo: Game) {
+    console.log(gameInfo)
+  }
+
+  submitUpdateUserForm() {
+    console.log('hello')
+  }
 }

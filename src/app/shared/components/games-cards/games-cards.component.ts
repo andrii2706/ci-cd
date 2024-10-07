@@ -34,7 +34,6 @@ export class GamesCardsComponent implements OnInit {
     _isGameBought.map(gameBoughted => {
       if(gameBoughted.id === this.gameInfo.id){
         this.showLabel = true;
-        console.log(this.showLabel, this.gameInfo.name)
       }
     })
 
@@ -66,11 +65,11 @@ export class GamesCardsComponent implements OnInit {
 
   goToGameDetails() {
     if (this.router.url === '/home') {
-      void this.router.navigate([`/games/${this.game.id}`], {
+      void this.router.navigate([`/games/${this.gameInfo.id}`], {
         relativeTo: this.activatedRoute,
       });
     } else
-      void this.router.navigate([this.game.id], {
+      void this.router.navigate([this.gameInfo.id], {
         relativeTo: this.activatedRoute,
       });
   }
