@@ -39,7 +39,7 @@ export class HomeComponent extends ClearObservableDirective implements OnInit {
         this.total = games.count;
         this.games = games.results;
       }
-      this.isGameBought()
+      this.isGameBought();
       this.isLoading = false
     })
 
@@ -71,8 +71,10 @@ export class HomeComponent extends ClearObservableDirective implements OnInit {
     if (userInfo && userInfo.length) {
       const user = JSON.parse(userInfo)
       this.gamesService.getGameById(user.multiFactor.user.uid).then((games) => {
-        const gamesId = user.games.map((game: Game) => game.id)
-        this.isGameBoughtStatus = games.games.filter((game: Game, index: number )=> game.id === gamesId[index])
+        if(games.games && games.games.length){
+          const gamesId = user.games.map((game: Game) => game.id)
+          this.isGameBoughtStatus = games.games.filter((game: Game, index: number )=> game.id === gamesId[index])
+        }
       })
     }
   }

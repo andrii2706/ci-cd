@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {BehaviorSubject, Observable} from "rxjs";
-import {FilterParams, Games} from "../models/games.interface";
+import {FilterParams, GameDetails, Games} from "../models/games.interface";
 import {doc, Firestore, getDoc, updateDoc} from "@angular/fire/firestore";
 
 
@@ -55,6 +55,17 @@ export class GamesService {
       {
         params: paramsForFilter,
       })
+  }
+
+  getGameByIdFromBE(id: string): Observable<GameDetails> {
+    const paramsForGameBtId = new HttpParams({
+      fromObject: {
+        key: this.key,
+      },
+    });
+    return this.httpClient.get<GameDetails>(`${this.url}${this.games}/${id}`, {
+      params: paramsForGameBtId,
+    });
   }
 
   private getFilterQueryParameter(filterParams: FilterParams): HttpParams {

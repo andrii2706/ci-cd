@@ -1,44 +1,102 @@
 <section>
-  <div class="user-info">
-    <img class="avatar" src="{{user?.photoURL | replaceNullImg}}" alt="User Icon">
-    <div>
-      <h3>{{user.displayName}}</h3>
-      <p>{{user.email}}</p>
-    </div>
-  </div>
+  @if(user){
+    @if (!updateUserInfoStatus){
+      <div class="user-info">
+        <div>
+          <img class="avatar" src="{{user?.photoURL | replaceNullImg}}" alt="User Icon">
+          <h3>{{user.displayName}}</h3>
+          <p>{{user.email}}</p>
+        </div>
+        <button mat-raised-button (click)="changeUserInfo(true)" >Update your info</button>
+      </div>
+    }@else{
+      <form class="flex-direction-columns form-update" [formGroup]="updateUserInfoForm" >
+        <div class="flex-block user-info-form">
+          <mat-form-field >
+            <mat-label>Name</mat-label>
+            <input type="text" matInput formControlName="email"
+                   placeholder="Enter your name">
+            @if (updateUserInfoForm.hasError('email') && !updateUserInfoForm.hasError('required')) {
+              <mat-error>Please enter a valid email address</mat-error>
+            }
+            @if (updateUserInfoForm.hasError('required')) {
+              <mat-error>Email is <strong>required</strong></mat-error>
+            }
+          </mat-form-field>
+          <mat-form-field >
+            <mat-label>Email</mat-label>
+            <input type="email" matInput formControlName="email"
+                   placeholder="Ex. pat@example.com">
+            @if (updateUserInfoForm.hasError('email') && !updateUserInfoForm.hasError('required')) {
+              <mat-error>Please enter a valid email address</mat-error>
+            }
+            @if (updateUserInfoForm.hasError('required')) {
+              <mat-error>Email is <strong>required</strong></mat-error>
+            }
+          </mat-form-field>
+        </div>
+        <div class="avatar-filed">
+          <div>
+            <input
+              type="file"
+              id="fileInput"
+              (change)="getFile($event)"
+              style="display: none" />
+            <label for="fileInput" class="user-avatar-input-field"
+            >Choose your avatar</label
+            >
+          </div>
+          <div>
+            <img *ngIf="showAvatar" [src]="userAvatar" alt="avatar" />
+            <span *ngIf="!showAvatar" class="avatar-file-name" id="fileName"
+            >Avatar not selected. Please choose your avatar!</span
+            >
+          </div>
+        </div>
+        <button mat-raised-button (click)="submitUpdateUserForm(); changeUserInfo(false)" >Safe your changes</button>
+      </form>
+
+    }
+
+  }
+
+
   <div class="wishList">
-    @for(gameInfo of userGames; track gameInfo.slug){
+    <div>
+      @for(gameInfo of userGames; track gameInfo.slug){
         <div class="game-wishListCard">
           <div>
             <img class="img-card" src="{{ gameInfo.background_image }}" alt="" />
           </div>
-          <div>
+          <div class="flex-block-start game-info">
             <h2>{{ gameInfo.name  }}</h2>
             <p>Original Name: {{ gameInfo.name_original  }}</p>
             <p>Metacritic: {{ gameInfo.metacritic  }}</p>
             <p>Rating: {{ gameInfo.rating  }}</p>
             <p>Release data: {{ gameInfo.released | date }}</p>
             <p>Description: {{ gameInfo.description  }}</p>
-            <div class="buttons">
-              <button
-                mat-raised-button
-                [color]="'primary'"
-                matTooltip="See game details"
-                (click)="goToGame(gameInfo.id)">
-                See game details
-              </button>
-              <button
-                mat-raised-button
-                matTooltip="Delete Game from list"
-                [color]="'primary'"
-                (click)="removeGames(gameInfo)">
-                Delete Game from list
-              </button>
-            </div>
+          </div>
+          <div class="buttons">
+            <button
+              mat-raised-button
+              [color]="'primary'"
+              matTooltip="See game details"
+              (click)="goToGame(gameInfo.id)">
+              See game details
+            </button>
+            <button
+              mat-raised-button
+              matTooltip="Delete Game from list"
+              [color]="'primary'"
+              (click)="removeGames(gameInfo)">
+              Delete Game from list
+            </button>
           </div>
         </div>
-    } @empty {
-      <div> Add your games to wishlist </div>
-    }
+      } @empty {
+        <div> Add your games to wishlist </div>
+      }
+    </div>
   </div>
 </section>
+
