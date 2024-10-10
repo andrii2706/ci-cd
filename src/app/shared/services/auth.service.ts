@@ -36,9 +36,14 @@ export class AuthService {
   changeLoginStatus(status: boolean, userInfo: any) {
     this.loggedInStatus = status;
     localStorage.setItem('loggedIn', `${this.loggedInStatus}`);
-    this.getGameById(userInfo.uid).then((games) => {
-      localStorage.setItem('user', JSON.stringify({...userInfo, games: games.games}));
-    })
+    if(userInfo){
+      this.getGameById(userInfo.uid).then((games) => {
+        localStorage.setItem('user', JSON.stringify({...userInfo, games: games.games}));
+      })
+    }else {
+      localStorage.removeItem('user');
+    }
+
   }
 
   get LoginStatus(): boolean {
@@ -89,8 +94,9 @@ export class AuthService {
 
   logout() {
     return this.afAuth.signOut().then(() => {
-      // Перенаправлення після логауту (наприклад, на сторінку логіну)
       this.router.navigate(['/']);
+      this.proceedUserLoginStatus(false);
+      this.changeLoginStatus(false, null)
     }).catch((error) => {
       console.error('Logout error:', error);
     });
