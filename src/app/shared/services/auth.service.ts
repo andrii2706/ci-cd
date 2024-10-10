@@ -89,8 +89,9 @@ export class AuthService {
 
   logout() {
     return this.afAuth.signOut().then(() => {
-      // Перенаправлення після логауту (наприклад, на сторінку логіну)
       this.router.navigate(['/']);
+      this.proceedUserLoginStatus(false);
+      this.changeLoginStatus(false, null)
     }).catch((error) => {
       console.error('Logout error:', error);
     });
