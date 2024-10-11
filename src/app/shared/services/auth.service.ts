@@ -7,6 +7,7 @@ import GoogleAuthProvider = firebase.auth.GoogleAuthProvider;
 import User = firebase.User;
 import {doc, Firestore, getDoc, setDoc} from "@angular/fire/firestore";
 import {Game} from "../models/games.interface";
+import {Auth, sendPasswordResetEmail} from "@angular/fire/auth";
 
 @Injectable({
   providedIn: 'root'
@@ -23,8 +24,9 @@ export class AuthService {
 
   constructor(
     private afAuth: AngularFireAuth,
+    private fireStore: Firestore,
+    private auth: Auth,
     private router: Router,
-    private fireStore: Firestore
   ) {
   }
 
@@ -129,6 +131,14 @@ export class AuthService {
       return { id: +gameSnapshot.id, ...gameSnapshot.data() } ;
     } else {
       return null;
+    }
+  }
+
+  async forgotPassword(email: string): Promise<void>{
+    try {
+      await sendPasswordResetEmail(this.auth, email)
+    } catch (error){
+      console.error('Error callback')
     }
   }
 
