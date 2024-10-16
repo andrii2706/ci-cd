@@ -44,7 +44,9 @@
           </div>
         </div>
         <div class="games-description">
-          <div [innerHTML]="gameDetails.description" *ngIf="gameDetails"></div>
+          @if(gameDetails){
+            <div [innerHTML]="gameDetails.description"></div>
+          }
           <div>
             <div class="stores-header"><h2>Stores</h2></div>
             <mat-divider></mat-divider>
@@ -129,7 +131,6 @@
                 } @empty {
                   <h3>No developers found</h3>
                 }
-
               </mat-tab>
             </mat-tab-group>
           </div>

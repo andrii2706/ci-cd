@@ -144,6 +144,11 @@
     justify-content: space-around;
     align-items: center;
     padding-top: 40px;
+    flex-direction: row;
+    @media (max-width: 900px) {
+      flex-direction: column;
+      justify-content: center;
+    }
   }
 
   .game-image {
@@ -161,8 +166,12 @@
   color: #1d1d1e;
   font-size: 15px;
   letter-spacing: 1px;
-  max-width: 1200px;
+  width: 75rem;
+  min-height: 80rem ;
   padding: 25px;
+  @media (max-width: 900px) {
+    width: 40rem;
+  }
 
   .tags {
     display: flex;

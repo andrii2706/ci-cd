@@ -58,6 +58,9 @@ section {
 
   > div {
     width: 100%;
+    > div:nth-last-child(odd){
+      padding-bottom: 0rem ;
+    }
   }
 
   h2 {
@@ -91,7 +94,6 @@ section {
     flex-direction: column;
   }
 
-  padding-top: 1rem;
   padding-bottom: 1rem ;
 
   .img-card {
