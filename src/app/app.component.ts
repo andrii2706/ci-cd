@@ -19,16 +19,16 @@ export class AppComponent implements OnInit {
   constructor(private router: Router, private authService: AuthService) {}
 
   ngOnInit() {
-    if (this.authService.LoginStatus) { // Перевірка логіну
-      this.authService.userLoginStatus.next(true); // Оновлюємо статус логіну
+    if (this.authService.LoginStatus) {
+      this.authService.userLoginStatus.next(true);
+      this.router.navigateByUrl('home');
     }
   }
 
   logoutUser() {
-    this.authService.logout().then(() => noop()); // Виклик логауту
+    this.authService.logout().then(() => noop());
   }
-
   goToProfile() {
-    this.router.navigateByUrl('profile'); // Навігація до профілю
+    this.router.navigateByUrl('profile');
   }
 }
