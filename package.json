@@ -25,7 +25,8 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
-    "lint": "ng lint"
+    "lint": "ng lint",
+    "prepare": "husky"
   },
   "private": true,
   "dependencies": {
@@ -56,6 +57,7 @@
     "@types/jest": "^29.5.13",
     "angular-eslint": "18.3.1",
     "eslint": "^9.9.1",
+    "husky": "^9.1.6",
     "jest": "^29.7.0",
     "jest-preset-angular": "^14.2.4",
     "typescript": "~5.5.2",

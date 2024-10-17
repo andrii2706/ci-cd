@@ -7,7 +7,7 @@ import GoogleAuthProvider = firebase.auth.GoogleAuthProvider;
 import User = firebase.User;
 import {doc, Firestore, getDoc, setDoc} from "@angular/fire/firestore";
 import {Game} from "../models/games.interface";
-import {Auth, sendPasswordResetEmail} from "@angular/fire/auth";
+import {Auth, sendPasswordResetEmail, updateEmail, updatePassword, updateProfile} from "@angular/fire/auth";
 
 @Injectable({
   providedIn: 'root'
@@ -92,6 +92,40 @@ export class AuthService {
         }
       }
     );
+  }
+  async updateUserInformation(displayName: string, photoUrl: string): Promise<void>{
+    const user = this.auth.currentUser;
+    if(user){
+      try {
+        await updateProfile(user, {
+          displayName,
+          photoURL: photoUrl
+        })
+      }
+      catch (error){
+        console.error('User info is not updated', error);
+      }
+    }
+  }
+  async updateUserEmailInfo(email:string): Promise<void>{
+    const user = this.auth.currentUser;
+    if(user){
+      try {
+        await updateEmail(user, email)
+      }
+      catch (error){}
+    }
+  }
+  async updateUserPassword(newPassword: string): Promise<void>{
+    const user = this.auth.currentUser;
+    if(user) {
+      try {
+        await updatePassword(user,newPassword)
+      }
+      catch (e) {
+
+      }
+    }
   }
 
   logout() {

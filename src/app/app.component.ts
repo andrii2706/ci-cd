@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {Router, RouterLink, RouterOutlet} from '@angular/router';
+import {NavigationEnd, Router, RouterLink, RouterOutlet} from '@angular/router';
 import {AppMaterialModule} from "./app-material/app-material.module";
 import {AuthService} from "./shared/services/auth.service";
-import {noop} from "rxjs";
+import {filter, noop} from "rxjs";
 
 @Component({
   selector: 'app-root',
@@ -16,12 +16,19 @@ export class AppComponent implements OnInit {
   events: string[] = [];
   opened = false;
 
-  constructor(private router: Router, private authService: AuthService) {}
+  constructor(private router: Router, private authService: AuthService) {
+  }
 
   ngOnInit() {
     if (this.authService.LoginStatus) {
       this.authService.userLoginStatus.next(true);
-      this.router.navigateByUrl('home');
+      this.router.events
+        .pipe(filter((event) => event instanceof NavigationEnd))
+        .subscribe((event: any) => {
+          if(event.url === '/'){
+            this.router.navigate(['home'])
+          }
+        });
     }
   }
 

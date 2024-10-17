@@ -12,9 +12,9 @@
     }@else{
       <form class="flex-direction-columns form-update" [formGroup]="updateUserInfoForm" >
         <div class="flex-block user-info-form">
-          <mat-form-field >
+          <mat-form-field>
             <mat-label>Name</mat-label>
-            <input type="text" matInput formControlName="email"
+            <input type="text" matInput formControlName="displayName"
                    placeholder="Enter your name">
             @if (updateUserInfoForm.hasError('email') && !updateUserInfoForm.hasError('required')) {
               <mat-error>Please enter a valid email address</mat-error>
@@ -23,7 +23,7 @@
               <mat-error>Email is <strong>required</strong></mat-error>
             }
           </mat-form-field>
-          <mat-form-field >
+          <mat-form-field>
             <mat-label>Email</mat-label>
             <input type="email" matInput formControlName="email"
                    placeholder="Ex. pat@example.com">
@@ -47,7 +47,7 @@
             >
           </div>
           <div>
-            <img *ngIf="showAvatar" [src]="userAvatar" alt="avatar" />
+            <img *ngIf="showAvatar" [src]="userAvatar" alt="avatar" class="user-avatar-img" />
             <span *ngIf="!showAvatar" class="avatar-file-name" id="fileName"
             >Avatar not selected. Please choose your avatar!</span
             >

@@ -5,6 +5,7 @@ import {Game} from "../../shared/models/games.interface";
 import {ActivatedRoute, Router} from "@angular/router";
 import {UserInterface} from "../../shared/models/user.interface";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {AuthService} from "../../shared/services/auth.service";
 
 
 
@@ -26,7 +27,7 @@ export class ProfileComponent extends ClearObservableDirective implements OnInit
   private userId: string;
 
 
-  constructor(private gamesService :GamesService, private router: Router, private activatedRoute: ActivatedRoute) {
+  constructor(private gamesService :GamesService, private authService :AuthService, private router: Router, private activatedRoute: ActivatedRoute) {
     super();
   }
 
@@ -62,6 +63,7 @@ export class ProfileComponent extends ClearObservableDirective implements OnInit
   initUpdateForm(){
     this.updateUserInfoForm = new FormGroup({
       displayName: new FormControl('', [Validators.required]),
+      photoUrl: new FormControl('',Validators.required),
       email: new FormControl('', [Validators.required, Validators.email])
     })
   }
@@ -82,6 +84,8 @@ export class ProfileComponent extends ClearObservableDirective implements OnInit
   }
 
   submitUpdateUserForm() {
-    console.log('hello')
+    this.updateUserInfoForm.get('photoUrl')?.setValue(this.userAvatar);
+    this.authService.updateUserInformation(this.updateUserInfoForm.get('displayName')?.value, this.userAvatar).then(() => {});
+    this.authService.updateUserEmailInfo(this.updateUserInfoForm.get('email')?.value).then(() => {})
   }
 }
