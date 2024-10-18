@@ -1,24 +1,30 @@
-@if(!isLoading){
+@if (!isLoading) {
   <section>
     <div class="games-grid">
-      @for(game of games | paginate
-        : { itemsPerPage: 25, currentPage: page, totalItems: total }; track game.name){
-        <app-games-cards [game]="game" [isGameBought]="isGameBoughtStatus" (boughtedGame)="buyGame($event)"></app-games-cards>
+      @for (
+        game of games
+          | paginate
+            : { itemsPerPage: 25, currentPage: page, totalItems: total };
+        track game.name
+      ) {
+        <app-games-cards
+          [game]="game"
+          [isGameBought]="isGameBoughtStatus"
+          (boughtedGame)="buyGame($event)"
+        ></app-games-cards>
       } @empty {
-        <div>
-          Games not come wait a minute
-        </div>
+        <div>Games not come wait a minute</div>
       }
     </div>
     <div class="pagination">
       <div class="pagination-controllers">
         <pagination-controls
           class="pagination"
-          (pageChange)="navigateTo($event)"></pagination-controls>
+          (pageChange)="navigateTo($event)"
+        ></pagination-controls>
       </div>
     </div>
   </section>
 } @else {
   <app-spinner></app-spinner>
 }
-

@@ -1,4 +1,4 @@
-@if(gameInfo){
+@if (gameInfo) {
   <mat-card class="game-card">
     <mat-card-header>
       <mat-card-title>{{ gameInfo.name }}</mat-card-title>
@@ -9,8 +9,9 @@
       height="225px"
       mat-card-image
       src="{{ gameInfo.background_image | replaceNullImg }}"
-      alt="{{ gameInfo.slug }}" />
-    @if (gameInfo.metacritic){
+      alt="{{ gameInfo.slug }}"
+    />
+    @if (gameInfo.metacritic) {
       <div class="metacritic-position">
         {{ gameInfo.metacritic }}
       </div>
@@ -24,7 +25,8 @@
           matTooltip="See game Details"
           class="goToDetails"
           [color]="'primary'"
-          (click)="goToGameDetails()">
+          (click)="goToGameDetails()"
+        >
           To game details
         </button>
         <button
@@ -32,12 +34,13 @@
           mat-raised-button
           [disabled]="showLabel"
           [color]="'primary'"
-          (click)="buyGame(gameInfo)">
+          (click)="buyGame(gameInfo)"
+        >
           <mat-icon>add_shopping_cart</mat-icon>
-          @if (showLabel){
-            <span >Game Has been bought</span>
+          @if (showLabel) {
+            <span>Game Has been bought</span>
           } @else {
-            <span >Push to WishList</span>
+            <span>Push to WishList</span>
           }
         </button>
       </div>

@@ -1,6 +1,6 @@
-import {ComponentFixture, TestBed} from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import {ProfileComponent} from './profile.component';
+import { ProfileComponent } from './profile.component';
 //TODO write unit test
 
 xdescribe('ProfileComponent', () => {
@@ -9,9 +9,8 @@ xdescribe('ProfileComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ProfileComponent]
-    })
-      .compileComponents();
+      imports: [ProfileComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(ProfileComponent);
     component = fixture.componentInstance;

@@ -1,34 +1,40 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%}
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
 
-.flex-direction-columns{
+.flex-direction-columns {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
 }
-.flex-block{
+.flex-block {
   display: flex;
   justify-content: center;
   align-items: center;
 }
-.flex-block-end{
+.flex-block-end {
   display: flex;
   justify-content: flex-end;
   align-items: center;
 }
-.flex-block-between{
+.flex-block-between {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-.gap-1rem{
-  gap:1rem;
+.gap-1rem {
+  gap: 1rem;
 }
-.gap-4rem{
-  gap:4rem;
+.gap-4rem {
+  gap: 4rem;
 }
 .pagination .ngx-pagination .current {
   background: #005cbb;
@@ -60,4 +66,3 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     color: white !important;
   }
 }
-

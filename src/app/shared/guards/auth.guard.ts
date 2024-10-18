@@ -1,8 +1,8 @@
 import { CanActivateFn, Router } from '@angular/router';
-import { AuthService } from "../services/auth.service";
-import { inject } from "@angular/core";
-import { MatSnackBar } from "@angular/material/snack-bar";
-import { SnackbarComponent } from "../components/snackbar/snackbar.component";
+import { AuthService } from '../services/auth.service';
+import { inject } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { SnackbarComponent } from '../components/snackbar/snackbar.component';
 import { map } from 'rxjs/operators';
 
 /* eslint-disable  @typescript-eslint/no-unused-vars */
@@ -18,13 +18,13 @@ export const authGuard: CanActivateFn = (route, state) => {
       } else {
         snackbar.openFromComponent(SnackbarComponent, {
           duration: 5000,
-          data: {text: 'You are not logged in yet.', status: 'error'},
+          data: { text: 'You are not logged in yet.', status: 'error' },
           verticalPosition: 'top',
           horizontalPosition: 'end',
         });
-        router.navigate(['/'])
+        router.navigate(['/']);
         return false;
       }
-    })
+    }),
   );
 };

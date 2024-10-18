@@ -1,6 +1,6 @@
-import {ComponentFixture, TestBed} from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import {GamesDetailsComponent} from './games-details.component';
+import { GamesDetailsComponent } from './games-details.component';
 //TODO write unit test
 
 xdescribe('GamesDetailsComponent', () => {
@@ -9,9 +9,8 @@ xdescribe('GamesDetailsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [GamesDetailsComponent]
-    })
-      .compileComponents();
+      imports: [GamesDetailsComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(GamesDetailsComponent);
     component = fixture.componentInstance;

@@ -1,15 +1,14 @@
-import {Injectable} from '@angular/core';
-import {HttpClient, HttpParams} from "@angular/common/http";
-import {BehaviorSubject, Observable} from "rxjs";
-import {FilterParams, GameDetails, Games} from "../models/games.interface";
-import {doc, Firestore, getDoc, updateDoc} from "@angular/fire/firestore";
-
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { FilterParams, GameDetails, Games } from '../models/games.interface';
+import { doc, Firestore, getDoc, updateDoc } from '@angular/fire/firestore';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class GamesService {
-  key = '85d9905e7cd7443c8983e54b4733abf5'
+  key = '85d9905e7cd7443c8983e54b4733abf5';
   url = 'https://api.rawg.io/api';
   games = '/games';
 
@@ -18,8 +17,10 @@ export class GamesService {
   gamesData = new BehaviorSubject<Games | null>(null);
   private gamesData$: Observable<Games | null> = this.gamesData.asObservable();
 
-  constructor(private httpClient: HttpClient, private fireStore: Firestore) {
-  }
+  constructor(
+    private httpClient: HttpClient,
+    private fireStore: Firestore,
+  ) {}
 
   getLastReleasedGames(page: number, dates: string): Observable<Games> {
     const query = (dates: string) =>
@@ -51,10 +52,12 @@ export class GamesService {
 
   filterGames(page: number, filterParams: FilterParams): Observable<Games> {
     const paramsForFilter = this.getFilterQueryParameter(filterParams);
-    return this.httpClient.get<Games>(`${this.url}${this.games}?key=${this.key}&page=${page}`,
+    return this.httpClient.get<Games>(
+      `${this.url}${this.games}?key=${this.key}&page=${page}`,
       {
         params: paramsForFilter,
-      })
+      },
+    );
   }
 
   getGameByIdFromBE(id: string): Observable<GameDetails> {
@@ -81,7 +84,7 @@ export class GamesService {
   /* eslint-disable  @typescript-eslint/no-explicit-any */
   async updateUserData(userId: string, newData: any) {
     const userRef = doc(this.fireStore, 'userGame', userId);
-    console.log(userRef.id)
+    console.log(userRef.id);
     try {
       await updateDoc(userRef, newData);
     } catch (error) {
@@ -93,7 +96,7 @@ export class GamesService {
     const gameDoc = doc(this.fireStore, 'userGame', id);
     const gameSnapshot = await getDoc(gameDoc);
     if (gameSnapshot.exists()) {
-      return { id: +gameSnapshot.id, ...gameSnapshot.data() } ;
+      return { id: +gameSnapshot.id, ...gameSnapshot.data() };
     } else {
       return null;
     }
@@ -102,5 +105,4 @@ export class GamesService {
   // async removeGameFromUser(userId: string, gameId: string) {
   //
   // }
-
 }

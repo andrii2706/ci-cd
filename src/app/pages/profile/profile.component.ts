@@ -1,20 +1,22 @@
-import {Component, OnInit} from '@angular/core';
-import {ClearObservableDirective} from "../../shared/classes";
-import {GamesService} from "../../shared/services/games.service";
-import {Game} from "../../shared/models/games.interface";
-import {ActivatedRoute, Router} from "@angular/router";
-import {UserInterface} from "../../shared/models/user.interface";
-import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {AuthService} from "../../shared/services/auth.service";
-
-
+import { Component, OnInit } from '@angular/core';
+import { ClearObservableDirective } from '../../shared/classes';
+import { GamesService } from '../../shared/services/games.service';
+import { Game } from '../../shared/models/games.interface';
+import { ActivatedRoute, Router } from '@angular/router';
+import { UserInterface } from '../../shared/models/user.interface';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AuthService } from '../../shared/services/auth.service';
+import { noop } from 'rxjs';
 
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
-  styleUrl: './profile.component.scss'
+  styleUrl: './profile.component.scss',
 })
-export class ProfileComponent extends ClearObservableDirective implements OnInit {
+export class ProfileComponent
+  extends ClearObservableDirective
+  implements OnInit
+{
   updateUserInfoForm: FormGroup;
 
   user: UserInterface;
@@ -26,8 +28,12 @@ export class ProfileComponent extends ClearObservableDirective implements OnInit
   updateUserInfoStatus = false;
   private userId: string;
 
-
-  constructor(private gamesService :GamesService, private authService :AuthService, private router: Router, private activatedRoute: ActivatedRoute) {
+  constructor(
+    private gamesService: GamesService,
+    private authService: AuthService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+  ) {
     super();
   }
 
@@ -36,15 +42,15 @@ export class ProfileComponent extends ClearObservableDirective implements OnInit
     this.initUpdateForm();
   }
 
-  getUser(){
+  getUser() {
     const localUserInfo = localStorage.getItem('user');
-    if(localUserInfo){
-      this.user = JSON.parse(localUserInfo).multiFactor.user
-      if(this.user){
-      this.userId = this.user.uid
-        this.gamesService.getGameById(this.userId).then(userGames => {
+    if (localUserInfo) {
+      this.user = JSON.parse(localUserInfo).multiFactor.user;
+      if (this.user) {
+        this.userId = this.user.uid;
+        this.gamesService.getGameById(this.userId).then((userGames) => {
           this.userGames = userGames.games;
-        })
+        });
       }
     }
   }
@@ -60,12 +66,12 @@ export class ProfileComponent extends ClearObservableDirective implements OnInit
     this.showAvatar = !this.showAvatar;
   }
 
-  initUpdateForm(){
+  initUpdateForm() {
     this.updateUserInfoForm = new FormGroup({
       displayName: new FormControl('', [Validators.required]),
-      photoUrl: new FormControl('',Validators.required),
-      email: new FormControl('', [Validators.required, Validators.email])
-    })
+      photoUrl: new FormControl('', Validators.required),
+      email: new FormControl('', [Validators.required, Validators.email]),
+    });
   }
 
   goToGame(id: number) {
@@ -74,18 +80,24 @@ export class ProfileComponent extends ClearObservableDirective implements OnInit
     });
   }
 
-  changeUserInfo(status: boolean){
-    this.updateUserInfoStatus = status
+  changeUserInfo(status: boolean) {
+    this.updateUserInfoStatus = status;
   }
 
-
   removeGames(gameInfo: Game) {
-    console.log(gameInfo)
+    console.log(gameInfo);
   }
 
   submitUpdateUserForm() {
     this.updateUserInfoForm.get('photoUrl')?.setValue(this.userAvatar);
-    this.authService.updateUserInformation(this.updateUserInfoForm.get('displayName')?.value, this.userAvatar).then(() => {});
-    this.authService.updateUserEmailInfo(this.updateUserInfoForm.get('email')?.value).then(() => {})
+    this.authService
+      .updateUserInformation(
+        this.updateUserInfoForm.get('displayName')?.value,
+        this.userAvatar,
+      )
+      .then(() => {noop();});
+    this.authService
+      .updateUserEmailInfo(this.updateUserInfoForm.get('email')?.value)
+      .then(() => {noop()});
   }
 }

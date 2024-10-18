@@ -1,26 +1,26 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {FormControl, FormGroup} from "@angular/forms";
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import {
   DevelopersFilters,
   FilterParams,
   GenresFilters,
   Metacritics,
   OrderByInfos,
-  PlatformsFilters
-} from "../../../../shared/models/filter.interface";
-import moment from "moment";
+  PlatformsFilters,
+} from '../../../../shared/models/filter.interface';
+import moment from 'moment';
 import {
   developersFilter,
   genresFilter,
   metacriticNumbers,
   orderByInfos,
-  platformsFilter
-} from "../../constants/filter.contants";
+  platformsFilter,
+} from '../../constants/filter.contants';
 
 @Component({
   selector: 'app-games-filter',
   templateUrl: './games-filter.component.html',
-  styleUrl: './games-filter.component.scss'
+  styleUrl: './games-filter.component.scss',
 })
 export class GamesFilterComponent implements OnInit {
   filterForm: FormGroup;

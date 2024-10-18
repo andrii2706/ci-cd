@@ -1,19 +1,19 @@
-import {Component} from '@angular/core';
-import {take} from "rxjs";
-import {SnackbarComponent} from "../snackbar/snackbar.component";
-import {ActivatedRoute} from "@angular/router";
-import {GamesService} from "../../services/games.service";
-import {MatSnackBar} from "@angular/material/snack-bar";
-import {GameDetails} from "../../models/games.interface";
-import {AppMaterialModule} from "../../../app-material/app-material.module";
-import {SpinnerComponent} from "../spinner/spinner.component";
+import { Component } from '@angular/core';
+import { take } from 'rxjs';
+import { SnackbarComponent } from '../snackbar/snackbar.component';
+import { ActivatedRoute } from '@angular/router';
+import { GamesService } from '../../services/games.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { GameDetails } from '../../models/games.interface';
+import { AppMaterialModule } from '../../../app-material/app-material.module';
+import { SpinnerComponent } from '../spinner/spinner.component';
 
 @Component({
   selector: 'app-games-details',
   standalone: true,
   imports: [AppMaterialModule, SpinnerComponent],
   templateUrl: './games-details.component.html',
-  styleUrl: './games-details.component.scss'
+  styleUrl: './games-details.component.scss',
 })
 export class GamesDetailsComponent {
   isLoading = false;
@@ -23,7 +23,7 @@ export class GamesDetailsComponent {
   constructor(
     private activatedRoute: ActivatedRoute,
     private gamesService: GamesService,
-    private snackbar: MatSnackBar
+    private snackbar: MatSnackBar,
   ) {
     this.activatedRoute.params.pipe(take(1)).subscribe(
       ({ id }) => {
@@ -36,7 +36,7 @@ export class GamesDetailsComponent {
           verticalPosition: 'top',
           horizontalPosition: 'end',
         });
-      }
+      },
     );
   }
   gameDetailsById(id: string) {

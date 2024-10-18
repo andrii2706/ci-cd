@@ -3,13 +3,13 @@ import { GamesComponent } from './games.component';
 import { GamesService } from '../../shared/services/games.service';
 import { of } from 'rxjs';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import {Game } from "../../shared/models/games.interface";
-import {NgxPaginationModule } from "ngx-pagination";
+import { Game } from '../../shared/models/games.interface';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 describe('GamesComponent', () => {
   let component: GamesComponent;
   let fixture: ComponentFixture<GamesComponent>;
-  let service: GamesService
+  let service: GamesService;
   /* eslint-disable  @typescript-eslint/no-explicit-any */
 
   let mockGamesService: any;
@@ -26,10 +26,10 @@ describe('GamesComponent', () => {
     };
 
     await TestBed.configureTestingModule({
-      declarations: [GamesComponent ],
+      declarations: [GamesComponent],
       imports: [NgxPaginationModule],
       providers: [{ provide: GamesService, useValue: mockGamesService }],
-      schemas: [NO_ERRORS_SCHEMA] // To ignore child components for this test
+      schemas: [NO_ERRORS_SCHEMA], // To ignore child components for this test
     }).compileComponents();
 
     fixture = TestBed.createComponent(GamesComponent);
@@ -74,7 +74,7 @@ describe('GamesComponent', () => {
       developers: '',
       ordering: '',
       dates: '',
-      metacritic: ''
+      metacritic: '',
     };
 
     component.getFilterQuery(filterParams);
@@ -89,7 +89,7 @@ describe('GamesComponent', () => {
       developers: '',
       ordering: '',
       dates: '',
-      metacritic: ''
+      metacritic: '',
     };
 
     component.getFilterQuery(emptyFilterParams);
@@ -97,7 +97,15 @@ describe('GamesComponent', () => {
   });
 
   xit('should navigate to a page and load filtered games', () => {
-    const filterParams = { search: 'test', genres: '', platforms: '', developers: '', ordering: '', dates: '', metacritic: '' };
+    const filterParams = {
+      search: 'test',
+      genres: '',
+      platforms: '',
+      developers: '',
+      ordering: '',
+      dates: '',
+      metacritic: '',
+    };
     component.filterParams = filterParams;
     component.navigateTo(2);
 

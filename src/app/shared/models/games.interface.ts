@@ -49,7 +49,7 @@ export interface GameDetails {
       slug: string;
       games_count: number;
       image_background: string;
-    }
+    },
   ];
   metacritic: number;
   metacritic_platforms: [
@@ -59,7 +59,7 @@ export interface GameDetails {
       platform: {
         name: string;
       };
-    }
+    },
   ];
   released: string;
   tba: boolean;
@@ -75,7 +75,7 @@ export interface GameDetails {
       title: string;
       count: number;
       percent: number;
-    }
+    },
   ];
   //TODO change to index interface (look into DAE)
   reactions: {
@@ -114,7 +114,7 @@ export interface GameDetails {
         minimum: string;
         recommended: string;
       };
-    }
+    },
   ];
   genres: [
     {
@@ -122,7 +122,7 @@ export interface GameDetails {
       name: string;
       slug: string;
       image_background: string;
-    }
+    },
   ];
   stores: [
     {
@@ -134,7 +134,7 @@ export interface GameDetails {
         domain: string;
         image_background: string;
       };
-    }
+    },
   ];
   tags: [
     {
@@ -144,7 +144,7 @@ export interface GameDetails {
       language: string;
       image_background: string;
       games_count: number;
-    }
+    },
   ];
 }
 
@@ -157,7 +157,7 @@ export interface ScreenShots {
       id: number;
       image: string;
       is_deleted: boolean;
-    }
+    },
   ];
 }
 
@@ -180,7 +180,7 @@ export interface GameTrailers {
         480: string;
         max: string;
       };
-    }
+    },
   ];
 }
 
@@ -202,7 +202,7 @@ export interface IAchivments {
       description: string;
       image: string;
       percent: string;
-    }
+    },
   ];
 }
 
@@ -214,4 +214,3 @@ export interface FilterParams {
   developers: string;
   dates: string;
 }
-

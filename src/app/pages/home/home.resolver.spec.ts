@@ -1,7 +1,7 @@
-import {TestBed} from '@angular/core/testing';
-import {ResolveFn} from '@angular/router';
+import { TestBed } from '@angular/core/testing';
+import { ResolveFn } from '@angular/router';
 
-import {homeResolver} from './home.resolver';
+import { homeResolver } from './home.resolver';
 //TODO write unit test
 
 xdescribe('homeResolver', () => {

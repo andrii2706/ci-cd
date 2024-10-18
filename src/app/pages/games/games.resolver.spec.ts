@@ -1,7 +1,7 @@
-import {TestBed} from '@angular/core/testing';
-import {ResolveFn} from '@angular/router';
+import { TestBed } from '@angular/core/testing';
+import { ResolveFn } from '@angular/router';
 
-import {gamesResolver} from './games.resolver';
+import { gamesResolver } from './games.resolver';
 
 describe('gamesResolver', () => {
   const executeResolver: ResolveFn<boolean> = (...resolverParameters) =>
