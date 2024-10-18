@@ -22,14 +22,14 @@ export class GamesComponent extends ClearObservableDirective implements OnInit {
 
   constructor(
     private cdr: ChangeDetectorRef,
-    private gamesService: GamesService,
+    private gamesService: GamesService
   ) {
     super();
   }
 
   ngOnInit() {
     this.isLoading = true;
-    this.gamesService.gamesData.pipe(take(1)).subscribe((games) => {
+    this.gamesService.gamesData.pipe(take(1)).subscribe(games => {
       if (games) {
         this.games = games?.results;
         this.total = games.count;
@@ -43,7 +43,7 @@ export class GamesComponent extends ClearObservableDirective implements OnInit {
     this.gamesService
       .getAllGames(page)
       .pipe(takeUntil(this.destroy$))
-      .subscribe((games) => {
+      .subscribe(games => {
         this.games = games.results;
         this.cdr.detectChanges();
       });
@@ -67,11 +67,11 @@ export class GamesComponent extends ClearObservableDirective implements OnInit {
     const userInfo = localStorage.getItem('user');
     if (userInfo && userInfo.length) {
       const user = JSON.parse(userInfo);
-      this.gamesService.getGameById(user.multiFactor.user.uid).then((games) => {
+      this.gamesService.getGameById(user.multiFactor.user.uid).then(games => {
         if (games.games && games.games.length) {
           const gamesId = user.games.map((game: Game) => game.id);
           this.isGameBoughtStatus = games.games?.filter(
-            (game: Game, index: number) => game.id === gamesId[index],
+            (game: Game, index: number) => game.id === gamesId[index]
           );
         }
       });
@@ -117,9 +117,9 @@ export class GamesComponent extends ClearObservableDirective implements OnInit {
         takeUntil(this.destroy$),
         finalize(() => {
           this.isLoading = false;
-        }),
+        })
       )
-      .subscribe((games) => {
+      .subscribe(games => {
         this.totalGames = games.count;
         this.games = games.results;
         this.isLoading = false;

@@ -19,7 +19,7 @@ export class GamesService {
 
   constructor(
     private httpClient: HttpClient,
-    private fireStore: Firestore,
+    private fireStore: Firestore
   ) {}
 
   getLastReleasedGames(page: number, dates: string): Observable<Games> {
@@ -56,7 +56,7 @@ export class GamesService {
       `${this.url}${this.games}?key=${this.key}&page=${page}`,
       {
         params: paramsForFilter,
-      },
+      }
     );
   }
 

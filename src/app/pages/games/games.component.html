@@ -20,8 +20,7 @@
         <app-games-cards
           [game]="game"
           [isGameBought]="isGameBoughtStatus"
-          (boughtedGame)="buyGame($event)"
-        ></app-games-cards>
+          (boughtedGame)="buyGame($event)"></app-games-cards>
       } @empty {
         <div>Games not come wait a minute</div>
       }
@@ -30,8 +29,7 @@
       <div class="pagination-controllers">
         <pagination-controls
           class="pagination"
-          (pageChange)="navigateTo($event)"
-        ></pagination-controls>
+          (pageChange)="navigateTo($event)"></pagination-controls>
       </div>
     </div>
   } @else {

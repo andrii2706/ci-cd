@@ -33,14 +33,14 @@ export class HomeComponent extends ClearObservableDirective implements OnInit {
 
   constructor(
     private gamesService: GamesService,
-    private cdr: ChangeDetectorRef,
+    private cdr: ChangeDetectorRef
   ) {
     super();
   }
 
   ngOnInit() {
     this.isLoading = true;
-    this.gamesService.newGames.subscribe((games) => {
+    this.gamesService.newGames.subscribe(games => {
       if (games) {
         this.total = games.count;
         this.games = games.results;
@@ -60,7 +60,7 @@ export class HomeComponent extends ClearObservableDirective implements OnInit {
     this.gamesService
       .getLastReleasedGames(page, this.dates)
       .pipe(takeUntil(this.destroy$))
-      .subscribe((games) => {
+      .subscribe(games => {
         this.total = games.count;
         this.games = games.results;
       });
@@ -83,11 +83,11 @@ export class HomeComponent extends ClearObservableDirective implements OnInit {
     const userInfo = localStorage.getItem('user');
     if (userInfo && userInfo.length) {
       const user = JSON.parse(userInfo);
-      this.gamesService.getGameById(user.multiFactor.user.uid).then((games) => {
+      this.gamesService.getGameById(user.multiFactor.user.uid).then(games => {
         if (games.games && games.games.length) {
           const gamesId = user.games.map((game: Game) => game.id);
           this.isGameBoughtStatus = games.games.filter(
-            (game: Game, index: number) => game.id === gamesId[index],
+            (game: Game, index: number) => game.id === gamesId[index]
           );
         }
       });

@@ -8,8 +8,7 @@
           matTooltip="Previous page"
           mat-flat-button
           [color]="'primary'"
-          (click)="backButton()"
-        >
+          (click)="backButton()">
           <mat-icon>arrow_back</mat-icon>
         </button>
       </div>
@@ -24,8 +23,7 @@
             <img
               src="{{ gameDetails.background_image }}"
               alt="Image Poster"
-              width="450px"
-            />
+              width="450px" />
           </div>
           <div class="game-name">
             <h1>{{ gameDetails.name_original }}</h1>
@@ -78,8 +76,7 @@
                   <div class="tags">
                     <img
                       src="{{ tag.image_background }}"
-                      alt="{{ tag.name }}"
-                    />
+                      alt="{{ tag.name }}" />
                     <h2>{{ tag.name }}</h2>
                     <span>games on this tag --- {{ tag.games_count }}</span>
                   </div>
@@ -122,8 +119,7 @@
                   <div class="platforms">
                     <img
                       src="{{ pm.platform.image_background }}"
-                      alt="{{ pm.platform.name }}"
-                    />
+                      alt="{{ pm.platform.name }}" />
                     <h2>{{ pm.platform.name }}</h2>
                     <span
                       >games on this platform ---
@@ -145,8 +141,7 @@
                   <div>
                     <img
                       src="{{ developer.image_background }}"
-                      alt="{{ developer.name }}"
-                    />
+                      alt="{{ developer.name }}" />
                     <h2>{{ developer.name }}</h2>
                   </div>
                 } @empty {

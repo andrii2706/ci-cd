@@ -5,8 +5,7 @@
       <mat-select
         formControlName="developers"
         placeholder="Developers"
-        [value]="''"
-      >
+        [value]="''">
         @for (developer of developers; track developer.slug) {
           <mat-option [value]="developer.slug">
             {{ developer.developersName }}
@@ -27,8 +26,7 @@
       <mat-select
         formControlName="platforms"
         placeholder="Platforms"
-        [value]="''"
-      >
+        [value]="''">
         @for (platform of platforms; track platform.slug) {
           <mat-option [value]="platform.slug">{{
             platform.platformsName
@@ -41,8 +39,7 @@
       <mat-select
         formControlName="ordering"
         placeholder="Order By"
-        [value]="''"
-      >
+        [value]="''">
         @for (orderByInfo of orderByInfos; track orderByInfo.slug) {
           <mat-option [value]="orderByInfo.slug">{{
             orderByInfo.name
@@ -55,8 +52,7 @@
       <mat-select
         formControlName="metacritic"
         placeholder="Metacritic"
-        [value]="''"
-      >
+        [value]="''">
         @for (metacritic of metacritics; track metacritic.slug) {
           <mat-option [value]="metacritic.slug">{{
             metacritic.name
@@ -70,16 +66,14 @@
         formControlName="search"
         type="text"
         matInput
-        autocomplete="false"
-      />
+        autocomplete="false" />
     </mat-form-field>
     <button
       mat-button
       matTooltip="Last released games"
       mat-flat-button
       [color]="'primary'"
-      (click)="lastGames()"
-    >
+      (click)="lastGames()">
       Last released games
     </button>
   </form>
@@ -87,8 +81,7 @@
     <button
       matTooltip="Clear Filters"
       mat-icon-button
-      (click)="clearFilterForm()"
-    >
+      (click)="clearFilterForm()">
       <mat-icon>delete</mat-icon>
     </button>
   </div>

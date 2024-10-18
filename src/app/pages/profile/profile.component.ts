@@ -32,7 +32,7 @@ export class ProfileComponent
     private gamesService: GamesService,
     private authService: AuthService,
     private router: Router,
-    private activatedRoute: ActivatedRoute,
+    private activatedRoute: ActivatedRoute
   ) {
     super();
   }
@@ -48,7 +48,7 @@ export class ProfileComponent
       this.user = JSON.parse(localUserInfo).multiFactor.user;
       if (this.user) {
         this.userId = this.user.uid;
-        this.gamesService.getGameById(this.userId).then((userGames) => {
+        this.gamesService.getGameById(this.userId).then(userGames => {
           this.userGames = userGames.games;
         });
       }
@@ -93,11 +93,15 @@ export class ProfileComponent
     this.authService
       .updateUserInformation(
         this.updateUserInfoForm.get('displayName')?.value,
-        this.userAvatar,
+        this.userAvatar
       )
-      .then(() => {noop();});
+      .then(() => {
+        noop();
+      });
     this.authService
       .updateUserEmailInfo(this.updateUserInfoForm.get('email')?.value)
-      .then(() => {noop()});
+      .then(() => {
+        noop();
+      });
   }
 }

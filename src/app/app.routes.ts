@@ -8,7 +8,7 @@ export const routes: Routes = [
   {
     path: '',
     loadChildren: () =>
-      import('./pages/auth/auth.module').then((m) => m.AuthModule),
+      import('./pages/auth/auth.module').then(m => m.AuthModule),
     title: 'Auth',
   },
   {
@@ -21,7 +21,7 @@ export const routes: Routes = [
   {
     path: 'games',
     loadChildren: () =>
-      import('./pages/games/games.module').then((m) => m.GamesModule),
+      import('./pages/games/games.module').then(m => m.GamesModule),
     title: 'Games',
     canActivate: [authGuard],
     resolve: { games: gamesResolver },
@@ -29,7 +29,7 @@ export const routes: Routes = [
   {
     path: 'profile',
     loadChildren: () =>
-      import('./pages/profile/profile.module').then((m) => m.ProfileModule),
+      import('./pages/profile/profile.module').then(m => m.ProfileModule),
     title: 'Profile',
     canActivate: [authGuard],
   },

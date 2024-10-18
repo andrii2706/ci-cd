@@ -6,8 +6,7 @@
           <img
             class="avatar"
             src="{{ user?.photoURL | replaceNullImg }}"
-            alt="User Icon"
-          />
+            alt="User Icon" />
           <h3>{{ user.displayName }}</h3>
           <p>{{ user.email }}</p>
         </div>
@@ -18,8 +17,7 @@
     } @else {
       <form
         class="flex-direction-columns form-update"
-        [formGroup]="updateUserInfoForm"
-      >
+        [formGroup]="updateUserInfoForm">
         <div class="flex-block user-info-form">
           <mat-form-field>
             <mat-label>Name</mat-label>
@@ -27,15 +25,14 @@
               type="text"
               matInput
               formControlName="displayName"
-              placeholder="Enter your name"
-            />
+              placeholder="Enter your name" />
             @if (
-              updateUserInfoForm.hasError("email") &&
-              !updateUserInfoForm.hasError("required")
+              updateUserInfoForm.hasError('email') &&
+              !updateUserInfoForm.hasError('required')
             ) {
               <mat-error>Please enter a valid email address</mat-error>
             }
-            @if (updateUserInfoForm.hasError("required")) {
+            @if (updateUserInfoForm.hasError('required')) {
               <mat-error>Email is <strong>required</strong></mat-error>
             }
           </mat-form-field>
@@ -45,15 +42,14 @@
               type="email"
               matInput
               formControlName="email"
-              placeholder="Ex. pat@example.com"
-            />
+              placeholder="Ex. pat@example.com" />
             @if (
-              updateUserInfoForm.hasError("email") &&
-              !updateUserInfoForm.hasError("required")
+              updateUserInfoForm.hasError('email') &&
+              !updateUserInfoForm.hasError('required')
             ) {
               <mat-error>Please enter a valid email address</mat-error>
             }
-            @if (updateUserInfoForm.hasError("required")) {
+            @if (updateUserInfoForm.hasError('required')) {
               <mat-error>Email is <strong>required</strong></mat-error>
             }
           </mat-form-field>
@@ -64,8 +60,7 @@
               type="file"
               id="fileInput"
               (change)="getFile($event)"
-              style="display: none"
-            />
+              style="display: none" />
             <label for="fileInput" class="user-avatar-input-field"
               >Choose your avatar</label
             >
@@ -75,8 +70,7 @@
               *ngIf="showAvatar"
               [src]="userAvatar"
               alt="avatar"
-              class="user-avatar-img"
-            />
+              class="user-avatar-img" />
             <span *ngIf="!showAvatar" class="avatar-file-name" id="fileName"
               >Avatar not selected. Please choose your avatar!</span
             >
@@ -84,8 +78,7 @@
         </div>
         <button
           mat-raised-button
-          (click)="submitUpdateUserForm(); changeUserInfo(false)"
-        >
+          (click)="submitUpdateUserForm(); changeUserInfo(false)">
           Safe your changes
         </button>
       </form>
@@ -100,8 +93,7 @@
             <img
               class="img-card"
               src="{{ gameInfo.background_image }}"
-              alt=""
-            />
+              alt="" />
           </div>
           <div class="flex-block-start game-info">
             <h2>{{ gameInfo.name }}</h2>
@@ -116,16 +108,14 @@
               mat-raised-button
               [color]="'primary'"
               matTooltip="See game details"
-              (click)="goToGame(gameInfo.id)"
-            >
+              (click)="goToGame(gameInfo.id)">
               See game details
             </button>
             <button
               mat-raised-button
               matTooltip="Delete Game from list"
               [color]="'primary'"
-              (click)="removeGames(gameInfo)"
-            >
+              (click)="removeGames(gameInfo)">
               Delete Game from list
             </button>
           </div>

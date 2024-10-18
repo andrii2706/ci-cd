@@ -12,7 +12,7 @@ export const authGuard: CanActivateFn = (route, state) => {
   const router = inject(Router);
 
   return authService.userLoginStatus.pipe(
-    map((status) => {
+    map(status => {
       if (status) {
         return true;
       } else {
@@ -25,6 +25,6 @@ export const authGuard: CanActivateFn = (route, state) => {
         router.navigate(['/']);
         return false;
       }
-    }),
+    })
   );
 };

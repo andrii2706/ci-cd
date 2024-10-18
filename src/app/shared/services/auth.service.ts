@@ -33,7 +33,7 @@ export class AuthService {
     private afAuth: AngularFireAuth,
     private fireStore: Firestore,
     private auth: Auth,
-    private router: Router,
+    private router: Router
   ) {}
 
   setLoginStatus(value: boolean) {
@@ -45,10 +45,10 @@ export class AuthService {
     this.loggedInStatus = status;
     localStorage.setItem('loggedIn', `${this.loggedInStatus}`);
     if (userInfo) {
-      this.getGameById(userInfo.uid).then((games) => {
+      this.getGameById(userInfo.uid).then(games => {
         localStorage.setItem(
           'user',
-          JSON.stringify({ ...userInfo, games: games.games }),
+          JSON.stringify({ ...userInfo, games: games.games })
         );
       });
     } else {
@@ -58,7 +58,7 @@ export class AuthService {
 
   get LoginStatus(): boolean {
     return JSON.parse(
-      localStorage.getItem('loggedIn') || this.loggedInStatus.toString(),
+      localStorage.getItem('loggedIn') || this.loggedInStatus.toString()
     );
   }
   proceedUserLoginStatus(status: boolean) {
@@ -66,7 +66,7 @@ export class AuthService {
   }
 
   googleLogin() {
-    this.afAuth.signInWithPopup(new GoogleAuthProvider()).then((userInfo) => {
+    this.afAuth.signInWithPopup(new GoogleAuthProvider()).then(userInfo => {
       this.changeLoginStatus(true, userInfo.user);
       this.proceedUserLoginStatus(true);
       this.userLoggingWithFireBase.next(userInfo.user);
@@ -76,13 +76,13 @@ export class AuthService {
   loginWithCredentials(email: string, password: string) {
     return this.afAuth
       .signInWithEmailAndPassword(email, password)
-      .then((userInfo) => {
+      .then(userInfo => {
         this.changeLoginStatus(true, userInfo.user);
         this.userLoggingWithFireBase.next(userInfo.user);
         this.proceedUserLoginStatus(true);
         this.router.navigate(['/home']);
       })
-      .catch((err) => {
+      .catch(err => {
         console.error('Помилка під час входу:', err);
       });
   }
@@ -90,7 +90,7 @@ export class AuthService {
   signInWithCredentials(email: string, password: string) {
     this.afAuth
       .createUserWithEmailAndPassword(email, password)
-      .then((userInfo) => {
+      .then(userInfo => {
         this.changeLoginStatus(true, userInfo.user);
         this.userLoggingWithFireBase.next(userInfo.user);
         this.proceedUserLoginStatus(true);
@@ -101,7 +101,7 @@ export class AuthService {
   }
   async updateUserInformation(
     displayName: string,
-    photoUrl: string,
+    photoUrl: string
   ): Promise<void> {
     const user = this.auth.currentUser;
     if (user) {
@@ -120,7 +120,9 @@ export class AuthService {
     if (user) {
       try {
         await updateEmail(user, email);
-      } catch (error) {console.error(error)}
+      } catch (error) {
+        console.error(error);
+      }
     }
   }
   async updateUserPassword(newPassword: string): Promise<void> {
@@ -128,7 +130,9 @@ export class AuthService {
     if (user) {
       try {
         await updatePassword(user, newPassword);
-      } catch (e) {console.error(e)}
+      } catch (e) {
+        console.error(e);
+      }
     }
   }
 
@@ -140,7 +144,7 @@ export class AuthService {
         this.proceedUserLoginStatus(false);
         this.changeLoginStatus(false, null);
       })
-      .catch((error) => {
+      .catch(error => {
         console.error('Logout error:', error);
       });
   }

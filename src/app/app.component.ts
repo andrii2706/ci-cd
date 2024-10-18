@@ -22,14 +22,14 @@ export class AppComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private authService: AuthService,
+    private authService: AuthService
   ) {}
 
   ngOnInit() {
     if (this.authService.LoginStatus) {
       this.authService.userLoginStatus.next(true);
       this.router.events
-        .pipe(filter((event) => event instanceof NavigationEnd))
+        .pipe(filter(event => event instanceof NavigationEnd))
         /* eslint-disable  @typescript-eslint/no-explicit-any */
         .subscribe((event: any) => {
           if (event.url === '/') {

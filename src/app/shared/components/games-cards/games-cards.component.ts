@@ -27,7 +27,7 @@ export class GamesCardsComponent implements OnInit {
   userStatus: boolean;
 
   @Input() set isGameBought(_isGameBought: Game[]) {
-    _isGameBought.map((gameBoughted) => {
+    _isGameBought.map(gameBoughted => {
       if (gameBoughted.id === this.gameInfo.id) {
         this.showLabel = true;
       }
@@ -37,7 +37,7 @@ export class GamesCardsComponent implements OnInit {
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private snackBar: MatSnackBar,
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit() {

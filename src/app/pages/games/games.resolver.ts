@@ -10,9 +10,9 @@ export const gamesResolver: ResolveFn<any> = (route, state) => {
   const gamesService = inject(GamesService);
 
   const games = gamesService.getAllGames(1).pipe(
-    map((games) => {
+    map(games => {
       return gamesService.gamesData.next(games);
-    }),
+    })
   );
   return games;
 };

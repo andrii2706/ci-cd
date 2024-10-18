@@ -17,9 +17,9 @@ export const homeResolver: ResolveFn<any> = (route, state) => {
     .format('YYYY-MM-DD');
   const dates = `${firstYearDay},${lastYearDay}`;
   const games = gamesService.getLastReleasedGames(1, dates).pipe(
-    map((games) => {
+    map(games => {
       return gamesService.newGames.next(games);
-    }),
+    })
   );
   return games;
 };

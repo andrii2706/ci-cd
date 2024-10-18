@@ -3,8 +3,7 @@
     mat-icon-button
     class="example-icon"
     aria-label="Example icon-button with menu icon"
-    (click)="sidenav.toggle()"
-  >
+    (click)="sidenav.toggle()">
     <mat-icon>menu</mat-icon>
   </button>
   <span>My App</span>
@@ -22,8 +21,7 @@
     mode="side"
     [(opened)]="opened"
     (opened)="events.push('open!')"
-    (closed)="events.push('close!')"
-  >
+    (closed)="events.push('close!')">
     <mat-nav-list class="sidenav">
       <mat-list-item class="listItem" routerLink="home">
         <mat-icon matListItemIcon>home</mat-icon>

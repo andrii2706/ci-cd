@@ -23,7 +23,7 @@ export class GamesDetailsComponent {
   constructor(
     private activatedRoute: ActivatedRoute,
     private gamesService: GamesService,
-    private snackbar: MatSnackBar,
+    private snackbar: MatSnackBar
   ) {
     this.activatedRoute.params.pipe(take(1)).subscribe(
       ({ id }) => {
@@ -36,14 +36,14 @@ export class GamesDetailsComponent {
           verticalPosition: 'top',
           horizontalPosition: 'end',
         });
-      },
+      }
     );
   }
   gameDetailsById(id: string) {
     this.gamesService
       .getGameByIdFromBE(id)
       .pipe(take(1))
-      .subscribe((gameDetails) => {
+      .subscribe(gameDetails => {
         this.gameDetails = gameDetails;
       });
   }
