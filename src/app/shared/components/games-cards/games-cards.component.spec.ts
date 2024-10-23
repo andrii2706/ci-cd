@@ -4,20 +4,20 @@ import { GamesCardsComponent } from './games-cards.component';
 //TODO write unit test
 
 xdescribe('GamesCardsComponent', () => {
-  let component: GamesCardsComponent;
-  let fixture: ComponentFixture<GamesCardsComponent>;
+	let component: GamesCardsComponent;
+	let fixture: ComponentFixture<GamesCardsComponent>;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [GamesCardsComponent],
-    }).compileComponents();
+	beforeEach(async () => {
+		await TestBed.configureTestingModule({
+			imports: [GamesCardsComponent],
+		}).compileComponents();
 
-    fixture = TestBed.createComponent(GamesCardsComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+		fixture = TestBed.createComponent(GamesCardsComponent);
+		component = fixture.componentInstance;
+		fixture.detectChanges();
+	});
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+	it('should create', () => {
+		expect(component).toBeTruthy();
+	});
 });

@@ -4,18 +4,18 @@ import { GamesComponent } from './games.component';
 import { GamesDetailsComponent } from '../../shared/components/games-details/games-details.component';
 
 const routes: Routes = [
-  {
-    path: '',
-    component: GamesComponent,
-  },
-  {
-    path: ':id',
-    component: GamesDetailsComponent,
-  },
+	{
+		path: '',
+		component: GamesComponent,
+	},
+	{
+		path: ':id',
+		component: GamesDetailsComponent,
+	},
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule],
+	imports: [RouterModule.forChild(routes)],
+	exports: [RouterModule],
 })
 export class GamesRoutingModule {}

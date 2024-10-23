@@ -5,14 +5,14 @@ import { authGuard } from './auth.guard';
 //TODO write unit test
 
 xdescribe('authGuard', () => {
-  const executeGuard: CanActivateFn = (...guardParameters) =>
-    TestBed.runInInjectionContext(() => authGuard(...guardParameters));
+	const executeGuard: CanActivateFn = (...guardParameters) =>
+		TestBed.runInInjectionContext(() => authGuard(...guardParameters));
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({});
-  });
+	beforeEach(() => {
+		TestBed.configureTestingModule({});
+	});
 
-  it('should be created', () => {
-    expect(executeGuard).toBeTruthy();
-  });
+	it('should be created', () => {
+		expect(executeGuard).toBeTruthy();
+	});
 });

@@ -3,10 +3,10 @@ import { Subject } from 'rxjs';
 
 @Directive({ selector: '[appObservableClear]', standalone: true })
 export class ClearObservableDirective implements OnDestroy {
-  destroy$ = new Subject<boolean>();
+	destroy$ = new Subject<boolean>();
 
-  ngOnDestroy(): void {
-    this.destroy$.next(true);
-    this.destroy$.complete();
-  }
+	ngOnDestroy(): void {
+		this.destroy$.next(true);
+		this.destroy$.complete();
+	}
 }

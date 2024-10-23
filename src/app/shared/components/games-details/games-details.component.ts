@@ -9,46 +9,47 @@ import { AppMaterialModule } from '../../../app-material/app-material.module';
 import { SpinnerComponent } from '../spinner/spinner.component';
 
 @Component({
-  selector: 'app-games-details',
-  standalone: true,
-  imports: [AppMaterialModule, SpinnerComponent],
-  templateUrl: './games-details.component.html',
-  styleUrl: './games-details.component.scss',
+	selector: 'app-games-details',
+	standalone: true,
+	imports: [AppMaterialModule, SpinnerComponent],
+	templateUrl: './games-details.component.html',
+	styleUrl: './games-details.component.scss',
 })
 export class GamesDetailsComponent {
-  isLoading = false;
-  gameDetails: GameDetails;
-  games: GameDetails[];
+	isLoading = false;
+	gameDetails: GameDetails;
+	games: GameDetails[];
 
-  constructor(
-    private activatedRoute: ActivatedRoute,
-    private gamesService: GamesService,
-    private snackbar: MatSnackBar
-  ) {
-    this.activatedRoute.params.pipe(take(1)).subscribe(
-      ({ id }) => {
-        this.gameDetailsById(id);
-      },
-      () => {
-        this.isLoading = true;
-        this.snackbar.openFromComponent(SnackbarComponent, {
-          data: 'Server is out',
-          verticalPosition: 'top',
-          horizontalPosition: 'end',
-        });
-      }
-    );
-  }
-  gameDetailsById(id: string) {
-    this.gamesService
-      .getGameByIdFromBE(id)
-      .pipe(take(1))
-      .subscribe(gameDetails => {
-        this.gameDetails = gameDetails;
-      });
-  }
+	constructor(
+		private activatedRoute: ActivatedRoute,
+		private gamesService: GamesService,
+		private snackbar: MatSnackBar
+	) {
+		this.activatedRoute.params.pipe(take(1)).subscribe(
+			({ id }) => {
+				this.gameDetailsById(id);
+			},
+			() => {
+				this.isLoading = true;
+				this.snackbar.openFromComponent(SnackbarComponent, {
+					data: 'Server is out',
+					verticalPosition: 'top',
+					horizontalPosition: 'end',
+				});
+			}
+		);
+	}
 
-  backButton() {
-    history.back();
-  }
+	gameDetailsById(id: string) {
+		this.gamesService
+			.getGameByIdFromBE(id)
+			.pipe(take(1))
+			.subscribe(gameDetails => {
+				this.gameDetails = gameDetails;
+			});
+	}
+
+	backButton() {
+		history.back();
+	}
 }

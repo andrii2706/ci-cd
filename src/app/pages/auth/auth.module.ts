@@ -6,13 +6,13 @@ import { AppMaterialModule } from '../../app-material/app-material.module';
 import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
-  declarations: [AuthComponent],
-  imports: [
-    AppMaterialModule,
-    CommonModule,
-    AuthRouterModule,
-    ReactiveFormsModule,
-    NgOptimizedImage,
-  ],
+	declarations: [AuthComponent],
+	imports: [
+		AppMaterialModule,
+		CommonModule,
+		AuthRouterModule,
+		ReactiveFormsModule,
+		NgOptimizedImage,
+	],
 })
 export class AuthModule {}

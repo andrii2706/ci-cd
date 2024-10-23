@@ -7,67 +7,67 @@ import { SnackbarComponent } from '../snackbar/snackbar.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
-  selector: 'app-games-cards',
-  standalone: true,
-  imports: [AppMaterialModule, ReplaceNullImgPipe],
-  templateUrl: './games-cards.component.html',
-  styleUrl: './games-cards.component.scss',
+	selector: 'app-games-cards',
+	standalone: true,
+	imports: [AppMaterialModule, ReplaceNullImgPipe],
+	templateUrl: './games-cards.component.html',
+	styleUrl: './games-cards.component.scss',
 })
 export class GamesCardsComponent implements OnInit {
-  @Input() set game(_game: Game) {
-    if (_game) {
-      this.gameInfo = _game;
-    }
-  }
+	@Input() set game(_game: Game) {
+		if (_game) {
+			this.gameInfo = _game;
+		}
+	}
 
-  @Output() boughtedGame = new EventEmitter<Game>();
+	@Output() boughtedGame = new EventEmitter<Game>();
 
-  gameInfo: Game;
-  showLabel: boolean;
-  userStatus: boolean;
+	gameInfo: Game;
+	showLabel: boolean;
+	userStatus: boolean;
 
-  @Input() set isGameBought(_isGameBought: Game[]) {
-    _isGameBought.map(gameBoughted => {
-      if (gameBoughted.id === this.gameInfo.id) {
-        this.showLabel = true;
-      }
-    });
-  }
+	@Input() set isGameBought(_isGameBought: Game[]) {
+		_isGameBought.map(gameBoughted => {
+			if (gameBoughted.id === this.gameInfo.id) {
+				this.showLabel = true;
+			}
+		});
+	}
 
-  constructor(
-    private router: Router,
-    private activatedRoute: ActivatedRoute,
-    private snackBar: MatSnackBar
-  ) {}
+	constructor(
+		private router: Router,
+		private activatedRoute: ActivatedRoute,
+		private snackBar: MatSnackBar
+	) {}
 
-  ngOnInit() {
-    const userInfo = JSON.stringify(localStorage.getItem('user'));
-    this.userStatus = !!userInfo && !userInfo.length;
-  }
+	ngOnInit() {
+		const userInfo = JSON.stringify(localStorage.getItem('user'));
+		this.userStatus = !!userInfo && !userInfo.length;
+	}
 
-  buyGame(game: Game) {
-    this.boughtedGame.emit(game);
-    this.showLabel = true;
-    if (this.showLabel)
-      this.snackBar.openFromComponent(SnackbarComponent, {
-        duration: 900,
-        data: {
-          text: 'The game has been added to your list',
-          status: 'success',
-        },
-        verticalPosition: 'bottom',
-        horizontalPosition: 'center',
-      });
-  }
+	buyGame(game: Game) {
+		this.boughtedGame.emit(game);
+		this.showLabel = true;
+		if (this.showLabel)
+			this.snackBar.openFromComponent(SnackbarComponent, {
+				duration: 900,
+				data: {
+					text: 'The game has been added to your list',
+					status: 'success',
+				},
+				verticalPosition: 'bottom',
+				horizontalPosition: 'center',
+			});
+	}
 
-  goToGameDetails() {
-    if (this.router.url === '/home') {
-      void this.router.navigate([`/games/${this.gameInfo.id}`], {
-        relativeTo: this.activatedRoute,
-      });
-    } else
-      void this.router.navigate([this.gameInfo.id], {
-        relativeTo: this.activatedRoute,
-      });
-  }
+	goToGameDetails() {
+		if (this.router.url === '/home') {
+			void this.router.navigate([`/games/${this.gameInfo.id}`], {
+				relativeTo: this.activatedRoute,
+			});
+		} else
+			void this.router.navigate([this.gameInfo.id], {
+				relativeTo: this.activatedRoute,
+			});
+	}
 }

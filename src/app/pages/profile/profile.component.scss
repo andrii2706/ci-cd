@@ -1,164 +1,164 @@
 section {
-  min-height: 80vh;
+	min-height: 80vh;
 }
 
 .user-info {
-  width: 100%;
-  display: flex;
-  background: #c4c4c4;
-  color: #1d1d1e;
-  margin-top: 20px;
-  padding: 20px;
-  justify-content: space-between;
-  align-items: center;
-  border-radius: 10px;
-  box-shadow: 4px 3px 7px 7px rgb(13, 13, 22, 0.63);
+	width: 100%;
+	display: flex;
+	background: #c4c4c4;
+	color: #1d1d1e;
+	margin-top: 20px;
+	padding: 20px;
+	justify-content: space-between;
+	align-items: center;
+	border-radius: 10px;
+	box-shadow: 4px 3px 7px 7px rgb(13, 13, 22, 0.63);
 
-  div > p {
-    font-size: 15px;
-  }
+	div > p {
+		font-size: 15px;
+	}
 
-  .avatar {
-    display: flex;
-    justify-content: center;
-    align-items: flex-end;
-    flex-direction: column;
+	.avatar {
+		display: flex;
+		justify-content: center;
+		align-items: flex-end;
+		flex-direction: column;
 
-    > img {
-      width: 40rem;
-      height: 550px;
-      border-radius: 10px;
-    }
+		> img {
+			width: 40rem;
+			height: 550px;
+			border-radius: 10px;
+		}
 
-    > mat-icon {
-      width: 60px;
-      height: 60px;
-    }
-  }
+		> mat-icon {
+			width: 60px;
+			height: 60px;
+		}
+	}
 }
 
 .default-avatar {
-  width: 200px !important;
-  height: 200px !important;
+	width: 200px !important;
+	height: 200px !important;
 }
 
 .wishList {
-  width: 100%;
-  margin-top: 20px;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  align-items: center;
-  background: #c4c4c4;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 4px 3px 7px 7px rgb(13, 13, 22, 0.63);
+	width: 100%;
+	margin-top: 20px;
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	align-items: center;
+	background: #c4c4c4;
+	padding: 20px;
+	border-radius: 10px;
+	box-shadow: 4px 3px 7px 7px rgb(13, 13, 22, 0.63);
 
-  > div {
-    width: 100%;
-    > div:nth-last-child(odd) {
-      padding-bottom: 0rem;
-    }
-  }
+	> div {
+		width: 100%;
+		> div:nth-last-child(odd) {
+			padding-bottom: 0rem;
+		}
+	}
 
-  h2 {
-    color: #005cbb;
-  }
+	h2 {
+		color: #005cbb;
+	}
 }
 
 .profile-navigation {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
 
-  > button {
-    margin-right: 10px;
-  }
+	> button {
+		margin-right: 10px;
+	}
 }
 .deleteAllGames {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
 }
 
 .game-wishListCard {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-direction: row;
-  @media (max-width: 1700px) {
-    flex-direction: column;
-  }
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	flex-direction: row;
+	@media (max-width: 1700px) {
+		flex-direction: column;
+	}
 
-  padding-bottom: 1rem;
+	padding-bottom: 1rem;
 
-  .img-card {
-    width: 400px;
-    height: 250px;
-    border-radius: 10px;
-  }
+	.img-card {
+		width: 400px;
+		height: 250px;
+		border-radius: 10px;
+	}
 }
 
 .buttons {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 
-  > button {
-    &:nth-of-type(2) {
-      margin-left: 10px;
-    }
-  }
+	> button {
+		&:nth-of-type(2) {
+			margin-left: 10px;
+		}
+	}
 }
 
 .form-update {
-  width: 100%;
-  background: #c4c4c4;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 4px 3px 7px 7px rgba(13, 13, 22, 0.63);
+	width: 100%;
+	background: #c4c4c4;
+	padding: 20px;
+	border-radius: 10px;
+	box-shadow: 4px 3px 7px 7px rgba(13, 13, 22, 0.63);
 }
 
 .game-info {
-  min-width: 803px;
-  @media (max-width: 1024px) {
-    width: 100%;
-    min-width: 0;
-  }
+	min-width: 803px;
+	@media (max-width: 1024px) {
+		width: 100%;
+		min-width: 0;
+	}
 }
 .avatar-filed {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 20px 0;
-  :nth-child(1) {
-    margin-right: 30px;
-  }
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin: 20px 0;
+	:nth-child(1) {
+		margin-right: 30px;
+	}
 }
 .user-avatar-input-field {
-  background-color: #673ab7;
-  color: #fff;
-  padding: 10px 15px;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 14px;
-  display: inline-block;
+	background-color: #673ab7;
+	color: #fff;
+	padding: 10px 15px;
+	border-radius: 5px;
+	cursor: pointer;
+	font-size: 14px;
+	display: inline-block;
 }
 
 .avatar-file-name {
-  margin-left: 10px;
-  font-size: 14px;
+	margin-left: 10px;
+	font-size: 14px;
 }
 
 input[type='file'] + .user-avatar-input-field + .avatar-file-name {
-  display: inline-block;
+	display: inline-block;
 }
 
 .user-info-form {
-  gap: 15px;
+	gap: 15px;
 }
 
 .user-avatar-img {
-  width: 220px;
-  height: 230px;
+	width: 220px;
+	height: 230px;
 }

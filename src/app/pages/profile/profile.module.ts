@@ -8,14 +8,14 @@ import { ReplaceNullImgPipe } from '../../shared/pipe/replace-null-img.pipe';
 import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
-  declarations: [ProfileComponent],
-  imports: [
-    ProfileRouterModule,
-    AppMaterialModule,
-    CommonModule,
-    SpinnerComponent,
-    ReplaceNullImgPipe,
-    ReactiveFormsModule,
-  ],
+	declarations: [ProfileComponent],
+	imports: [
+		ProfileRouterModule,
+		AppMaterialModule,
+		CommonModule,
+		SpinnerComponent,
+		ReplaceNullImgPipe,
+		ReactiveFormsModule,
+	],
 })
 export class ProfileModule {}

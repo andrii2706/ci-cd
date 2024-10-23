@@ -4,14 +4,14 @@ import { ResolveFn } from '@angular/router';
 import { gamesResolver } from './games.resolver';
 
 describe('gamesResolver', () => {
-  const executeResolver: ResolveFn<boolean> = (...resolverParameters) =>
-    TestBed.runInInjectionContext(() => gamesResolver(...resolverParameters));
+	const executeResolver: ResolveFn<boolean> = (...resolverParameters) =>
+		TestBed.runInInjectionContext(() => gamesResolver(...resolverParameters));
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({});
-  });
+	beforeEach(() => {
+		TestBed.configureTestingModule({});
+	});
 
-  it('should be created', () => {
-    expect(executeResolver).toBeTruthy();
-  });
+	it('should be created', () => {
+		expect(executeResolver).toBeTruthy();
+	});
 });

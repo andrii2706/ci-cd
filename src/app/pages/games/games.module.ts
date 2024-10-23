@@ -10,15 +10,15 @@ import { GamesRoutingModule } from './games.router.module';
 import { SpinnerComponent } from '../../shared/components/spinner/spinner.component';
 
 @NgModule({
-  declarations: [GamesComponent, GamesFilterComponent],
-  imports: [
-    CommonModule,
-    AppMaterialModule,
-    NgxPaginationModule,
-    GamesCardsComponent,
-    ReactiveFormsModule,
-    GamesRoutingModule,
-    SpinnerComponent,
-  ],
+	declarations: [GamesComponent, GamesFilterComponent],
+	imports: [
+		CommonModule,
+		AppMaterialModule,
+		NgxPaginationModule,
+		GamesCardsComponent,
+		ReactiveFormsModule,
+		GamesRoutingModule,
+		SpinnerComponent,
+	],
 })
 export class GamesModule {}

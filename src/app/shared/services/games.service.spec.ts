@@ -7,17 +7,17 @@ import { environment } from '../../../environment/environment';
 //TODO write unit test
 
 xdescribe('GamesService', () => {
-  let service: GamesService;
+	let service: GamesService;
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      imports: [AngularFireModule.initializeApp(environment.firebaseConfig)],
-      providers: [HttpClient, HttpHandler],
-    });
-    service = TestBed.inject(GamesService);
-  });
+	beforeEach(() => {
+		TestBed.configureTestingModule({
+			imports: [AngularFireModule.initializeApp(environment.firebaseConfig)],
+			providers: [HttpClient, HttpHandler],
+		});
+		service = TestBed.inject(GamesService);
+	});
 
-  it('should be created', () => {
-    expect(service).toBeTruthy();
-  });
+	it('should be created', () => {
+		expect(service).toBeTruthy();
+	});
 });
