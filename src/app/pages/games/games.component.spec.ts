@@ -53,7 +53,7 @@ describe('GamesComponent', () => {
     expect(mockGamesService.getAllGames).toHaveBeenCalledWith(2);
   });
 
-  xit('should buy a game and update user info', () => {
+  it('should buy a game and update user info', () => {
     const user = { multiFactor: { user: { uid: 'user123' } }, games: [] };
     localStorage.setItem('user', JSON.stringify(user));
 
