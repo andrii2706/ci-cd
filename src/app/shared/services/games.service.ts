@@ -114,7 +114,6 @@ export class GamesService {
 			await updateDoc(userRef, {
 				games: arrayRemove(gameId),
 			});
-			console.log(`Гра успішно видалена`);
 		} catch (error) {
 			console.error('Помилка видалення гри з масиву: ', error);
 		}
