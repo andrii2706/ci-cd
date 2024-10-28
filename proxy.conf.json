@@ -1,0 +1,8 @@
+{
+	"/api": {
+		"target": "https://www.giantbomb.com/api",
+		"secure": true,
+		"changeOrigin": true,
+		"logLevel": "debug"
+	}
+}

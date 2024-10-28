@@ -148,6 +148,29 @@
 									<h3>No developers found</h3>
 								}
 							</mat-tab>
+							<mat-tab>
+								<ng-template mat-tab-label
+									><span class="tab-header">Trailers</span></ng-template
+								>
+								@for (
+									gameTrailer of gameTrailers.results;
+									track gameDetails.developers
+								) {
+									<div class="videos">
+										<h2>{{ gameTrailer.name }}</h2>
+										<video width="640" height="360" controls>
+											<source
+												src="{{ gameTrailer.data.max }}"
+												type="video/mp4" />
+											<source
+												src="{{ gameTrailer.preview }}"
+												type="video/jgp" />
+										</video>
+									</div>
+								} @empty {
+									<h3>No Trailers found</h3>
+								}
+							</mat-tab>
 						</mat-tab-group>
 					</div>
 				</div>
