@@ -1,7 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { FilterParams, GameDetails, Games } from '../models/games.interface';
+import {
+	FilterParams,
+	GameDetails,
+	Games,
+	GameTrailers,
+} from '../models/games.interface';
 import {
 	arrayRemove,
 	doc,
@@ -9,13 +14,14 @@ import {
 	getDoc,
 	updateDoc,
 } from '@angular/fire/firestore';
+import { environment } from '../../../environment/environment';
 
 @Injectable({
 	providedIn: 'root',
 })
 export class GamesService {
-	key = '85d9905e7cd7443c8983e54b4733abf5';
-	url = 'https://api.rawg.io/api';
+	key = environment.rawgApiKey;
+	url = environment.rawgApaUrl;
 	games = '/games';
 
 	newGames = new BehaviorSubject<Games | null>(null);
@@ -75,6 +81,20 @@ export class GamesService {
 		return this.httpClient.get<GameDetails>(`${this.url}${this.games}/${id}`, {
 			params: paramsForGameBtId,
 		});
+	}
+
+	getGameMovieById(id: string): Observable<GameTrailers> {
+		const paramsForGameBtId = new HttpParams({
+			fromObject: {
+				key: this.key,
+			},
+		});
+		return this.httpClient.get<GameTrailers>(
+			`${this.url}${this.games}/${id}/movies`,
+			{
+				params: paramsForGameBtId,
+			}
+		);
 	}
 
 	private getFilterQueryParameter(filterParams: FilterParams): HttpParams {

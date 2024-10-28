@@ -4,7 +4,7 @@ import { SnackbarComponent } from '../snackbar/snackbar.component';
 import { ActivatedRoute } from '@angular/router';
 import { GamesService } from '../../services/games.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { GameDetails } from '../../models/games.interface';
+import { GameDetails, GameTrailers } from '../../models/games.interface';
 import { AppMaterialModule } from '../../../app-material/app-material.module';
 import { SpinnerComponent } from '../spinner/spinner.component';
 
@@ -18,6 +18,7 @@ import { SpinnerComponent } from '../spinner/spinner.component';
 export class GamesDetailsComponent {
 	isLoading = false;
 	gameDetails: GameDetails;
+	gameTrailers: GameTrailers;
 	games: GameDetails[];
 
 	constructor(
@@ -47,6 +48,9 @@ export class GamesDetailsComponent {
 			.subscribe(gameDetails => {
 				this.gameDetails = gameDetails;
 			});
+		this.gamesService.getGameMovieById(id).subscribe(gameVideo => {
+			this.gameTrailers = gameVideo;
+		});
 	}
 
 	backButton() {

@@ -176,7 +176,7 @@ export interface GameTrailers {
 			id: number;
 			name: string;
 			preview: string;
-			date: {
+			data: {
 				480: string;
 				max: string;
 			};
