@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { FilterParams, GameDetails, Games } from '../models/games.interface';
-import { doc, Firestore, getDoc, updateDoc } from '@angular/fire/firestore';
+import { arrayRemove, doc, Firestore, getDoc, updateDoc } from '@angular/fire/firestore';
 
 @Injectable({
 	providedIn: 'root',
@@ -101,8 +101,17 @@ export class GamesService {
 			return null;
 		}
 	}
-	//TODO finish this logic for remove game
-	// async removeGameFromUser(userId: string, gameId: string) {
-	//
-	// }
+
+
+	async removeGameFromUser(userId: string, gameId: string) {
+	 const userRef = doc(this.fireStore, 'userGame', userId);
+      try {
+        await updateDoc(userRef, {
+          games: arrayRemove(gameId)
+        });
+        console.log(`Гра успішно видалена`);
+      } catch (error) {
+        console.error('Помилка видалення гри з масиву: ', error);
+      }
+	}
 }
