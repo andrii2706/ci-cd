@@ -1,63 +1,68 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%}
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+	height: 100%;
+}
+body {
+	margin: 0;
+	font-family: Roboto, 'Helvetica Neue', sans-serif;
+}
 
-.flex-direction-columns{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
+.flex-direction-columns {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
 }
-.flex-block{
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.flex-block {
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
-.flex-block-end{
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
+.flex-block-end {
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
 }
-.flex-block-between{
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+.flex-block-between {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
 }
-.gap-1rem{
-  gap:1rem;
+.gap-1rem {
+	gap: 1rem;
 }
-.gap-4rem{
-  gap:4rem;
+.gap-4rem {
+	gap: 4rem;
 }
 .pagination .ngx-pagination .current {
-  background: #005cbb;
-  border-radius: 15px;
-  color: white;
+	background: #005cbb;
+	border-radius: 15px;
+	color: white;
 }
 .page-container {
-  width: 95%;
-  font-size: 30px;
-  background: #c4c4c4;
-  border-radius: 10px;
-  min-height: 80vh;
+	width: 95%;
+	font-size: 30px;
+	background: #c4c4c4;
+	border-radius: 10px;
+	min-height: 80vh;
 }
 
 .pagination .ngx-pagination {
-  font-size: 15px;
+	font-size: 15px;
 
-  li {
-    margin-right: 10px;
-  }
+	li {
+		margin-right: 10px;
+	}
 
-  a {
-    color: #005cbb !important;
-  }
+	a {
+		color: #005cbb !important;
+	}
 
-  li > a:hover {
-    background: #005cbb;
-    border-radius: 15px;
-    color: white !important;
-  }
+	li > a:hover {
+		background: #005cbb;
+		border-radius: 15px;
+		color: white !important;
+	}
 }
-

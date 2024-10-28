@@ -1,46 +1,46 @@
-@if(gameInfo){
-  <mat-card class="game-card">
-    <mat-card-header>
-      <mat-card-title>{{ gameInfo.name }}</mat-card-title>
-      <mat-card-subtitle>{{ gameInfo.released }}</mat-card-subtitle>
-    </mat-card-header>
-    <img
-      width="400px"
-      height="225px"
-      mat-card-image
-      src="{{ gameInfo.background_image | replaceNullImg }}"
-      alt="{{ gameInfo.slug }}" />
-    @if (gameInfo.metacritic){
-      <div class="metacritic-position">
-        {{ gameInfo.metacritic }}
-      </div>
-    }
-    <mat-card-content>
-      <div class="content-card">
-        <p>rating - {{ gameInfo.rating }}</p>
-        <p>Rating Top - {{ gameInfo.rating_top }}</p>
-        <button
-          mat-raised-button
-          matTooltip="See game Details"
-          class="goToDetails"
-          [color]="'primary'"
-          (click)="goToGameDetails()">
-          To game details
-        </button>
-        <button
-          matTooltip="Add Game To WishList"
-          mat-raised-button
-          [disabled]="showLabel"
-          [color]="'primary'"
-          (click)="buyGame(gameInfo)">
-          <mat-icon>add_shopping_cart</mat-icon>
-          @if (showLabel){
-            <span >Game Has been bought</span>
-          } @else {
-            <span >Push to WishList</span>
-          }
-        </button>
-      </div>
-    </mat-card-content>
-  </mat-card>
+@if (gameInfo) {
+	<mat-card class="game-card">
+		<mat-card-header>
+			<mat-card-title>{{ gameInfo.name }}</mat-card-title>
+			<mat-card-subtitle>{{ gameInfo.released }}</mat-card-subtitle>
+		</mat-card-header>
+		<img
+			width="400px"
+			height="225px"
+			mat-card-image
+			src="{{ gameInfo.background_image | replaceNullImg }}"
+			alt="{{ gameInfo.slug }}" />
+		@if (gameInfo.metacritic) {
+			<div class="metacritic-position">
+				{{ gameInfo.metacritic }}
+			</div>
+		}
+		<mat-card-content>
+			<div class="content-card">
+				<p>rating - {{ gameInfo.rating }}</p>
+				<p>Rating Top - {{ gameInfo.rating_top }}</p>
+				<button
+					mat-raised-button
+					matTooltip="See game Details"
+					class="goToDetails"
+					[color]="'primary'"
+					(click)="goToGameDetails()">
+					To game details
+				</button>
+				<button
+					matTooltip="Add Game To WishList"
+					mat-raised-button
+					[disabled]="showLabel"
+					[color]="'primary'"
+					(click)="buyGame(gameInfo)">
+					<mat-icon>add_shopping_cart</mat-icon>
+					@if (showLabel) {
+						<span>Game Has been bought</span>
+					} @else {
+						<span>Push to WishList</span>
+					}
+				</button>
+			</div>
+		</mat-card-content>
+	</mat-card>
 }

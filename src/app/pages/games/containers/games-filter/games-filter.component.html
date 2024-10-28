@@ -1,95 +1,91 @@
 <section class="filter-form">
-  <form [formGroup]="filterForm">
-    <mat-form-field>
-      <mat-label>Developers</mat-label>
-      <mat-select
-        formControlName="developers"
-        placeholder="Developers"
-        [value]="''">
-        @for(developer of developers; track developer.slug){
-          <mat-option
-            [value]="developer.slug">
-            {{ developer.developersName }}
-          </mat-option>
-        }
-      </mat-select>
-    </mat-form-field>
-    <mat-form-field>
-      <mat-label>Genres</mat-label>
-      <mat-select formControlName="genres" placeholder="Genres" [value]="''">
-        <mat-option [value]="genre.slug" *ngFor="let genre of genres">{{
-            genre.genreName
-          }}</mat-option>
-      </mat-select>
-    </mat-form-field>
-    <mat-form-field>
-      <mat-label>Platforms</mat-label>
-      <mat-select
-        formControlName="platforms"
-        placeholder="Platforms"
-        [value]="''">
-        @for(platform of platforms; track platform.slug){
-          <mat-option
-            [value]="platform.slug"
-          >{{ platform.platformsName }}</mat-option
-          >
-        }
-      </mat-select>
-    </mat-form-field>
-    <mat-form-field>
-      <mat-label>Order By:</mat-label>
-      <mat-select
-        formControlName="ordering"
-        placeholder="Order By"
-        [value]="''">
-        @for(orderByInfo of orderByInfos; track orderByInfo.slug){
-          <mat-option
-            [value]="orderByInfo.slug"
-          >{{ orderByInfo.name }}</mat-option
-          >
-        }
-      </mat-select>
-    </mat-form-field>
-    <mat-form-field>
-      <mat-label>Metacritic:</mat-label>
-      <mat-select
-        formControlName="metacritic"
-        placeholder="Metacritic"
-        [value]="''">
-        @for(metacritic of metacritics; track metacritic.slug){
-          <mat-option
-            [value]="metacritic.slug"
-          >{{ metacritic.name }}</mat-option
-          >
-        }
-      </mat-select>
-    </mat-form-field>
-    <mat-form-field>
-      <mat-label>Search</mat-label>
-      <input
-        formControlName="search"
-        type="text"
-        matInput
-        autocomplete="false" />
-    </mat-form-field>
-    <button
-      mat-button
-      matTooltip="Last released games"
-      mat-flat-button
-      [color]="'primary'"
-      (click)="lastGames()">
-      Last released games
-    </button>
-  </form>
-  <div>
-    <button
-      matTooltip="Clear Filters"
-      mat-icon-button
-      (click)="clearFilterForm()">
-      <mat-icon>delete</mat-icon>
-    </button>
-  </div>
-  <button matTooltip="Search" (click)="submitFilter()" mat-icon-button>
-    <mat-icon>search</mat-icon>
-  </button>
+	<form [formGroup]="filterForm">
+		<mat-form-field>
+			<mat-label>Developers</mat-label>
+			<mat-select
+				formControlName="developers"
+				placeholder="Developers"
+				[value]="''">
+				@for (developer of developers; track developer.slug) {
+					<mat-option [value]="developer.slug">
+						{{ developer.developersName }}
+					</mat-option>
+				}
+			</mat-select>
+		</mat-form-field>
+		<mat-form-field>
+			<mat-label>Genres</mat-label>
+			<mat-select formControlName="genres" placeholder="Genres" [value]="''">
+				<mat-option [value]="genre.slug" *ngFor="let genre of genres">{{
+					genre.genreName
+				}}</mat-option>
+			</mat-select>
+		</mat-form-field>
+		<mat-form-field>
+			<mat-label>Platforms</mat-label>
+			<mat-select
+				formControlName="platforms"
+				placeholder="Platforms"
+				[value]="''">
+				@for (platform of platforms; track platform.slug) {
+					<mat-option [value]="platform.slug">{{
+						platform.platformsName
+					}}</mat-option>
+				}
+			</mat-select>
+		</mat-form-field>
+		<mat-form-field>
+			<mat-label>Order By:</mat-label>
+			<mat-select
+				formControlName="ordering"
+				placeholder="Order By"
+				[value]="''">
+				@for (orderByInfo of orderByInfos; track orderByInfo.slug) {
+					<mat-option [value]="orderByInfo.slug">{{
+						orderByInfo.name
+					}}</mat-option>
+				}
+			</mat-select>
+		</mat-form-field>
+		<mat-form-field>
+			<mat-label>Metacritic:</mat-label>
+			<mat-select
+				formControlName="metacritic"
+				placeholder="Metacritic"
+				[value]="''">
+				@for (metacritic of metacritics; track metacritic.slug) {
+					<mat-option [value]="metacritic.slug">{{
+						metacritic.name
+					}}</mat-option>
+				}
+			</mat-select>
+		</mat-form-field>
+		<mat-form-field>
+			<mat-label>Search</mat-label>
+			<input
+				formControlName="search"
+				type="text"
+				matInput
+				autocomplete="false" />
+		</mat-form-field>
+		<button
+			mat-button
+			matTooltip="Last released games"
+			mat-flat-button
+			[color]="'primary'"
+			(click)="lastGames()">
+			Last released games
+		</button>
+	</form>
+	<div>
+		<button
+			matTooltip="Clear Filters"
+			mat-icon-button
+			(click)="clearFilterForm()">
+			<mat-icon>delete</mat-icon>
+		</button>
+	</div>
+	<button matTooltip="Search" (click)="submitFilter()" mat-icon-button>
+		<mat-icon>search</mat-icon>
+	</button>
 </section>

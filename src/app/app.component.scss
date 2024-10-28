@@ -1,56 +1,50 @@
 .example-spacer {
-  flex: 1 1 auto;
+	flex: 1 1 auto;
 }
 
-mat-toolbar{
-  background: #d7e3ff;
-  color: #005cbb;
+mat-toolbar {
+	background: #d7e3ff;
+	color: #005cbb;
 }
-mat-icon{
-  color:#005cbb;
+mat-icon {
+	color: #005cbb;
 }
-
-
-
 
 ::ng-deep mat-toolbar {
-  justify-content: space-between;
+	justify-content: space-between;
 }
 .block {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 
-  > a ::ng-deep .mdc-button__label {
-    > img {
-      border-radius: 50%;
-    }
-  }
+	> a ::ng-deep .mdc-button__label {
+		> img {
+			border-radius: 50%;
+		}
+	}
 }
 
-
 .menu-btn {
-  margin-top: 10px;
-  margin-left: 9.5px;
+	margin-top: 10px;
+	margin-left: 9.5px;
 }
 
 .listItem {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  h3{
-    margin-bottom: 0;
-    font-size: medium;
-    margin-left: 15px;
-  }
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	h3 {
+		margin-bottom: 0;
+		font-size: medium;
+		margin-left: 15px;
+	}
 
-  mat-icon{
-    color: #005cbb;
-
-  }
-
+	mat-icon {
+		color: #005cbb;
+	}
 }
-.example-sidenav-content{
-  padding: 70px;
-  height: auto;
+.example-sidenav-content {
+	padding: 70px;
+	height: auto;
 }
