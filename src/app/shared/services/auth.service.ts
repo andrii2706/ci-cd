@@ -70,7 +70,7 @@ export class AuthService {
 			this.changeLoginStatus(true, userInfo.user);
 			this.proceedUserLoginStatus(true);
 			this.userLoggingWithFireBase.next(userInfo.user);
-      this.router.navigate(['/home']);
+			this.router.navigate(['/home']);
 		});
 	}
 
