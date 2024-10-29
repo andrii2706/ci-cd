@@ -6,15 +6,16 @@ import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { environment } from '../environment/environment';
 import { getAuth, provideAuth } from '@angular/fire/auth';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { FIREBASE_OPTIONS } from '@angular/fire/compat';
+import { errorInterceptor } from './error.interceptor';
 
 export const appConfig: ApplicationConfig = {
 	providers: [
 		provideZoneChangeDetection({ eventCoalescing: true }),
 		provideRouter(routes),
 		provideAnimationsAsync(),
-		provideHttpClient(),
+		provideHttpClient(withInterceptors([errorInterceptor])),
 		provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
 		provideAuth(() => getAuth()),
 		provideFirestore(() => getFirestore()),

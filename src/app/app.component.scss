@@ -45,6 +45,9 @@ mat-icon {
 	}
 }
 .example-sidenav-content {
-	padding: 70px;
+  @media (min-width: 800px) {
+    padding: 70px;
+  }
+
 	height: auto;
 }
