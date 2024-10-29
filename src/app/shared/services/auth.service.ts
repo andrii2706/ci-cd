@@ -99,6 +99,7 @@ export class AuthService {
 				}
 			});
 	}
+
 	async updateUserInformation(
 		displayName: string,
 		photoUrl: string
@@ -125,6 +126,7 @@ export class AuthService {
 			}
 		}
 	}
+
 	async updateUserPassword(newPassword: string): Promise<void> {
 		const user = this.auth.currentUser;
 		if (user) {
@@ -147,14 +149,6 @@ export class AuthService {
 			.catch(error => {
 				console.error('Logout error:', error);
 			});
-	}
-
-	getCurrentUser(): Observable<User | null> {
-		return this.afAuth.authState;
-	}
-
-	async getCurrentUserPromise(): Promise<User | null> {
-		return this.afAuth.currentUser;
 	}
 
 	async addGamesToUser(userId: string, games: Game[]) {
