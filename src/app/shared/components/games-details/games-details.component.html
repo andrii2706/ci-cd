@@ -140,19 +140,19 @@
 								<ng-template mat-tab-label
 									><span class="tab-header">Developers</span></ng-template
 								>
-                @for (
-                    developer of gameDetails.developers;
-                  track gameDetails.developers
-                  ) {
-                  <div class="developer">
-                    <img
-                      src="{{ developer.image_background }}"
-                      alt="{{ developer.name }}" />
-                    <h2>{{ developer.name }}</h2>
-                  </div>
-                } @empty {
-                  <h3>No developers found</h3>
-                }
+								@for (
+									developer of gameDetails.developers;
+									track gameDetails.developers
+								) {
+									<div class="developer">
+										<img
+											src="{{ developer.image_background }}"
+											alt="{{ developer.name }}" />
+										<h2>{{ developer.name }}</h2>
+									</div>
+								} @empty {
+									<h3>No developers found</h3>
+								}
 							</mat-tab>
 							<mat-tab>
 								<ng-template mat-tab-label
