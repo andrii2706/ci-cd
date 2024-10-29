@@ -33,7 +33,7 @@ export class ProfileComponent
 		private authService: AuthService,
 		private router: Router,
 		private activatedRoute: ActivatedRoute,
-    private cdr: ChangeDetectorRef
+		private cdr: ChangeDetectorRef
 	) {
 		super();
 	}
@@ -86,12 +86,11 @@ export class ProfileComponent
 	}
 
 	removeGames(gameInfo: Game) {
-	  this.gamesService.removeGameFromUser( this.user.uid, gameInfo).then(() => {
-      this.gamesService.getGameById(this.userId).then(userGames => {
-        this.userGames = userGames.games;
-      });
-    })
-
+		this.gamesService.removeGameFromUser(this.user.uid, gameInfo).then(() => {
+			this.gamesService.getGameById(this.userId).then(userGames => {
+				this.userGames = userGames.games;
+			});
+		});
 	}
 
 	submitUpdateUserForm() {
