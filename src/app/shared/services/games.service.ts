@@ -107,16 +107,17 @@ export class GamesService {
 			return acc;
 		}, new HttpParams());
 	}
+
 	/* eslint-disable  @typescript-eslint/no-explicit-any */
 	async updateUserData(userId: string, newData: any) {
 		const userRef = doc(this.fireStore, 'userGame', userId);
-		console.log(userRef.id);
 		try {
 			await updateDoc(userRef, newData);
 		} catch (error) {
 			console.error('Помилка оновлення даних: ', error);
 		}
 	}
+
 	/* eslint-disable  @typescript-eslint/no-explicit-any */
 	async getGameById(id: string): Promise<any | undefined> {
 		const gameDoc = doc(this.fireStore, 'userGame', id);

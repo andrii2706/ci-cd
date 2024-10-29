@@ -8,6 +8,10 @@
 	align-items: center;
 	color: beige;
 
+	@media (max-width: 405px) {
+		margin-top: 15px;
+	}
+
 	> button {
 		width: 50px;
 		height: 50px;
@@ -25,7 +29,14 @@
 	justify-content: center;
 	align-items: center;
 	flex-direction: column;
-	margin: 25px;
+
+	@media (max-width: 400px) {
+		margin: 25px;
+	}
+	@media (min-width: 400px) {
+		margin-top: 25px;
+	}
+
 	padding: 15px;
 	.stores-header {
 		display: flex;
@@ -45,23 +56,34 @@
 		display: flex;
 		justify-content: center;
 		align-items: center;
+		flex-direction: row;
+		@media (max-width: 850px) {
+			flex-direction: column;
+		}
+		div {
+			@media (min-width: 850px) {
+				margin-right: 20px;
+			}
+			> a {
+				font-size: 15px;
+				text-decoration: none;
+				border-radius: 10px;
+				background: #1d1d1e;
+				border: 1px solid #1d1d1e;
+				padding: 10px;
+				color: #c4c4c4;
+				font-weight: 400;
+				transition: 800ms;
 
-		div > a {
-			font-size: 15px;
-			text-decoration: none;
-			border-radius: 10px;
-			background: #1d1d1e;
-			border: 1px solid #1d1d1e;
-			padding: 10px;
-			color: #c4c4c4;
-			font-weight: 400;
-			margin-right: 20px;
-			transition: 800ms;
-
-			&:hover {
-				color: #333333;
-				border: 1px solid white;
-				background: white;
+				&:hover {
+					color: #333333;
+					border: 1px solid white;
+					background: white;
+				}
+			}
+			@media (max-width: 850px) {
+				margin-right: 0;
+				margin-top: 20px;
 			}
 		}
 	}
@@ -154,9 +176,10 @@
 	.game-image {
 		margin: 25px;
 		position: relative;
+		max-width: 800px;
 		img {
 			position: relative;
-			width: 600px;
+			width: 100%;
 			border-radius: 10px;
 		}
 	}
@@ -166,11 +189,15 @@
 	color: #1d1d1e;
 	font-size: 15px;
 	letter-spacing: 1px;
-	width: 75rem;
+
 	min-height: 80rem;
 	padding: 25px;
-	@media (max-width: 900px) {
-		width: 40rem;
+
+	@media (min-width: 405px) {
+		width: 75rem;
+	}
+	@media (max-width: 405px) {
+		width: 20rem;
 	}
 
 	.tags {
@@ -178,10 +205,18 @@
 		justify-content: center;
 		align-items: center;
 		flex-direction: column;
-
+		> .tag-item {
+			max-width: 600px;
+		}
 		img {
-			width: 450px;
-			margin: 25px;
+			width: 100%;
+			max-width: 400px;
+			@media (min-width: 405px) {
+				margin: 25px;
+			}
+			@media (max-width: 405px) {
+				margin-top: 25px;
+			}
 			border-radius: 15px;
 		}
 	}
@@ -192,14 +227,27 @@
 		align-items: center;
 		flex-direction: column;
 		padding-top: 30px;
+		> .video-item {
+			max-width: 600px;
+		}
 		a {
 			&:hover {
 				color: #333333;
 			}
 		}
+		video {
+			width: 100%;
+			height: auto;
+		}
 		img {
-			width: 450px;
-			margin: 25px;
+			width: 100%;
+			max-width: 400px;
+			@media (min-width: 405px) {
+				margin: 25px;
+			}
+			@media (max-width: 405px) {
+				margin-top: 25px;
+			}
 			border-radius: 15px;
 		}
 	}
@@ -211,8 +259,14 @@
 		flex-direction: column;
 
 		img {
-			width: 450px;
-			margin: 25px;
+			width: 100%;
+			max-width: 400px;
+			@media (min-width: 405px) {
+				margin-top: 25px;
+			}
+			@media (max-width: 405px) {
+				margin: 25px;
+			}
 			border-radius: 15px;
 		}
 	}
@@ -226,10 +280,51 @@
 			color: #1d1d1e !important;
 		}
 
+		mat-tab-group {
+			overflow: hidden;
+		}
+
+		.mat-tab-labels {
+			flex-wrap: nowrap; /* Приберіть перенос */
+			overflow-x: auto; /* Додає горизонтальну прокрутку */
+		}
+
+		.mat-tab-label {
+			flex: 1 0 auto; /* Встановлює ширину кожного табу */
+			text-align: center;
+			white-space: nowrap; /* Прибирає перенос тексту */
+		}
+
+		/* Для дуже маленьких екранів */
+		@media (max-width: 600px) {
+			.mat-tab-label {
+				min-width: 100px; /* Мінімальна ширина табу */
+			}
+		}
+
 		.tab-header {
 			color: beige;
 			font-size: 20px;
 			font-weight: 100;
 		}
+	}
+}
+
+.developer {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	margin: 25px;
+	img {
+		width: 100%;
+		max-width: 400px;
+		@media (min-width: 405px) {
+			margin: 25px;
+		}
+		@media (max-width: 405px) {
+			margin-top: 25px;
+		}
+		border-radius: 15px;
 	}
 }

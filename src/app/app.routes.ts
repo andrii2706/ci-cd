@@ -3,6 +3,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { authGuard } from './shared/guards/auth.guard';
 import { homeResolver } from './pages/home/home.resolver';
 import { gamesResolver } from './pages/games/games.resolver';
+import { ErrorPageComponent } from './pages/error-page/error-page.component';
 
 export const routes: Routes = [
 	{
@@ -40,6 +41,12 @@ export const routes: Routes = [
 		loadChildren: () =>
 			import('./pages/profile/profile.module').then(m => m.ProfileModule),
 		title: 'Profile',
+		canActivate: [authGuard],
+	},
+	{
+		path: 'error',
+		component: ErrorPageComponent,
+		title: 'Error',
 		canActivate: [authGuard],
 	},
 ];
