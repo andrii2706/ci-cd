@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ClearObservableDirective } from '../../shared/classes';
 import { GamesService } from '../../shared/services/games.service';
 import { Game } from '../../shared/models/games.interface';
@@ -32,7 +32,8 @@ export class ProfileComponent
 		private gamesService: GamesService,
 		private authService: AuthService,
 		private router: Router,
-		private activatedRoute: ActivatedRoute
+		private activatedRoute: ActivatedRoute,
+    private cdr: ChangeDetectorRef
 	) {
 		super();
 	}
@@ -85,7 +86,12 @@ export class ProfileComponent
 	}
 
 	removeGames(gameInfo: Game) {
-		console.log(gameInfo);
+	  this.gamesService.removeGameFromUser( this.user.uid, gameInfo).then(() => {
+      this.gamesService.getGameById(this.userId).then(userGames => {
+        this.userGames = userGames.games;
+      });
+    })
+
 	}
 
 	submitUpdateUserForm() {

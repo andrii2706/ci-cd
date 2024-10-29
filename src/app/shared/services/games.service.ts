@@ -2,10 +2,10 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import {
-	FilterParams,
-	GameDetails,
-	Games,
-	GameTrailers,
+  FilterParams, Game,
+  GameDetails,
+  Games,
+  GameTrailers,
 } from '../models/games.interface';
 import {
 	arrayRemove,
@@ -129,7 +129,7 @@ export class GamesService {
 		}
 	}
 
-	async removeGameFromUser(userId: string, gameId: string) {
+	async removeGameFromUser(userId: string, gameId: Game) {
 		const userRef = doc(this.fireStore, 'userGame', userId);
 		try {
 			await updateDoc(userRef, {
