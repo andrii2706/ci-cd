@@ -19,16 +19,16 @@ import { filter, noop } from 'rxjs';
 export class AppComponent implements OnInit, OnDestroy {
 	events: string[] = [];
 	opened = false;
-  /* eslint-disable  @typescript-eslint/no-explicit-any */
-  private logoutTimer: any;
-  private readonly timeoutDuration = 8 * 60 * 60 * 1000;
+	/* eslint-disable  @typescript-eslint/no-explicit-any */
+	private logoutTimer: any;
+	private readonly timeoutDuration = 8 * 60 * 60 * 1000;
 
-  @HostListener('document:mousemove')
-  @HostListener('document:keydown')
-  @HostListener('document:click')
-  handleUserActivity() {
-    this.resetLogoutTimer();
-  }
+	@HostListener('document:mousemove')
+	@HostListener('document:keydown')
+	@HostListener('document:click')
+	handleUserActivity() {
+		this.resetLogoutTimer();
+	}
 
 	constructor(
 		private router: Router,
@@ -47,24 +47,22 @@ export class AppComponent implements OnInit, OnDestroy {
 					}
 				});
 		}
-    this.resetLogoutTimer();
+		this.resetLogoutTimer();
 	}
 
+	private resetLogoutTimer() {
+		this.clearLogoutTimer();
 
-  private resetLogoutTimer() {
-    this.clearLogoutTimer();
+		this.logoutTimer = setTimeout(() => {
+			this.logoutUser();
+		}, this.timeoutDuration);
+	}
 
-    this.logoutTimer = setTimeout(() => {
-      this.logoutUser();
-    }, this.timeoutDuration);
-  }
-
-  private clearLogoutTimer() {
-    if (this.logoutTimer) {
-      clearTimeout(this.logoutTimer);
-    }
-  }
-
+	private clearLogoutTimer() {
+		if (this.logoutTimer) {
+			clearTimeout(this.logoutTimer);
+		}
+	}
 
 	logoutUser() {
 		this.authService.logout().then(() => noop());
@@ -74,8 +72,7 @@ export class AppComponent implements OnInit, OnDestroy {
 		this.router.navigateByUrl('profile');
 	}
 
-  ngOnDestroy() {
-    this.clearLogoutTimer();
-  }
-
+	ngOnDestroy() {
+		this.clearLogoutTimer();
+	}
 }
