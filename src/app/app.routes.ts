@@ -43,7 +43,7 @@ export const routes: Routes = [
 		title: 'Profile',
 		canActivate: [authGuard],
 	},
-  {
+	{
 		path: 'error',
 		component: ErrorPageComponent,
 		title: 'Error',

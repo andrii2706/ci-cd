@@ -9,8 +9,7 @@ import { AppMaterialModule } from '../../app-material/app-material.module';
 	styleUrl: './error-page.component.scss',
 })
 export class ErrorPageComponent {
-
-  redirectToPreviousPage() {
-    history.back();
-  }
+	redirectToPreviousPage() {
+		history.back();
+	}
 }
