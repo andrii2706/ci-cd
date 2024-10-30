@@ -69,7 +69,7 @@ export class GamesComponent extends ClearObservableDirective implements OnInit {
 			const user = JSON.parse(userInfo);
 			this.gamesService.getGameById(user.multiFactor.user.uid).then(games => {
 				if (games.games && games.games.length) {
-					const gamesId = user.games.map((game: Game) => game.id);
+					const gamesId = games.games.map((game: Game) => game.id);
 					this.isGameBoughtStatus = games.games?.filter(
 						(game: Game, index: number) => game.id === gamesId[index]
 					);
