@@ -4,7 +4,7 @@ import { GamesCardsComponent } from '../../shared/components/games-cards/games-c
 import { GamesService } from '../../shared/services/games.service';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { Game } from '../../shared/models/games.interface';
-import { noop, takeUntil } from 'rxjs';
+import { finalize, noop, takeUntil } from 'rxjs';
 import moment from 'moment';
 import { SpinnerComponent } from '../../shared/components/spinner/spinner.component';
 import { ClearObservableDirective } from '../../shared/classes';
@@ -40,14 +40,16 @@ export class HomeComponent extends ClearObservableDirective implements OnInit {
 
 	ngOnInit() {
 		this.isLoading = true;
-		this.gamesService.newGames.subscribe(games => {
-			if (games) {
-				this.total = games.count;
-				this.games = games.results;
-			}
-			this.isGameBought();
-			this.isLoading = false;
-		});
+		this.gamesService.newGames
+			.pipe(takeUntil(this.destroy$))
+			.subscribe(games => {
+				if (games) {
+					this.total = games.count;
+					this.games = games.results;
+				}
+				this.isGameBought();
+				this.isLoading = false;
+			});
 	}
 
 	getNewGames(page: number) {
@@ -59,7 +61,10 @@ export class HomeComponent extends ClearObservableDirective implements OnInit {
 		this.dates = `${firstYearDay},${lastYearDay}`;
 		this.gamesService
 			.getLastReleasedGames(page, this.dates)
-			.pipe(takeUntil(this.destroy$))
+			.pipe(
+				takeUntil(this.destroy$),
+				finalize(() => (this.isLoading = false))
+			)
 			.subscribe(games => {
 				this.total = games.count;
 				this.games = games.results;

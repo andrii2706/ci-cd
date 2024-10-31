@@ -14,6 +14,8 @@ import {
 	updatePassword,
 	updateProfile,
 } from '@angular/fire/auth';
+import { SnackbarComponent } from '../components/snackbar/snackbar.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable({
 	providedIn: 'root',
@@ -36,6 +38,7 @@ export class AuthService {
 
 	constructor(
 		private afAuth: AngularFireAuth,
+		private snackbarComponent: MatSnackBar,
 		private fireStore: Firestore,
 		private auth: Auth,
 		private router: Router
@@ -75,16 +78,26 @@ export class AuthService {
 		});
 	}
 
-	googleLogin() {
-		this.afAuth.signInWithPopup(new GoogleAuthProvider()).then(userInfo => {
-			this.changeLoginStatus(true, userInfo.user);
-			this.proceedUserLoginStatus(true);
-			this.userLoggingWithFireBase.next(userInfo.user);
-			this.router.navigate(['/home']);
-		});
+	async googleLogin() {
+		this.afAuth
+			.signInWithPopup(new GoogleAuthProvider())
+			.then(userInfo => {
+				this.changeLoginStatus(true, userInfo.user);
+				this.proceedUserLoginStatus(true);
+				this.userLoggingWithFireBase.next(userInfo.user);
+				this.router.navigate(['/home']);
+			})
+			.catch(error => {
+				this.snackbarComponent.openFromComponent(SnackbarComponent, {
+					duration: 5000,
+					data: { text: error.message, status: 'error' },
+					verticalPosition: 'top',
+					horizontalPosition: 'center',
+				});
+			});
 	}
 
-	loginWithCredentials(email: string, password: string) {
+	async loginWithCredentials(email: string, password: string) {
 		return this.afAuth
 			.signInWithEmailAndPassword(email, password)
 			.then(userInfo => {
@@ -94,8 +107,16 @@ export class AuthService {
 				this.proceedUserLoginStatus(true);
 				this.router.navigate(['/home']);
 			})
-			.catch(err => {
-				console.error('Помилка під час входу:', err);
+			.catch(() => {
+				this.snackbarComponent.openFromComponent(SnackbarComponent, {
+					duration: 5000,
+					data: {
+						text: `You don't have profile please Sign In`,
+						status: 'error',
+					},
+					verticalPosition: 'top',
+					horizontalPosition: 'center',
+				});
 			});
 	}
 
@@ -106,11 +127,19 @@ export class AuthService {
 				this.changeLoginStatus(true, userInfo.user);
 				this.userLoggingWithFireBase.next(userInfo.user);
 				this.proceedUserLoginStatus(true);
-        this.router.navigate(['/home']);
+				this.router.navigate(['/home']);
 				if (userInfo.user) {
 					this.addGamesToUser(userInfo.user.uid, []).then();
 					this.userAvatarUrl(userInfo.user.uid, '').then();
 				}
+			})
+			.catch(() => {
+				this.snackbarComponent.openFromComponent(SnackbarComponent, {
+					duration: 5000,
+					data: { text: 'You are not logged yet', status: 'error' },
+					verticalPosition: 'top',
+					horizontalPosition: 'center',
+				});
 			});
 	}
 
@@ -142,13 +171,19 @@ export class AuthService {
 		if (user) {
 			try {
 				await updatePassword(user, newPassword);
-			} catch (e) {
-				console.error(e);
+			} catch (error) {
+				this.snackbarComponent.openFromComponent(SnackbarComponent, {
+					duration: 5000,
+					data: { text: 'User update is not responding', status: 'error' },
+					verticalPosition: 'top',
+					horizontalPosition: 'center',
+				});
+				console.log(error);
 			}
 		}
 	}
 
-	logout() {
+	async logout() {
 		return this.afAuth
 			.signOut()
 			.then(() => {
@@ -156,8 +191,13 @@ export class AuthService {
 				this.proceedUserLoginStatus(false);
 				this.changeLoginStatus(false, null);
 			})
-			.catch(error => {
-				console.error('Logout error:', error);
+			.catch(() => {
+				this.snackbarComponent.openFromComponent(SnackbarComponent, {
+					duration: 5000,
+					data: { text: 'Server is not responding ', status: 'error' },
+					verticalPosition: 'top',
+					horizontalPosition: 'center',
+				});
 			});
 	}
 
@@ -165,16 +205,41 @@ export class AuthService {
 		const gameRef = doc(this.fireStore, 'userGame', userId);
 		try {
 			await setDoc(gameRef, { games });
+			this.snackbarComponent.openFromComponent(SnackbarComponent, {
+				duration: 5000,
+				data: { text: 'Game is added to user', status: 'success' },
+				verticalPosition: 'top',
+				horizontalPosition: 'center',
+			});
 		} catch (error) {
-			console.error('Помилка створення документа: ', error);
+			this.snackbarComponent.openFromComponent(SnackbarComponent, {
+				duration: 5000,
+				data: { text: 'Game is not added to user', status: 'error' },
+				verticalPosition: 'top',
+				horizontalPosition: 'center',
+			});
+			console.error(error);
 		}
 	}
+
 	async userAvatarUrl(userId: string, photoUrl: string) {
 		const photoURL = doc(this.fireStore, 'userAvatarUrl', userId);
 		try {
 			await setDoc(photoURL, { photoUrl });
+			this.snackbarComponent.openFromComponent(SnackbarComponent, {
+				duration: 5000,
+				data: { text: 'Avatar is added to user', status: 'error' },
+				verticalPosition: 'top',
+				horizontalPosition: 'center',
+			});
 		} catch (error) {
-			console.error('Помилка створення документа: ', error);
+			this.snackbarComponent.openFromComponent(SnackbarComponent, {
+				duration: 5000,
+				data: { text: 'Avatar is not added to user', status: 'error' },
+				verticalPosition: 'top',
+				horizontalPosition: 'center',
+			});
+			console.log(error);
 		}
 	}
 
@@ -203,7 +268,13 @@ export class AuthService {
 		try {
 			await sendPasswordResetEmail(this.auth, email);
 		} catch (error) {
-			console.error('Error callback', error);
+			this.snackbarComponent.openFromComponent(SnackbarComponent, {
+				duration: 5000,
+				data: { text: 'Password is not updated', status: 'error' },
+				verticalPosition: 'top',
+				horizontalPosition: 'center',
+			});
+			console.log(error);
 		}
 	}
 }

@@ -40,11 +40,13 @@ export class GamesComponent extends ClearObservableDirective implements OnInit {
 	}
 
 	getGames(page: number) {
+		this.isLoading = true;
 		this.gamesService
 			.getAllGames(page)
 			.pipe(takeUntil(this.destroy$))
 			.subscribe(games => {
 				this.games = games.results;
+				this.isLoading = false;
 				this.cdr.detectChanges();
 			});
 	}
