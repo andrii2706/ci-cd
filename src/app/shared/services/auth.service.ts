@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, noop, Observable } from 'rxjs';
 import firebase from 'firebase/compat/app';
 import { Router } from '@angular/router';
 import GoogleAuthProvider = firebase.auth.GoogleAuthProvider;
@@ -8,11 +8,9 @@ import User = firebase.User;
 import { doc, Firestore, getDoc, setDoc } from '@angular/fire/firestore';
 import { Game } from '../models/games.interface';
 import {
-	Auth,
-	sendPasswordResetEmail,
-	updateEmail,
-	updatePassword,
-	updateProfile,
+  Auth, onAuthStateChanged, reauthenticateWithCredential,
+  sendPasswordResetEmail, updateEmail,
+  updatePassword, updateProfile,
 } from '@angular/fire/auth';
 
 @Injectable({
@@ -21,8 +19,12 @@ import {
 export class AuthService {
 	userLoggingWithFireBase = new BehaviorSubject<User | null>(null);
 	private userLoggingWithFireBase$: Observable<User | null> =
-		this.userLoggingWithFireBase.asObservable();
-
+	this.userLoggingWithFireBase.asObservable();
+  userPasswordWithFireBase = new BehaviorSubject<string>('');
+	private userPasswordWithFireBase$: Observable<string> =
+	this.userPasswordWithFireBase.asObservable();
+  private userSubject = new BehaviorSubject<any>(null);
+  public user$ = this.userSubject.asObservable();
 	userLoginStatus = new BehaviorSubject<boolean>(false);
 	private userLoginStatus$: Observable<boolean> =
 		this.userLoginStatus.asObservable();
@@ -34,7 +36,9 @@ export class AuthService {
 		private fireStore: Firestore,
 		private auth: Auth,
 		private router: Router
-	) {}
+	) {
+    this.initAuthListener();
+  }
 
 	setLoginStatus(value: boolean) {
 		this.loggedInStatus = value;
@@ -62,6 +66,13 @@ export class AuthService {
 		return this.userLoginStatus.next(status);
 	}
 
+  private initAuthListener(){
+    onAuthStateChanged(this.auth, (user) => {
+      this.userSubject.next(user);
+    });
+  }
+
+
 	googleLogin() {
 		this.afAuth.signInWithPopup(new GoogleAuthProvider()).then(userInfo => {
 			this.changeLoginStatus(true, userInfo.user);
@@ -77,6 +88,7 @@ export class AuthService {
 			.then(userInfo => {
 				this.changeLoginStatus(true, userInfo.user);
 				this.userLoggingWithFireBase.next(userInfo.user);
+        this.userPasswordWithFireBase.next(password)
 				this.proceedUserLoginStatus(true);
 				this.router.navigate(['/home']);
 			})
@@ -94,38 +106,32 @@ export class AuthService {
 				this.proceedUserLoginStatus(true);
 				if (userInfo.user) {
 					this.addGamesToUser(userInfo.user.uid, []).then();
+          this.userAvatarUrl(userInfo.user.uid, '').then()
 				}
 			});
 	}
 
-	async updateUserInformation(
-		displayName: string,
-		photoUrl: string
-	): Promise<void> {
-		const user = this.auth.currentUser;
-		if (user) {
-			try {
-				await updateProfile(user, {
-					displayName,
-					photoURL: photoUrl,
-				});
-			} catch (error) {
-				console.error('User info is not updated', error);
-			}
-		}
-	}
-	async updateUserEmailInfo(email: string): Promise<void> {
-		const user = this.auth.currentUser;
-		if (user) {
-			try {
-				await updateEmail(user, email);
-			} catch (error) {
-				console.error(error);
-			}
-		}
-	}
+  async updateUserInfo(displayName: string, email: string, photoUrl: string) {
+    const auth = this.auth.currentUser;
+    if (auth) {
+      updateProfile(auth, {
+        displayName,
+      }).then(() => {
+       noop();
+      }).catch(error => {
+        console.error(error);
+      })
+      this.userAvatarUrl(auth.uid, photoUrl).then(() => {})
+      // updateEmail(auth, email).then(() => {
+      //   console.log('email updated');
+      // }).catch((error) => {
+      //   console.log(error);
+      // });
+    }
+  }
 
-	async updateUserPassword(newPassword: string): Promise<void> {
+
+  async updateUserPassword(newPassword: string): Promise<void> {
 		const user = this.auth.currentUser;
 		if (user) {
 			try {
@@ -157,6 +163,24 @@ export class AuthService {
 			console.error('Помилка створення документа: ', error);
 		}
 	}
+  async userAvatarUrl(userId: string, photoUrl: string) {
+		const photoURL = doc(this.fireStore, 'userAvatarUrl', userId);
+		try {
+			await setDoc(photoURL, { photoUrl });
+		} catch (error) {
+			console.error('Помилка створення документа: ', error);
+		}
+	}
+
+  async getAvatarById(id: string): Promise<any | undefined> {
+    const avatarDoc = doc(this.fireStore, 'userAvatarUrl', id);
+    const avatarDocSnapshot = await getDoc(avatarDoc);
+    if (avatarDocSnapshot.exists()) {
+      return { id: +avatarDocSnapshot.id, ...avatarDocSnapshot.data() };
+    } else {
+      return null;
+    }
+  }
 
 	/* eslint-disable  @typescript-eslint/no-explicit-any */
 	async getGameById(id: string): Promise<any | undefined> {
