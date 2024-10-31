@@ -3,14 +3,13 @@
 		@if (!updateUserInfoStatus) {
 			<div class="user-info">
 				<div>
-          @if (userAvatar.length) {
-
-          }@else {
-            <img
-              class="avatar"
-              src="{{ user?.photoURL | replaceNullImg }}"
-              alt="User Icon" />
-          }
+					@if (userAvatar.length) {
+					} @else {
+						<img
+							class="avatar"
+							src="{{ user?.photoURL | replaceNullImg }}"
+							alt="User Icon" />
+					}
 					<h3>{{ user.displayName }}</h3>
 					<p>{{ user.email }}</p>
 				</div>
