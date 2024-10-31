@@ -4,6 +4,10 @@
 			<div class="user-info">
 				<div>
 					@if (userAvatar.length) {
+            <img
+              class="avatar"
+              src="{{ userAvatar | replaceNullImg }}"
+              alt="User Icon" />
 					} @else {
 						<img
 							class="avatar"

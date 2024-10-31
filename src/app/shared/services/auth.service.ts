@@ -106,6 +106,7 @@ export class AuthService {
 				this.changeLoginStatus(true, userInfo.user);
 				this.userLoggingWithFireBase.next(userInfo.user);
 				this.proceedUserLoginStatus(true);
+        this.router.navigate(['/home']);
 				if (userInfo.user) {
 					this.addGamesToUser(userInfo.user.uid, []).then();
 					this.userAvatarUrl(userInfo.user.uid, '').then();

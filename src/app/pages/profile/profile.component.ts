@@ -7,7 +7,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../shared/services/auth.service';
 import firebase from 'firebase/compat/app';
 import User = firebase.User;
-import { FirebaseStorage } from '@angular/fire/storage';
+
 @Component({
 	selector: 'app-profile',
 	templateUrl: './profile.component.html',
@@ -26,7 +26,6 @@ export class ProfileComponent
 	showAvatar = false;
 	updateUserInfoStatus = false;
 	private userId: string;
-	private storage: FirebaseStorage;
 
 	constructor(
 		private gamesService: GamesService,
@@ -51,7 +50,7 @@ export class ProfileComponent
 					this.userGames = userGames.games;
 				});
 				this.authService.getAvatarById(user.uid).then(avatar => {
-					this.userAvatar = avatar;
+					this.userAvatar = avatar.photoUrl;
 				});
 			}
 		});
