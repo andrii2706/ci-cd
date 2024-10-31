@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, noop, Observable } from 'rxjs';
 import firebase from 'firebase/compat/app';
 import { Router } from '@angular/router';
 import GoogleAuthProvider = firebase.auth.GoogleAuthProvider;
@@ -9,11 +9,13 @@ import { doc, Firestore, getDoc, setDoc } from '@angular/fire/firestore';
 import { Game } from '../models/games.interface';
 import {
 	Auth,
+	onAuthStateChanged,
 	sendPasswordResetEmail,
-	updateEmail,
 	updatePassword,
 	updateProfile,
 } from '@angular/fire/auth';
+import { SnackbarComponent } from '../components/snackbar/snackbar.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable({
 	providedIn: 'root',
@@ -22,7 +24,12 @@ export class AuthService {
 	userLoggingWithFireBase = new BehaviorSubject<User | null>(null);
 	private userLoggingWithFireBase$: Observable<User | null> =
 		this.userLoggingWithFireBase.asObservable();
-
+	userPasswordWithFireBase = new BehaviorSubject<string>('');
+	private userPasswordWithFireBase$: Observable<string> =
+		this.userPasswordWithFireBase.asObservable();
+	/* eslint-disable  @typescript-eslint/no-explicit-any */
+	private userSubject = new BehaviorSubject<any>(null);
+	public user$ = this.userSubject.asObservable();
 	userLoginStatus = new BehaviorSubject<boolean>(false);
 	private userLoginStatus$: Observable<boolean> =
 		this.userLoginStatus.asObservable();
@@ -31,10 +38,13 @@ export class AuthService {
 
 	constructor(
 		private afAuth: AngularFireAuth,
+		private snackbarComponent: MatSnackBar,
 		private fireStore: Firestore,
 		private auth: Auth,
 		private router: Router
-	) {}
+	) {
+		this.initAuthListener();
+	}
 
 	setLoginStatus(value: boolean) {
 		this.loggedInStatus = value;
@@ -45,11 +55,8 @@ export class AuthService {
 		this.loggedInStatus = status;
 		localStorage.setItem('loggedIn', `${this.loggedInStatus}`);
 		if (userInfo) {
-			this.getGameById(userInfo.uid).then(games => {
-				localStorage.setItem(
-					'user',
-					JSON.stringify({ ...userInfo, games: games.games })
-				);
+			this.getGameById(userInfo.uid).then(() => {
+				localStorage.setItem('user', JSON.stringify({ ...userInfo }));
 			});
 		} else {
 			localStorage.removeItem('user');
@@ -65,26 +72,51 @@ export class AuthService {
 		return this.userLoginStatus.next(status);
 	}
 
-	googleLogin() {
-		this.afAuth.signInWithPopup(new GoogleAuthProvider()).then(userInfo => {
-			this.changeLoginStatus(true, userInfo.user);
-			this.proceedUserLoginStatus(true);
-			this.userLoggingWithFireBase.next(userInfo.user);
-			this.router.navigate(['/home']);
+	private initAuthListener() {
+		onAuthStateChanged(this.auth, user => {
+			this.userSubject.next(user);
 		});
 	}
 
-	loginWithCredentials(email: string, password: string) {
+	async googleLogin() {
+		this.afAuth
+			.signInWithPopup(new GoogleAuthProvider())
+			.then(userInfo => {
+				this.changeLoginStatus(true, userInfo.user);
+				this.proceedUserLoginStatus(true);
+				this.userLoggingWithFireBase.next(userInfo.user);
+				this.router.navigate(['/home']);
+			})
+			.catch(error => {
+				this.snackbarComponent.openFromComponent(SnackbarComponent, {
+					duration: 5000,
+					data: { text: error.message, status: 'error' },
+					verticalPosition: 'top',
+					horizontalPosition: 'center',
+				});
+			});
+	}
+
+	async loginWithCredentials(email: string, password: string) {
 		return this.afAuth
 			.signInWithEmailAndPassword(email, password)
 			.then(userInfo => {
 				this.changeLoginStatus(true, userInfo.user);
 				this.userLoggingWithFireBase.next(userInfo.user);
+				this.userPasswordWithFireBase.next(password);
 				this.proceedUserLoginStatus(true);
 				this.router.navigate(['/home']);
 			})
-			.catch(err => {
-				console.error('Помилка під час входу:', err);
+			.catch(() => {
+				this.snackbarComponent.openFromComponent(SnackbarComponent, {
+					duration: 5000,
+					data: {
+						text: `You don't have profile please Sign In`,
+						status: 'error',
+					},
+					verticalPosition: 'top',
+					horizontalPosition: 'center',
+				});
 			});
 	}
 
@@ -95,36 +127,42 @@ export class AuthService {
 				this.changeLoginStatus(true, userInfo.user);
 				this.userLoggingWithFireBase.next(userInfo.user);
 				this.proceedUserLoginStatus(true);
+				this.router.navigate(['/home']);
 				if (userInfo.user) {
 					this.addGamesToUser(userInfo.user.uid, []).then();
+					this.userAvatarUrl(userInfo.user.uid, '').then();
 				}
+			})
+			.catch(() => {
+				this.snackbarComponent.openFromComponent(SnackbarComponent, {
+					duration: 5000,
+					data: { text: 'You are not logged yet', status: 'error' },
+					verticalPosition: 'top',
+					horizontalPosition: 'center',
+				});
 			});
 	}
 
-	async updateUserInformation(
-		displayName: string,
-		photoUrl: string
-	): Promise<void> {
-		const user = this.auth.currentUser;
-		if (user) {
-			try {
-				await updateProfile(user, {
-					displayName,
-					photoURL: photoUrl,
+	async updateUserInfo(displayName: string, email: string, photoUrl: string) {
+		const auth = this.auth.currentUser;
+		if (auth) {
+			updateProfile(auth, {
+				displayName,
+			})
+				.then(() => {
+					noop();
+				})
+				.catch(error => {
+					console.error(error);
 				});
-			} catch (error) {
-				console.error('User info is not updated', error);
-			}
-		}
-	}
-	async updateUserEmailInfo(email: string): Promise<void> {
-		const user = this.auth.currentUser;
-		if (user) {
-			try {
-				await updateEmail(user, email);
-			} catch (error) {
-				console.error(error);
-			}
+			this.userAvatarUrl(auth.uid, photoUrl).then(() => {
+				noop();
+			});
+			// updateEmail(auth, email).then(() => {
+			//   console.log('email updated');
+			// }).catch((error) => {
+			//   console.log(error);
+			// });
 		}
 	}
 
@@ -133,13 +171,19 @@ export class AuthService {
 		if (user) {
 			try {
 				await updatePassword(user, newPassword);
-			} catch (e) {
-				console.error(e);
+			} catch (error) {
+				this.snackbarComponent.openFromComponent(SnackbarComponent, {
+					duration: 5000,
+					data: { text: 'User update is not responding', status: 'error' },
+					verticalPosition: 'top',
+					horizontalPosition: 'center',
+				});
+				console.log(error);
 			}
 		}
 	}
 
-	logout() {
+	async logout() {
 		return this.afAuth
 			.signOut()
 			.then(() => {
@@ -147,8 +191,13 @@ export class AuthService {
 				this.proceedUserLoginStatus(false);
 				this.changeLoginStatus(false, null);
 			})
-			.catch(error => {
-				console.error('Logout error:', error);
+			.catch(() => {
+				this.snackbarComponent.openFromComponent(SnackbarComponent, {
+					duration: 5000,
+					data: { text: 'Server is not responding ', status: 'error' },
+					verticalPosition: 'top',
+					horizontalPosition: 'center',
+				});
 			});
 	}
 
@@ -156,8 +205,51 @@ export class AuthService {
 		const gameRef = doc(this.fireStore, 'userGame', userId);
 		try {
 			await setDoc(gameRef, { games });
+			this.snackbarComponent.openFromComponent(SnackbarComponent, {
+				duration: 5000,
+				data: { text: 'Game is added to user', status: 'success' },
+				verticalPosition: 'top',
+				horizontalPosition: 'center',
+			});
 		} catch (error) {
-			console.error('Помилка створення документа: ', error);
+			this.snackbarComponent.openFromComponent(SnackbarComponent, {
+				duration: 5000,
+				data: { text: 'Game is not added to user', status: 'error' },
+				verticalPosition: 'top',
+				horizontalPosition: 'center',
+			});
+			console.error(error);
+		}
+	}
+
+	async userAvatarUrl(userId: string, photoUrl: string) {
+		const photoURL = doc(this.fireStore, 'userAvatarUrl', userId);
+		try {
+			await setDoc(photoURL, { photoUrl });
+			this.snackbarComponent.openFromComponent(SnackbarComponent, {
+				duration: 5000,
+				data: { text: 'Avatar is added to user', status: 'error' },
+				verticalPosition: 'top',
+				horizontalPosition: 'center',
+			});
+		} catch (error) {
+			this.snackbarComponent.openFromComponent(SnackbarComponent, {
+				duration: 5000,
+				data: { text: 'Avatar is not added to user', status: 'error' },
+				verticalPosition: 'top',
+				horizontalPosition: 'center',
+			});
+			console.log(error);
+		}
+	}
+
+	async getAvatarById(id: string): Promise<any | undefined> {
+		const avatarDoc = doc(this.fireStore, 'userAvatarUrl', id);
+		const avatarDocSnapshot = await getDoc(avatarDoc);
+		if (avatarDocSnapshot.exists()) {
+			return { id: +avatarDocSnapshot.id, ...avatarDocSnapshot.data() };
+		} else {
+			return null;
 		}
 	}
 
@@ -176,7 +268,13 @@ export class AuthService {
 		try {
 			await sendPasswordResetEmail(this.auth, email);
 		} catch (error) {
-			console.error('Error callback', error);
+			this.snackbarComponent.openFromComponent(SnackbarComponent, {
+				duration: 5000,
+				data: { text: 'Password is not updated', status: 'error' },
+				verticalPosition: 'top',
+				horizontalPosition: 'center',
+			});
+			console.log(error);
 		}
 	}
 }

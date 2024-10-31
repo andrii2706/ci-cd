@@ -28,15 +28,6 @@ export const routes: Routes = [
 		resolve: { games: gamesResolver },
 	},
 	{
-		path: 'videos',
-		loadChildren: () =>
-			import('./pages/games-videos/games-video.module').then(
-				m => m.GamesVideoModule
-			),
-		title: 'Videos',
-		canActivate: [authGuard],
-	},
-	{
 		path: 'profile',
 		loadChildren: () =>
 			import('./pages/profile/profile.module').then(m => m.ProfileModule),

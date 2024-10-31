@@ -56,12 +56,12 @@ xdescribe('AuthComponent', () => {
 		expect(signInSpy).toHaveBeenCalledWith('test@example.com', 'testpassword');
 	});
 
-	it('should submitGoogleAuth', () => {
-		const signInSpy = jest.spyOn(authService, 'googleLogin').mockReturnValue();
-		component.submitGoogleAuth();
-
-		expect(signInSpy).toHaveBeenCalled();
-	});
+	// xit('should submitGoogleAuth', () => {
+	// 	const signInSpy = jest.spyOn(authService, 'googleLogin').mockReturnValue();
+	// 	component.submitGoogleAuth();
+  //
+	// 	expect(signInSpy).toHaveBeenCalled();
+	// });
 
 	it('should cancelSubmitAuthForm', () => {
 		component.signInForm = true;

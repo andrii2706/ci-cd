@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import {
 	NavigationEnd,
 	Router,
@@ -16,9 +16,19 @@ import { filter, noop } from 'rxjs';
 	templateUrl: './app.component.html',
 	styleUrls: ['./app.component.scss'], // змінив на 'styleUrls' (зверни увагу на помилку в 'styleUrl')
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
 	events: string[] = [];
 	opened = false;
+	/* eslint-disable  @typescript-eslint/no-explicit-any */
+	private logoutTimer: any;
+	private readonly timeoutDuration = 8 * 60 * 60 * 1000;
+
+	@HostListener('document:mousemove')
+	@HostListener('document:keydown')
+	@HostListener('document:click')
+	handleUserActivity() {
+		this.resetLogoutTimer();
+	}
 
 	constructor(
 		private router: Router,
@@ -37,6 +47,21 @@ export class AppComponent implements OnInit {
 					}
 				});
 		}
+		this.resetLogoutTimer();
+	}
+
+	private resetLogoutTimer() {
+		this.clearLogoutTimer();
+
+		this.logoutTimer = setTimeout(() => {
+			this.logoutUser();
+		}, this.timeoutDuration);
+	}
+
+	private clearLogoutTimer() {
+		if (this.logoutTimer) {
+			clearTimeout(this.logoutTimer);
+		}
 	}
 
 	logoutUser() {
@@ -45,5 +70,9 @@ export class AppComponent implements OnInit {
 
 	goToProfile() {
 		this.router.navigateByUrl('profile');
+	}
+
+	ngOnDestroy() {
+		this.clearLogoutTimer();
 	}
 }

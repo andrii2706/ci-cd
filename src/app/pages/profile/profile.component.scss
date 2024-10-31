@@ -23,17 +23,10 @@ section {
 		justify-content: center;
 		align-items: flex-end;
 		flex-direction: column;
-
-		> img {
-			width: 40rem;
-			height: 550px;
-			border-radius: 10px;
-		}
-
-		> mat-icon {
-			width: 60px;
-			height: 60px;
-		}
+		max-width: 400px;
+		height: 400px;
+		border-radius: 10px;
+		margin-bottom: 1rem;
 	}
 }
 

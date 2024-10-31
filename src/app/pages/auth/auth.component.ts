@@ -87,6 +87,13 @@ export class AuthComponent extends ClearObservableDirective implements OnInit {
 			.then(() => {
 				this.showForgotPassword = false;
 				this.signInForm = false;
+			})
+			.catch(error => {
+				console.log(error);
 			});
 	}
+
+	// forgotEmail() {
+	//   this.authService.
+	// }
 }

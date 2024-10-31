@@ -3,6 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import {
 	FilterParams,
+	Game,
 	GameDetails,
 	Games,
 	GameTrailers,
@@ -15,6 +16,8 @@ import {
 	updateDoc,
 } from '@angular/fire/firestore';
 import { environment } from '../../../environment/environment';
+import { SnackbarComponent } from '../components/snackbar/snackbar.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable({
 	providedIn: 'root',
@@ -31,6 +34,7 @@ export class GamesService {
 
 	constructor(
 		private httpClient: HttpClient,
+		private snackbarComponent: MatSnackBar,
 		private fireStore: Firestore
 	) {}
 
@@ -113,8 +117,20 @@ export class GamesService {
 		const userRef = doc(this.fireStore, 'userGame', userId);
 		try {
 			await updateDoc(userRef, newData);
+			this.snackbarComponent.openFromComponent(SnackbarComponent, {
+				duration: 5000,
+				data: { text: `Game is added to bucket`, status: 'success' },
+				verticalPosition: 'top',
+				horizontalPosition: 'center',
+			});
 		} catch (error) {
-			console.error('Помилка оновлення даних: ', error);
+			this.snackbarComponent.openFromComponent(SnackbarComponent, {
+				duration: 5000,
+				data: { text: `Game is not added`, status: 'error' },
+				verticalPosition: 'top',
+				horizontalPosition: 'center',
+			});
+			console.log(error);
 		}
 	}
 
@@ -129,14 +145,26 @@ export class GamesService {
 		}
 	}
 
-	async removeGameFromUser(userId: string, gameId: string) {
+	async removeGameFromUser(userId: string, gameId: Game) {
 		const userRef = doc(this.fireStore, 'userGame', userId);
 		try {
 			await updateDoc(userRef, {
 				games: arrayRemove(gameId),
 			});
+			this.snackbarComponent.openFromComponent(SnackbarComponent, {
+				duration: 5000,
+				data: { text: `Game is removed successfully`, status: 'success' },
+				verticalPosition: 'top',
+				horizontalPosition: 'center',
+			});
 		} catch (error) {
-			console.error('Помилка видалення гри з масиву: ', error);
+			this.snackbarComponent.openFromComponent(SnackbarComponent, {
+				duration: 5000,
+				data: { text: `Game is not deleted`, status: 'error' },
+				verticalPosition: 'top',
+				horizontalPosition: 'center',
+			});
+			console.log(error);
 		}
 	}
 }

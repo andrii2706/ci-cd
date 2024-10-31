@@ -1,12 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ClearObservableDirective } from '../../shared/classes';
 import { GamesService } from '../../shared/services/games.service';
 import { Game } from '../../shared/models/games.interface';
 import { ActivatedRoute, Router } from '@angular/router';
-import { UserInterface } from '../../shared/models/user.interface';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../shared/services/auth.service';
-import { noop } from 'rxjs';
+import firebase from 'firebase/compat/app';
+import User = firebase.User;
 
 @Component({
 	selector: 'app-profile',
@@ -19,11 +19,10 @@ export class ProfileComponent
 {
 	updateUserInfoForm: FormGroup;
 
-	user: UserInterface;
+	user: User | null;
 	userGames: Game[] = [];
 	isLoading: boolean;
-	/* eslint-disable  @typescript-eslint/no-explicit-any */
-	userAvatar: any;
+	userAvatar = '';
 	showAvatar = false;
 	updateUserInfoStatus = false;
 	private userId: string;
@@ -32,7 +31,8 @@ export class ProfileComponent
 		private gamesService: GamesService,
 		private authService: AuthService,
 		private router: Router,
-		private activatedRoute: ActivatedRoute
+		private activatedRoute: ActivatedRoute,
+		private cdr: ChangeDetectorRef
 	) {
 		super();
 	}
@@ -43,17 +43,19 @@ export class ProfileComponent
 	}
 
 	getUser() {
-		const localUserInfo = localStorage.getItem('user');
-		if (localUserInfo) {
-			this.user = JSON.parse(localUserInfo).multiFactor.user;
-			if (this.user) {
-				this.userId = this.user.uid;
-				this.gamesService.getGameById(this.userId).then(userGames => {
+		this.authService.user$.subscribe(user => {
+			if (user) {
+				this.user = user;
+				this.gamesService.getGameById(user.uid).then(userGames => {
 					this.userGames = userGames.games;
 				});
+				this.authService.getAvatarById(user.uid).then(avatar => {
+					this.userAvatar = avatar.photoUrl;
+				});
 			}
-		}
+		});
 	}
+
 	/* eslint-disable  @typescript-eslint/no-explicit-any */
 	getFile(event: any) {
 		this.userAvatar = event.target.files[0];
@@ -85,23 +87,25 @@ export class ProfileComponent
 	}
 
 	removeGames(gameInfo: Game) {
-		console.log(gameInfo);
+		if (this.user) {
+			this.gamesService.removeGameFromUser(this.user.uid, gameInfo).then(() => {
+				this.gamesService.getGameById(this.userId).then(userGames => {
+					this.userGames = userGames.games;
+				});
+			});
+		}
 	}
 
-	submitUpdateUserForm() {
-		this.updateUserInfoForm.get('photoUrl')?.setValue(this.userAvatar);
-		this.authService
-			.updateUserInformation(
+	async submitUpdateUserForm() {
+		try {
+			this.authService.updateUserInfo(
 				this.updateUserInfoForm.get('displayName')?.value,
+				this.updateUserInfoForm.get('email')?.value,
 				this.userAvatar
-			)
-			.then(() => {
-				noop();
-			});
-		this.authService
-			.updateUserEmailInfo(this.updateUserInfoForm.get('email')?.value)
-			.then(() => {
-				noop();
-			});
+			);
+			console.log('User info updated successfully');
+		} catch (error) {
+			console.error('Error updating user info', error);
+		}
 	}
 }
