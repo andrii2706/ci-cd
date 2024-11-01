@@ -105,8 +105,8 @@ export class GamesComponent extends ClearObservableDirective implements OnInit {
 		} else {
 			return this.filteredGames(1, this.filterParams);
 		}
-    this.isLoading = false;
-    this.cdr.detectChanges();
+		this.isLoading = false;
+		this.cdr.detectChanges();
 	}
 
 	filteredGames(page: number, filter: FilterParams) {

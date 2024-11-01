@@ -30,7 +30,7 @@ export class HomeComponent extends ClearObservableDirective implements OnInit {
 	dates: string;
 	isLoading: boolean;
 	isGameBoughtStatus = [];
-  userGames: Game[] = []
+	userGames: Game[] = [];
 
 	constructor(
 		private gamesService: GamesService,

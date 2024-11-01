@@ -56,7 +56,10 @@ export class AuthService {
 		localStorage.setItem('loggedIn', `${this.loggedInStatus}`);
 		if (userInfo) {
 			this.getGameById(userInfo.uid).then(() => {
-				localStorage.setItem('user', JSON.stringify({ ...userInfo , games: []}));
+				localStorage.setItem(
+					'user',
+					JSON.stringify({ ...userInfo, games: [] })
+				);
 			});
 		} else {
 			localStorage.removeItem('user');
