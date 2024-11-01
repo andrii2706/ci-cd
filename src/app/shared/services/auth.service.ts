@@ -56,7 +56,7 @@ export class AuthService {
 		localStorage.setItem('loggedIn', `${this.loggedInStatus}`);
 		if (userInfo) {
 			this.getGameById(userInfo.uid).then(() => {
-				localStorage.setItem('user', JSON.stringify({ ...userInfo }));
+				localStorage.setItem('user', JSON.stringify({ ...userInfo , games: []}));
 			});
 		} else {
 			localStorage.removeItem('user');
@@ -158,11 +158,6 @@ export class AuthService {
 			this.userAvatarUrl(auth.uid, photoUrl).then(() => {
 				noop();
 			});
-			// updateEmail(auth, email).then(() => {
-			//   console.log('email updated');
-			// }).catch((error) => {
-			//   console.log(error);
-			// });
 		}
 	}
 

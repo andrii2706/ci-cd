@@ -101,14 +101,12 @@ export class GamesComponent extends ClearObservableDirective implements OnInit {
 			this.filterParams.dates === '' &&
 			this.filterParams.metacritic === ''
 		) {
-			this.isLoading = false;
-			this.cdr.detectChanges();
 			return this.getGames(1);
 		} else {
-			this.isLoading = false;
-			this.cdr.detectChanges();
 			return this.filteredGames(1, this.filterParams);
 		}
+    this.isLoading = false;
+    this.cdr.detectChanges();
 	}
 
 	filteredGames(page: number, filter: FilterParams) {
