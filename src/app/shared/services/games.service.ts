@@ -15,6 +15,7 @@ import {
 	getDoc,
 	updateDoc,
 } from '@angular/fire/firestore';
+import { environment } from '../../../environment/environment';
 import { SnackbarComponent } from '../components/snackbar/snackbar.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
@@ -22,8 +23,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 	providedIn: 'root',
 })
 export class GamesService {
-	key = process.env['API_KEY '];
-	url = process.env['API_URL '];
+	key = environment.rawgApiKey;
+	url = environment.rawgApaUrl;
 	games = '/games';
 
 	newGames = new BehaviorSubject<Games | null>(null);
@@ -41,7 +42,7 @@ export class GamesService {
 		const query = (dates: string) =>
 			new HttpParams({
 				fromObject: {
-					key: this.key as string,
+					key: this.key,
 					page,
 					dates: dates,
 				},
@@ -55,7 +56,7 @@ export class GamesService {
 		const filterParam = () =>
 			new HttpParams({
 				fromObject: {
-					key: this.key as string,
+					key: this.key,
 					page,
 				},
 			});
@@ -78,7 +79,7 @@ export class GamesService {
 	getGameByIdFromBE(id: string): Observable<GameDetails> {
 		const paramsForGameBtId = new HttpParams({
 			fromObject: {
-				key: this.key as string,
+				key: this.key,
 			},
 		});
 		return this.httpClient.get<GameDetails>(`${this.url}${this.games}/${id}`, {
@@ -89,7 +90,7 @@ export class GamesService {
 	getGameMovieById(id: string): Observable<GameTrailers> {
 		const paramsForGameBtId = new HttpParams({
 			fromObject: {
-				key: this.key as string,
+				key: this.key,
 			},
 		});
 		return this.httpClient.get<GameTrailers>(

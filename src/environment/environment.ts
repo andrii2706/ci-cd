@@ -8,6 +8,7 @@ export const environment = {
 		appId: '1:62981914512:web:1cf9bb17a3ed34c1bf7d15',
 		measurementId: 'G-JKRE9D00B4',
 	},
-
+	rawgApiKey: '85d9905e7cd7443c8983e54b4733abf5',
+	rawgApaUrl: 'https://api.rawg.io/api',
 	production: false,
 };

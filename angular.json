@@ -57,11 +57,8 @@
 							"sourceMap": true
 						}
 					},
-					"defaultConfiguration": "production",
-					"customWebpackConfig": {
-						"path": "./webpack.config.js"
-					}
-				},
+					"defaultConfiguration": "production"
+        },
 				"serve": {
 					"builder": "@angular-devkit/build-angular:dev-server",
 					"configurations": {
