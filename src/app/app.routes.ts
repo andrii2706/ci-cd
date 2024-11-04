@@ -40,6 +40,6 @@ export const routes: Routes = [
 		component: ErrorPageComponent,
 		title: 'Error',
 		canActivate: [authGuard, errorPageGuard],
-    canDeactivate:[]
+		canDeactivate: [],
 	},
 ];

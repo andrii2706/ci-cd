@@ -3,6 +3,6 @@ import { ErrorService } from '../services/error.service';
 import { inject } from '@angular/core';
 
 export const errorPageGuard: CanActivateFn | CanDeactivateFn<boolean> = () => {
-      const errorService = inject(ErrorService)
-    return !errorService.requestError.value;
+	const errorService = inject(ErrorService);
+	return !errorService.requestError.value;
 };

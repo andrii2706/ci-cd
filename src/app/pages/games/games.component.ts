@@ -24,7 +24,7 @@ export class GamesComponent extends ClearObservableDirective implements OnInit {
 	constructor(
 		private cdr: ChangeDetectorRef,
 		private gamesService: GamesService,
-    private errorService: ErrorService,
+		private errorService: ErrorService
 	) {
 		super();
 	}
@@ -37,7 +37,7 @@ export class GamesComponent extends ClearObservableDirective implements OnInit {
 				this.total = games.count;
 			}
 			this.isLoading = false;
-      this.errorService.fullErrorObject(false);
+			this.errorService.fullErrorObject(false);
 		});
 		this.isGameBought();
 	}
@@ -50,7 +50,7 @@ export class GamesComponent extends ClearObservableDirective implements OnInit {
 			.subscribe(games => {
 				this.games = games.results;
 				this.isLoading = false;
-        this.errorService.fullErrorObject(false);
+				this.errorService.fullErrorObject(false);
 				this.cdr.detectChanges();
 			});
 	}
@@ -96,7 +96,7 @@ export class GamesComponent extends ClearObservableDirective implements OnInit {
 	getFilterQuery(fp: FilterParams) {
 		this.isLoading = true;
 		this.filterParams = fp;
-    if (
+		if (
 			this.filterParams.search === '' &&
 			this.filterParams.genres === '' &&
 			this.filterParams.platforms === '' &&
@@ -127,7 +127,7 @@ export class GamesComponent extends ClearObservableDirective implements OnInit {
 				this.totalGames = games.count;
 				this.games = games.results;
 				this.isLoading = false;
-        this.errorService.fullErrorObject(false);
+				this.errorService.fullErrorObject(false);
 				this.cdr.detectChanges();
 			});
 	}

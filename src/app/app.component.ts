@@ -1,9 +1,5 @@
 import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
-import {
-	Router,
-	RouterLink,
-	RouterOutlet,
-} from '@angular/router';
+import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { AppMaterialModule } from './app-material/app-material.module';
 import { AuthService } from './shared/services/auth.service';
 import { noop } from 'rxjs';
@@ -37,7 +33,7 @@ export class AppComponent implements OnInit, OnDestroy {
 	ngOnInit() {
 		if (this.authService.LoginStatus) {
 			this.authService.userLoginStatus.next(true);
-			this.router.navigate(['/home'])
+			this.router.navigate(['/home']);
 		}
 		this.resetLogoutTimer();
 	}

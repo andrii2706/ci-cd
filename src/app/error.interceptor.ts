@@ -6,7 +6,7 @@ import { ErrorService } from './shared/services/error.service';
 
 export const errorInterceptor: HttpInterceptorFn = (req, next) => {
 	const router = inject(Router);
-  const errorService = inject(ErrorService);
+	const errorService = inject(ErrorService);
 
 	return next(req).pipe(
 		catchError((error: HttpErrorResponse) => {
@@ -20,7 +20,7 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
 					router.navigate(['/error']);
 				}
 			}
-      errorService.fullErrorObject(true)
+			errorService.fullErrorObject(true);
 			return throwError(() => new Error(errorMsg));
 		})
 	);
