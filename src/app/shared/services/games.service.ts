@@ -22,7 +22,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 	providedIn: 'root',
 })
 export class GamesService {
-	key = process.env['API_KEY ']
+	key = process.env['API_KEY '];
 	url = process.env['API_URL '];
 	games = '/games';
 

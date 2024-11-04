@@ -58,9 +58,9 @@
 						}
 					},
 					"defaultConfiguration": "production",
-          "customWebpackConfig": {
-            "path": "./webpack.config.js"
-          }
+					"customWebpackConfig": {
+						"path": "./webpack.config.js"
+					}
 				},
 				"serve": {
 					"builder": "@angular-devkit/build-angular:dev-server",
