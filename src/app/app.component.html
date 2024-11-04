@@ -8,14 +8,14 @@
 	</button>
 	<span>My App</span>
 	<span class="example-spacer"></span>
-  @if(userStatus){
-    <button mat-raised-button [color]="'primary'" (click)="logoutUser()">
-      Log out
-    </button>
-    <button mat-icon-button class="example-icon" (click)="goToProfile()">
-      <mat-icon>account_circle</mat-icon>
-    </button>
-  }
+	@if (userStatus) {
+		<button mat-raised-button [color]="'primary'" (click)="logoutUser()">
+			Log out
+		</button>
+		<button mat-icon-button class="example-icon" (click)="goToProfile()">
+			<mat-icon>account_circle</mat-icon>
+		</button>
+	}
 </mat-toolbar>
 <mat-sidenav-container class="sidenav-container">
 	<mat-sidenav

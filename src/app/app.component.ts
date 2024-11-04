@@ -1,4 +1,10 @@
-import { Component, DoCheck, HostListener, OnDestroy, OnInit } from '@angular/core';
+import {
+	Component,
+	DoCheck,
+	HostListener,
+	OnDestroy,
+	OnInit,
+} from '@angular/core';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { AppMaterialModule } from './app-material/app-material.module';
 import { AuthService } from './shared/services/auth.service';
@@ -11,10 +17,10 @@ import { noop } from 'rxjs';
 	templateUrl: './app.component.html',
 	styleUrls: ['./app.component.scss'], // змінив на 'styleUrls' (зверни увагу на помилку в 'styleUrl')
 })
-export class AppComponent implements OnInit, DoCheck , OnDestroy {
+export class AppComponent implements OnInit, DoCheck, OnDestroy {
 	events: string[] = [];
 	opened = false;
-  userStatus = false;
+	userStatus = false;
 	/* eslint-disable  @typescript-eslint/no-explicit-any */
 	private logoutTimer: any;
 	private readonly timeoutDuration = 8 * 60 * 60 * 1000;
@@ -38,9 +44,9 @@ export class AppComponent implements OnInit, DoCheck , OnDestroy {
 		}
 		this.resetLogoutTimer();
 	}
-  ngDoCheck(){
-    this.userStatus = this.authService.LoginStatus
-  }
+	ngDoCheck() {
+		this.userStatus = this.authService.LoginStatus;
+	}
 
 	private resetLogoutTimer() {
 		this.clearLogoutTimer();
