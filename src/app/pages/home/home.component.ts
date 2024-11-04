@@ -8,6 +8,7 @@ import { finalize, noop, takeUntil } from 'rxjs';
 import moment from 'moment';
 import { SpinnerComponent } from '../../shared/components/spinner/spinner.component';
 import { ClearObservableDirective } from '../../shared/classes';
+import { ErrorService } from '../../shared/services/error.service';
 
 @Component({
 	selector: 'app-home',
@@ -34,6 +35,7 @@ export class HomeComponent extends ClearObservableDirective implements OnInit {
 
 	constructor(
 		private gamesService: GamesService,
+    private errorService: ErrorService,
 		private cdr: ChangeDetectorRef
 	) {
 		super();
@@ -50,6 +52,7 @@ export class HomeComponent extends ClearObservableDirective implements OnInit {
 				}
 				this.isGameBought();
 				this.isLoading = false;
+        this.errorService.fullErrorObject(false);
 			});
 	}
 
@@ -69,6 +72,7 @@ export class HomeComponent extends ClearObservableDirective implements OnInit {
 			.subscribe(games => {
 				this.total = games.count;
 				this.games = games.results;
+        this.errorService.fullErrorObject(false);
 			});
 	}
 

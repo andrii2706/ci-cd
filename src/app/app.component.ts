@@ -1,13 +1,12 @@
 import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import {
-	NavigationEnd,
 	Router,
 	RouterLink,
 	RouterOutlet,
 } from '@angular/router';
 import { AppMaterialModule } from './app-material/app-material.module';
 import { AuthService } from './shared/services/auth.service';
-import { filter, noop } from 'rxjs';
+import { noop } from 'rxjs';
 
 @Component({
 	selector: 'app-root',
@@ -38,14 +37,7 @@ export class AppComponent implements OnInit, OnDestroy {
 	ngOnInit() {
 		if (this.authService.LoginStatus) {
 			this.authService.userLoginStatus.next(true);
-			this.router.events
-				.pipe(filter(event => event instanceof NavigationEnd))
-				/* eslint-disable  @typescript-eslint/no-explicit-any */
-				.subscribe((event: any) => {
-					if (event.url === '/') {
-						this.router.navigate(['home']);
-					}
-				});
+			this.router.navigate(['/home'])
 		}
 		this.resetLogoutTimer();
 	}

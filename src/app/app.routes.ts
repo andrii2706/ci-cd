@@ -4,6 +4,7 @@ import { authGuard } from './shared/guards/auth.guard';
 import { homeResolver } from './pages/home/home.resolver';
 import { gamesResolver } from './pages/games/games.resolver';
 import { ErrorPageComponent } from './pages/error-page/error-page.component';
+import { errorPageGuard } from './shared/guards/error-page.guard';
 
 export const routes: Routes = [
 	{
@@ -38,6 +39,7 @@ export const routes: Routes = [
 		path: 'error',
 		component: ErrorPageComponent,
 		title: 'Error',
-		canActivate: [authGuard],
+		canActivate: [authGuard, errorPageGuard],
+    canDeactivate:[]
 	},
 ];
