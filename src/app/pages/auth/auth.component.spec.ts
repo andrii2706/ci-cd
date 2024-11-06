@@ -59,7 +59,7 @@ xdescribe('AuthComponent', () => {
 	// xit('should submitGoogleAuth', () => {
 	// 	const signInSpy = jest.spyOn(authService, 'googleLogin').mockReturnValue();
 	// 	component.submitGoogleAuth();
-  //
+	//
 	// 	expect(signInSpy).toHaveBeenCalled();
 	// });
 

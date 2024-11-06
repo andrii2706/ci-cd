@@ -89,9 +89,11 @@ export class ProfileComponent
 	removeGames(gameInfo: Game) {
 		if (this.user) {
 			this.gamesService.removeGameFromUser(this.user.uid, gameInfo).then(() => {
-				this.gamesService.getGameById(this.userId).then(userGames => {
-					this.userGames = userGames.games;
-				});
+				if (this.user) {
+					this.gamesService.getGameById(this.user.uid).then(userGames => {
+						this.userGames = userGames.games;
+					});
+				}
 			});
 		}
 	}

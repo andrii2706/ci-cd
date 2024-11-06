@@ -4,6 +4,7 @@ import { Game } from '../../shared/models/games.interface';
 import { finalize, noop, take, takeUntil } from 'rxjs';
 import { FilterParams } from '../../shared/models/filter.interface';
 import { ClearObservableDirective } from '../../shared/classes';
+import { ErrorService } from '../../shared/services/error.service';
 
 @Component({
 	selector: 'app-games',
@@ -22,7 +23,8 @@ export class GamesComponent extends ClearObservableDirective implements OnInit {
 
 	constructor(
 		private cdr: ChangeDetectorRef,
-		private gamesService: GamesService
+		private gamesService: GamesService,
+		private errorService: ErrorService
 	) {
 		super();
 	}
@@ -35,6 +37,7 @@ export class GamesComponent extends ClearObservableDirective implements OnInit {
 				this.total = games.count;
 			}
 			this.isLoading = false;
+			this.errorService.fullErrorObject(false);
 		});
 		this.isGameBought();
 	}
@@ -47,6 +50,7 @@ export class GamesComponent extends ClearObservableDirective implements OnInit {
 			.subscribe(games => {
 				this.games = games.results;
 				this.isLoading = false;
+				this.errorService.fullErrorObject(false);
 				this.cdr.detectChanges();
 			});
 	}
@@ -101,14 +105,12 @@ export class GamesComponent extends ClearObservableDirective implements OnInit {
 			this.filterParams.dates === '' &&
 			this.filterParams.metacritic === ''
 		) {
-			this.isLoading = false;
-			this.cdr.detectChanges();
 			return this.getGames(1);
 		} else {
-			this.isLoading = false;
-			this.cdr.detectChanges();
 			return this.filteredGames(1, this.filterParams);
 		}
+		this.isLoading = false;
+		this.cdr.detectChanges();
 	}
 
 	filteredGames(page: number, filter: FilterParams) {
@@ -125,6 +127,7 @@ export class GamesComponent extends ClearObservableDirective implements OnInit {
 				this.totalGames = games.count;
 				this.games = games.results;
 				this.isLoading = false;
+				this.errorService.fullErrorObject(false);
 				this.cdr.detectChanges();
 			});
 	}

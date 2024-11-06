@@ -2,9 +2,11 @@ import { HttpErrorResponse, HttpInterceptorFn } from '@angular/common/http';
 import { catchError, throwError } from 'rxjs';
 import { inject } from '@angular/core';
 import { Router } from '@angular/router';
+import { ErrorService } from './shared/services/error.service';
 
 export const errorInterceptor: HttpInterceptorFn = (req, next) => {
 	const router = inject(Router);
+	const errorService = inject(ErrorService);
 
 	return next(req).pipe(
 		catchError((error: HttpErrorResponse) => {
@@ -18,7 +20,7 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
 					router.navigate(['/error']);
 				}
 			}
-			console.error(errorMsg);
+			errorService.fullErrorObject(true);
 			return throwError(() => new Error(errorMsg));
 		})
 	);

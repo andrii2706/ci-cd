@@ -1,13 +1,16 @@
-import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import {
-	NavigationEnd,
-	Router,
-	RouterLink,
-	RouterOutlet,
-} from '@angular/router';
+	Component,
+	DoCheck,
+	HostListener,
+	OnDestroy,
+	OnInit,
+} from '@angular/core';
+import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { AppMaterialModule } from './app-material/app-material.module';
 import { AuthService } from './shared/services/auth.service';
-import { filter, noop } from 'rxjs';
+import { noop } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
+import { BotComponent } from './pages/bot/bot.component';
 
 @Component({
 	selector: 'app-root',
@@ -16,9 +19,10 @@ import { filter, noop } from 'rxjs';
 	templateUrl: './app.component.html',
 	styleUrls: ['./app.component.scss'], // змінив на 'styleUrls' (зверни увагу на помилку в 'styleUrl')
 })
-export class AppComponent implements OnInit, OnDestroy {
+export class AppComponent implements OnInit, DoCheck, OnDestroy {
 	events: string[] = [];
 	opened = false;
+	userStatus = false;
 	/* eslint-disable  @typescript-eslint/no-explicit-any */
 	private logoutTimer: any;
 	private readonly timeoutDuration = 8 * 60 * 60 * 1000;
@@ -32,22 +36,19 @@ export class AppComponent implements OnInit, OnDestroy {
 
 	constructor(
 		private router: Router,
+		private dialogWindow: MatDialog,
 		private authService: AuthService
 	) {}
 
 	ngOnInit() {
 		if (this.authService.LoginStatus) {
 			this.authService.userLoginStatus.next(true);
-			this.router.events
-				.pipe(filter(event => event instanceof NavigationEnd))
-				/* eslint-disable  @typescript-eslint/no-explicit-any */
-				.subscribe((event: any) => {
-					if (event.url === '/') {
-						this.router.navigate(['home']);
-					}
-				});
+			this.router.navigate(['/home']);
 		}
 		this.resetLogoutTimer();
+	}
+	ngDoCheck() {
+		this.userStatus = this.authService.LoginStatus;
 	}
 
 	private resetLogoutTimer() {
@@ -74,5 +75,12 @@ export class AppComponent implements OnInit, OnDestroy {
 
 	ngOnDestroy() {
 		this.clearLogoutTimer();
+	}
+
+	openBotModal() {
+		this.dialogWindow.open(BotComponent, {
+			width: '700px',
+			height: '800px',
+		});
 	}
 }
