@@ -2,6 +2,7 @@
 	<div mat-dialog-title class="flex-block-between">
 		<h2>Bot</h2>
 	</div>
+  <div><button mat-icon-button (click)="closeBot()"><mat-icon>close</mat-icon></button></div>
 	<div mat-dialog-content class="w-500px h-500px" style="background: #d7e3ff">
 		<div [innerText]="botAnswer" class="message-from-bot"></div>
 		<div [innerText]="userMessage" class="message-from-user"></div>
