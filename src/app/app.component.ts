@@ -36,7 +36,7 @@ export class AppComponent implements OnInit, DoCheck, OnDestroy {
 
 	constructor(
 		private router: Router,
-    private dialogWindow: MatDialog,
+		private dialogWindow: MatDialog,
 		private authService: AuthService
 	) {}
 
@@ -77,10 +77,10 @@ export class AppComponent implements OnInit, DoCheck, OnDestroy {
 		this.clearLogoutTimer();
 	}
 
-  openBotModal() {
-    this.dialogWindow.open(BotComponent, {
-      width: '700px',
-      height: '800px'
-    })
-  }
+	openBotModal() {
+		this.dialogWindow.open(BotComponent, {
+			width: '700px',
+			height: '800px',
+		});
+	}
 }

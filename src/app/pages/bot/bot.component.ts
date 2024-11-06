@@ -12,35 +12,34 @@ import { ClearObservableDirective } from '../../shared/classes';
 	styleUrl: './bot.component.scss',
 })
 export class BotComponent extends ClearObservableDirective implements OnInit {
-  botForm: FormGroup;
-  botAnswer = 'hello'
-  userMessage = "Hello bot";
+	botForm: FormGroup;
+	botAnswer = 'hello';
+	userMessage = 'Hello bot';
 
-  constructor(private dialogWindow:MatDialog) {
-    super();
-  }
+	constructor(private dialogWindow: MatDialog) {
+		super();
+	}
 
-  ngOnInit(): void {
-  this.buildConversationWithBot();
-  }
+	ngOnInit(): void {
+		this.buildConversationWithBot();
+	}
 
-  buildConversationWithBot() {
-    this.botForm = new FormGroup({
-      conversation: new FormControl(''),
-    });
-  }
+	buildConversationWithBot() {
+		this.botForm = new FormGroup({
+			conversation: new FormControl(''),
+		});
+	}
 
-  get conversationFormField(): AbstractControl<string> | null {
-    return this.botForm.get('conversation');
-  }
+	get conversationFormField(): AbstractControl<string> | null {
+		return this.botForm.get('conversation');
+	}
 
-  sendMessageToBot() {
-    console.log(this.conversationFormField?.value);
-    this.conversationFormField?.setValue('');
-  }
+	sendMessageToBot() {
+		console.log(this.conversationFormField?.value);
+		this.conversationFormField?.setValue('');
+	}
 
-  closeBot() {
-    this.dialogWindow.closeAll()
-  }
-
+	closeBot() {
+		this.dialogWindow.closeAll();
+	}
 }
