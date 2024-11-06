@@ -9,6 +9,8 @@ import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { AppMaterialModule } from './app-material/app-material.module';
 import { AuthService } from './shared/services/auth.service';
 import { noop } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
+import { BotComponent } from './pages/bot/bot.component';
 
 @Component({
 	selector: 'app-root',
@@ -34,6 +36,7 @@ export class AppComponent implements OnInit, DoCheck, OnDestroy {
 
 	constructor(
 		private router: Router,
+    private dialogWindow: MatDialog,
 		private authService: AuthService
 	) {}
 
@@ -73,4 +76,11 @@ export class AppComponent implements OnInit, DoCheck, OnDestroy {
 	ngOnDestroy() {
 		this.clearLogoutTimer();
 	}
+
+  openBotModal() {
+    this.dialogWindow.open(BotComponent, {
+      width: '700px',
+      height: '800px'
+    })
+  }
 }

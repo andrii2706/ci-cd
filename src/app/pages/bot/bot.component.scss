@@ -1,0 +1,28 @@
+.w-500px{
+  width: 500px;
+}
+.h-500px{
+  height: 500px;
+}
+.mt-1{
+ margin-top :1rem;
+}
+::ng-deep .mat-mdc-form-field-infix{
+  display: flex;
+}
+.message-from-bot{
+  margin-top: 1rem;
+  border-radius: 15px;
+  padding: 0.5rem;
+  background: #005cbb;
+  color: white;
+}
+.message-from-user{
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1rem;
+  border-radius: 15px;
+  padding: 0.5rem;
+  background: #005cbb;
+  color: white;
+}

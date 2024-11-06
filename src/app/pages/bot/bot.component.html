@@ -1,1 +1,15 @@
-<p>bot works!</p>
+<section class="flex-direction-columns">
+  <div mat-dialog-title class="flex-block-between">
+    <h2>Bot</h2>
+  </div>
+  <div mat-dialog-content class="w-500px h-500px" style="background: #d7e3ff">
+    <div [innerText]="botAnswer" class="message-from-bot"></div>
+    <div [innerText]="userMessage" class="message-from-user"></div>
+  </div>
+  <div mat-dialog-actions class="mt-1 flex-block gap-1rem" style="width: 100%;">
+    <mat-form-field style="display: flex; justify-content: center; align-items: center; width: 100%;">
+      <input matInput placeholder="Insert your message">
+      <button matSuffix mat-button><mat-icon>send</mat-icon></button>
+    </mat-form-field>
+  </div>
+</section>
