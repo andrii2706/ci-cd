@@ -4,7 +4,7 @@ const { log } = require('node:util');
 const wss = new WebSocket.Server({ port: 8080 });
 
 wss.on('connection', socket => {
-	console.log('Користувач підключився.');
+	console.log('Session started');
 
 	socket.on('message', message => {
 		if (Buffer.isBuffer(message)) {
@@ -14,22 +14,22 @@ wss.on('connection', socket => {
 		try {
 			let response = '';
 
-			if (message.toLowerCase().includes('привіт')) {
-				response = 'Привіт! Як я можу допомогти?';
-			} else if (message.toLowerCase().includes('як справи')) {
-				response = 'У мене все добре, дякую за запитання!';
+			if (message.toLowerCase().includes('hello') || message.toLowerCase().includes("hi")) {
+				response = "Hello, How can I help you?"
+			} else if (message.toLowerCase().includes('how are you?')) {
+				response = 'I am doing alright, thanks for asking';
 			} else {
-				response = `Ви сказали: ${message}. Це дуже цікаво!`;
+				response = `You sad: ${message}. It is very interesting`;
 			}
 
 			socket.send(JSON.stringify({ response }));
-		} catch (e) {
-			console.error('Помилка при парсингу повідомлення:', e);
+		} catch (error) {
+			console.error(error);
 		}
 	});
 
 	socket.on('close', () => {
-		console.log('Користувач відключився.');
+		console.log('Session stop');
 	});
 });
 
