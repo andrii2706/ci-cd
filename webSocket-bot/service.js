@@ -14,8 +14,11 @@ wss.on('connection', socket => {
 		try {
 			let response = '';
 
-			if (message.toLowerCase().includes('hello') || message.toLowerCase().includes("hi")) {
-				response = "Hello, How can I help you?"
+			if (
+				message.toLowerCase().includes('hello') ||
+				message.toLowerCase().includes('hi')
+			) {
+				response = 'Hello, How can I help you?';
 			} else if (message.toLowerCase().includes('how are you?')) {
 				response = 'I am doing alright, thanks for asking';
 			} else {
