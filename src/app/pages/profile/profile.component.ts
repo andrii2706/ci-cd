@@ -43,7 +43,7 @@ export class ProfileComponent
 	}
 
 	getUser() {
-    this.isLoading = true;
+		this.isLoading = true;
 		this.authService.user$.subscribe(user => {
 			if (user) {
 				this.user = user;
@@ -54,7 +54,7 @@ export class ProfileComponent
 					this.userAvatar = avatar.photoUrl;
 				});
 			}
-      this.isLoading = false;
+			this.isLoading = false;
 		});
 	}
 
@@ -90,14 +90,14 @@ export class ProfileComponent
 
 	removeGames(gameInfo: Game) {
 		if (this.user) {
-      this.isLoading = true;
+			this.isLoading = true;
 			this.gamesService.removeGameFromUser(this.user.uid, gameInfo).then(() => {
 				if (this.user) {
 					this.gamesService.getGameById(this.user.uid).then(userGames => {
 						this.userGames = userGames.games;
 					});
 				}
-        this.isLoading = false;
+				this.isLoading = false;
 			});
 		}
 	}
