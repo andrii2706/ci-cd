@@ -11,7 +11,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
 	selector: 'app-bot',
 	standalone: true,
-	imports: [AppMaterialModule, ReactiveFormsModule, NgClass, SnackbarComponent],
+	imports: [AppMaterialModule, ReactiveFormsModule, NgClass],
 	templateUrl: './bot.component.html',
 	styleUrl: './bot.component.scss',
 })
