@@ -1,22 +1,30 @@
 import { Component, OnInit } from '@angular/core';
 import { AppMaterialModule } from '../../app-material/app-material.module';
 import { MatDialog } from '@angular/material/dialog';
-import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
-import { ClearObservableDirective } from '../../shared/classes';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { ClearObservableDirective, WebSocketChat } from '../../shared/classes';
+import { WebsocketBotService } from '../../shared/services/websocket-bot.service';
+import { NgClass } from '@angular/common';
+import { SnackbarComponent } from '../../shared/components/snackbar/snackbar.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
 	selector: 'app-bot',
 	standalone: true,
-	imports: [AppMaterialModule],
+	imports: [AppMaterialModule, ReactiveFormsModule, NgClass],
 	templateUrl: './bot.component.html',
 	styleUrl: './bot.component.scss',
 })
 export class BotComponent extends ClearObservableDirective implements OnInit {
 	botForm: FormGroup;
-	botAnswer = 'hello';
-	userMessage = 'Hello bot';
+	userMessage = '';
+	messages: WebSocketChat[] = [];
 
-	constructor(private dialogWindow: MatDialog) {
+	constructor(
+		private dialogWindow: MatDialog,
+		private botService: WebsocketBotService,
+		private snackBar: MatSnackBar
+	) {
 		super();
 	}
 
@@ -30,13 +38,36 @@ export class BotComponent extends ClearObservableDirective implements OnInit {
 		});
 	}
 
-	get conversationFormField(): AbstractControl<string> | null {
-		return this.botForm.get('conversation');
+	sendMessageToBot() {
+		this.messages.push({
+			user: 'user',
+			message: this.botForm.get('conversation')?.value,
+		});
+		this.botService.sendMessage(this.botForm.get('conversation')?.value);
+		this.botForm.setValue({ conversation: '' });
+		this.getBotAnswer();
 	}
 
-	sendMessageToBot() {
-		console.log(this.conversationFormField?.value);
-		this.conversationFormField?.setValue('');
+	getBotAnswer() {
+		this.botService.getMessages().subscribe({
+			next: message => {
+				this.messages.push({ user: 'bot', message: message.response });
+			},
+			error: err => {
+				if (err) {
+					this.dialogWindow.closeAll();
+					this.snackBar.openFromComponent(SnackbarComponent, {
+						duration: 5000,
+						data: { text: 'Bot it not responding', status: 'error' },
+						verticalPosition: 'top',
+						horizontalPosition: 'end',
+					});
+				}
+			},
+		});
+		setTimeout(() => {
+			this.botService.disconnect();
+		}, 500);
 	}
 
 	closeBot() {
