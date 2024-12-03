@@ -5,11 +5,13 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ClearObservableDirective, WebSocketChat } from '../../shared/classes';
 import { WebsocketBotService } from '../../shared/services/websocket-bot.service';
 import { NgClass } from '@angular/common';
+import { SnackbarComponent } from '../../shared/components/snackbar/snackbar.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
 	selector: 'app-bot',
 	standalone: true,
-	imports: [AppMaterialModule, ReactiveFormsModule, NgClass],
+	imports: [AppMaterialModule, ReactiveFormsModule, NgClass, SnackbarComponent],
 	templateUrl: './bot.component.html',
 	styleUrl: './bot.component.scss',
 })
@@ -20,7 +22,8 @@ export class BotComponent extends ClearObservableDirective implements OnInit {
 
 	constructor(
 		private dialogWindow: MatDialog,
-		private botService: WebsocketBotService
+		private botService: WebsocketBotService,
+		private snackBar: MatSnackBar
 	) {
 		super();
 	}
@@ -49,10 +52,18 @@ export class BotComponent extends ClearObservableDirective implements OnInit {
 		this.botService.getMessages().subscribe({
 			next: message => {
 				this.messages.push({ user: 'bot', message: message.response });
-				console.log('Отримано повідомлення від бота:', message);
-				console.log(this.messages);
 			},
-			error: err => console.error('Помилка WebSocket:', err),
+			error: err => {
+				if(err){
+					this.dialogWindow.closeAll();
+					this.snackBar.openFromComponent(SnackbarComponent, {
+						duration: 5000,
+					data: { text: 'Bot it not responding', status: 'error' },
+					verticalPosition: 'top',
+					horizontalPosition: 'end',
+					})
+				}
+			}
 		});
 		setTimeout(() => {
 			this.botService.disconnect();

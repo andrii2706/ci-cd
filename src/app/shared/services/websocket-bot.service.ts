@@ -15,8 +15,8 @@ export class WebsocketBotService {
 
 	private connect(): void {
 		this.socket$ = webSocket({
-			url: 'ws://localhost:8080',
-			deserializer: msg => JSON.parse(msg.data), // Обробка JSON-відповідей
+			url: 'wss://websocket-bot-16aa91cce35a.herokuapp.com',
+			deserializer: msg => JSON.parse(msg.data), 
 		});
 	}
 
