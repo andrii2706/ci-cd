@@ -45,7 +45,7 @@ describe('GamesComponent', () => {
 	it('should load games on init', () => {
 		expect(component.games).toEqual(mockGamesResponse.results);
 		expect(component.total).toEqual(mockGamesResponse.count);
-		expect(component.isLoading).toBe(false);
+		expect(component.isLoading).toBe(true)
 	});
 
 	it('should get games on page change', () => {

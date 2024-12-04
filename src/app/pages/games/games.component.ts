@@ -5,6 +5,7 @@ import { finalize, noop, take, takeUntil } from 'rxjs';
 import { FilterParams } from '../../shared/models/filter.interface';
 import { ClearObservableDirective } from '../../shared/classes';
 import { ErrorService } from '../../shared/services/error.service';
+import { LoaderService } from '../../shared/services/loader.service';
 
 @Component({
 	selector: 'app-games',
@@ -24,35 +25,42 @@ export class GamesComponent extends ClearObservableDirective implements OnInit {
 	constructor(
 		private cdr: ChangeDetectorRef,
 		private gamesService: GamesService,
+		private loaderService: LoaderService,
 		private errorService: ErrorService
 	) {
 		super();
 	}
 
 	ngOnInit() {
-		this.isLoading = true;
+		this.loaderService.proceedLoaderStatus(true)
+		this.loaderService.loaderStatus.subscribe(status => {
+			this.isLoading = status
+		})
 		this.gamesService.gamesData.pipe(take(1)).subscribe(games => {
 			if (games) {
 				this.games = games?.results;
 				this.total = games.count;
 			}
-			this.isLoading = false;
 			this.errorService.fullErrorObject(false);
 		});
 		this.isGameBought();
 	}
 
 	getGames(page: number) {
-		this.isLoading = true;
 		this.gamesService
 			.getAllGames(page)
 			.pipe(takeUntil(this.destroy$))
 			.subscribe(games => {
 				this.games = games.results;
-				this.isLoading = false;
 				this.errorService.fullErrorObject(false);
 				this.cdr.detectChanges();
-			});
+			},
+			error => {
+				if(error){
+					this.errorService.fullErrorObject(true)
+				}
+			}
+		);
 	}
 
 	buyGame(game: Game) {
@@ -129,6 +137,11 @@ export class GamesComponent extends ClearObservableDirective implements OnInit {
 				this.isLoading = false;
 				this.errorService.fullErrorObject(false);
 				this.cdr.detectChanges();
+			},
+			error => {
+				if(error){
+					this.errorService.fullErrorObject(true)
+				}
 			});
 	}
 }

@@ -9,6 +9,7 @@ import moment from 'moment';
 import { SpinnerComponent } from '../../shared/components/spinner/spinner.component';
 import { ClearObservableDirective } from '../../shared/classes';
 import { ErrorService } from '../../shared/services/error.service';
+import { LoaderService } from '../../shared/services/loader.service';
 
 @Component({
 	selector: 'app-home',
@@ -36,13 +37,17 @@ export class HomeComponent extends ClearObservableDirective implements OnInit {
 	constructor(
 		private gamesService: GamesService,
 		private errorService: ErrorService,
+		private loaderService: LoaderService,
 		private cdr: ChangeDetectorRef
 	) {
 		super();
 	}
 
 	ngOnInit() {
-		this.isLoading = true;
+		this.loaderService.loaderStatus.subscribe((status) => {
+			this.isLoading = status
+		})
+		
 		this.gamesService.newGames
 			.pipe(takeUntil(this.destroy$))
 			.subscribe(games => {
@@ -51,7 +56,7 @@ export class HomeComponent extends ClearObservableDirective implements OnInit {
 					this.games = games.results;
 				}
 				this.isGameBought();
-				this.isLoading = false;
+				this.loaderService.proceedLoaderStatus(false);
 				this.errorService.fullErrorObject(false);
 			});
 	}
@@ -73,7 +78,13 @@ export class HomeComponent extends ClearObservableDirective implements OnInit {
 				this.total = games.count;
 				this.games = games.results;
 				this.errorService.fullErrorObject(false);
-			});
+			}, 
+			error => {
+				if(error){
+					this.errorService.fullErrorObject(true)
+				}
+			}
+		);
 	}
 
 	buyGame(game: Game) {

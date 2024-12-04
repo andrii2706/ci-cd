@@ -9,7 +9,7 @@
 			</mat-expansion-panel>
 		</mat-accordion>
 	</div>
-	@if (!isLoading) {
+	@if (!isLoading || games) {
 		<div class="games-grid">
 			@for (
 				game of games
