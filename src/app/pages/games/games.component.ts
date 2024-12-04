@@ -1,11 +1,11 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { GamesService } from '../../shared/services/games.service';
 import { Game } from '../../shared/models/games.interface';
-import { finalize, noop, take, takeUntil } from 'rxjs';
+import { finalize, noop, takeUntil } from 'rxjs';
 import { FilterParams } from '../../shared/models/filter.interface';
 import { ClearObservableDirective } from '../../shared/classes';
 import { ErrorService } from '../../shared/services/error.service';
-import { LoaderService } from '../../shared/services/loader.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
 	selector: 'app-games',
@@ -18,31 +18,26 @@ export class GamesComponent extends ClearObservableDirective implements OnInit {
 	total: string | number;
 	isLoading: boolean;
 	boughtGames: Game[] = [];
-	filterParams: FilterParams;
+	filterParams: FilterParams | null;
 	totalGames: number;
 	isGameBoughtStatus: Game[] = [];
 
 	constructor(
 		private cdr: ChangeDetectorRef,
 		private gamesService: GamesService,
-		private loaderService: LoaderService,
+		private route: ActivatedRoute,
 		private errorService: ErrorService
 	) {
 		super();
 	}
 
 	ngOnInit() {
-		this.loaderService.proceedLoaderStatus(true);
-		this.loaderService.loaderStatus.subscribe(status => {
-			this.isLoading = status;
-		});
-		this.gamesService.gamesData.pipe(take(1)).subscribe(games => {
-			if (games) {
-				this.games = games?.results;
-				this.total = games.count;
-			}
-			this.errorService.fullErrorObject(false);
-		});
+    this.isLoading = true;
+    if (this.route.snapshot?.data['games'].results.length) {
+      this.games = this.route.snapshot?.data['games'].results;
+      this.total = this.route.snapshot?.data['games'].count;
+      this.isLoading = false;
+    }
 		this.isGameBought();
 	}
 

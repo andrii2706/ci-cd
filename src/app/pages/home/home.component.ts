@@ -38,19 +38,15 @@ export class HomeComponent extends ClearObservableDirective implements OnInit {
 		private cdr: ChangeDetectorRef
 	) {
 		super();
-
 	}
 
-
-
 	ngOnInit() {
-    this.isLoading = true
-		if(this.route.snapshot.data['games'].results.length){
+		this.isLoading = true;
+		if (this.route.snapshot.data['games'].results.length) {
 			this.games = this.route.snapshot.data['games'].results;
-			this.total = this.route.snapshot.data['games'].count
-      this.isLoading = false
+			this.total = this.route.snapshot.data['games'].count;
+			this.isLoading = false;
 		}
-
 	}
 
 	getNewGames(page: number) {
