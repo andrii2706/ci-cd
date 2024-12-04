@@ -8,23 +8,23 @@ import { GamesComponent } from '../games/games.component';
 import { Firestore } from '@angular/fire/firestore';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 
-
 xdescribe('HomeComponent', () => {
 	let component: HomeComponent;
 	let fixture: ComponentFixture<HomeComponent>;
-  // let service: GamesService;
-  let firestore: jest.Mocked<AngularFirestore>;
+	// let service: GamesService;
+	let firestore: jest.Mocked<AngularFirestore>;
 
 	beforeEach(async () => {
 		await TestBed.configureTestingModule({
-			imports: [HomeComponent,  HttpClientModule,
-              MatSnackBarModule,
-              RouterTestingModule.withRoutes([
-                { path: 'games', component: GamesComponent },
-              ])],
-      providers:[
-        { provide: Firestore, useValue: firestore },
-      ]
+			imports: [
+				HomeComponent,
+				HttpClientModule,
+				MatSnackBarModule,
+				RouterTestingModule.withRoutes([
+					{ path: 'games', component: GamesComponent },
+				]),
+			],
+			providers: [{ provide: Firestore, useValue: firestore }],
 		}).compileComponents();
 
 		fixture = TestBed.createComponent(HomeComponent);

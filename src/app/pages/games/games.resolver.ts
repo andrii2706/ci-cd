@@ -9,9 +9,9 @@ import { tap } from 'rxjs';
 export const gamesResolver: ResolveFn<any> = (route, state) => {
 	const gamesService = inject(GamesService);
 
-  return gamesService.getAllGames(1).pipe(
-    tap(games => {
-      return gamesService.gamesData.next(games);
-    })
-  );
+	return gamesService.getAllGames(1).pipe(
+		tap(games => {
+			return gamesService.gamesData.next(games);
+		})
+	);
 };
