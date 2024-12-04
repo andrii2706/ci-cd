@@ -5,7 +5,7 @@ import { AppMaterialModule } from '../../../app-material/app-material.module';
 import { ReplaceNullImgPipe } from '../../pipe/replace-null-img.pipe';
 import { SnackbarComponent } from '../snackbar/snackbar.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { SpinnerComponent } from "../spinner/spinner.component";
+import { SpinnerComponent } from '../spinner/spinner.component';
 
 @Component({
 	selector: 'app-games-cards',

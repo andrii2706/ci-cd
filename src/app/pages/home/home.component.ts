@@ -44,10 +44,10 @@ export class HomeComponent extends ClearObservableDirective implements OnInit {
 	}
 
 	ngOnInit() {
-		this.loaderService.loaderStatus.subscribe((status) => {
-			this.isLoading = status
-		})
-		
+		this.loaderService.loaderStatus.subscribe(status => {
+			this.isLoading = status;
+		});
+
 		this.gamesService.newGames
 			.pipe(takeUntil(this.destroy$))
 			.subscribe(games => {
@@ -74,17 +74,18 @@ export class HomeComponent extends ClearObservableDirective implements OnInit {
 				takeUntil(this.destroy$),
 				finalize(() => (this.isLoading = false))
 			)
-			.subscribe(games => {
-				this.total = games.count;
-				this.games = games.results;
-				this.errorService.fullErrorObject(false);
-			}, 
-			error => {
-				if(error){
-					this.errorService.fullErrorObject(true)
+			.subscribe(
+				games => {
+					this.total = games.count;
+					this.games = games.results;
+					this.errorService.fullErrorObject(false);
+				},
+				error => {
+					if (error) {
+						this.errorService.fullErrorObject(true);
+					}
 				}
-			}
-		);
+			);
 	}
 
 	buyGame(game: Game) {

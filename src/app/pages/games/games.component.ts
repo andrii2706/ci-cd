@@ -32,10 +32,10 @@ export class GamesComponent extends ClearObservableDirective implements OnInit {
 	}
 
 	ngOnInit() {
-		this.loaderService.proceedLoaderStatus(true)
+		this.loaderService.proceedLoaderStatus(true);
 		this.loaderService.loaderStatus.subscribe(status => {
-			this.isLoading = status
-		})
+			this.isLoading = status;
+		});
 		this.gamesService.gamesData.pipe(take(1)).subscribe(games => {
 			if (games) {
 				this.games = games?.results;
@@ -50,17 +50,18 @@ export class GamesComponent extends ClearObservableDirective implements OnInit {
 		this.gamesService
 			.getAllGames(page)
 			.pipe(takeUntil(this.destroy$))
-			.subscribe(games => {
-				this.games = games.results;
-				this.errorService.fullErrorObject(false);
-				this.cdr.detectChanges();
-			},
-			error => {
-				if(error){
-					this.errorService.fullErrorObject(true)
+			.subscribe(
+				games => {
+					this.games = games.results;
+					this.errorService.fullErrorObject(false);
+					this.cdr.detectChanges();
+				},
+				error => {
+					if (error) {
+						this.errorService.fullErrorObject(true);
+					}
 				}
-			}
-		);
+			);
 	}
 
 	buyGame(game: Game) {
@@ -131,17 +132,19 @@ export class GamesComponent extends ClearObservableDirective implements OnInit {
 					this.isLoading = false;
 				})
 			)
-			.subscribe(games => {
-				this.totalGames = games.count;
-				this.games = games.results;
-				this.isLoading = false;
-				this.errorService.fullErrorObject(false);
-				this.cdr.detectChanges();
-			},
-			error => {
-				if(error){
-					this.errorService.fullErrorObject(true)
+			.subscribe(
+				games => {
+					this.totalGames = games.count;
+					this.games = games.results;
+					this.isLoading = false;
+					this.errorService.fullErrorObject(false);
+					this.cdr.detectChanges();
+				},
+				error => {
+					if (error) {
+						this.errorService.fullErrorObject(true);
+					}
 				}
-			});
+			);
 	}
 }

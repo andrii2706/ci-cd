@@ -9,7 +9,6 @@ import { LoaderService } from '../../shared/services/loader.service';
 
 /* eslint-disable  @typescript-eslint/no-unused-vars */
 export const homeResolver: ResolveFn<any> = (route, state) => {
-	
 	const gamesService = inject(GamesService);
 	const loaderService = inject(LoaderService);
 
@@ -21,10 +20,10 @@ export const homeResolver: ResolveFn<any> = (route, state) => {
 	const dates = `${firstYearDay},${lastYearDay}`;
 	const games = gamesService.getLastReleasedGames(1, dates).pipe(
 		map(games => {
-			if(games){
+			if (games) {
 				loaderService.proceedLoaderStatus(false);
 			}
-			
+
 			return gamesService.newGames.next(games);
 		})
 	);

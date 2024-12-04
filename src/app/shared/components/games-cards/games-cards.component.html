@@ -4,15 +4,16 @@
 			<mat-card-title>{{ gameInfo.name }}</mat-card-title>
 			<mat-card-subtitle>{{ gameInfo.released }}</mat-card-subtitle>
 		</mat-card-header>
-		@if (gameInfo.background_image) {<img
-			width="400px"
-			height="225px"
-			mat-card-image
-			src="{{ gameInfo.background_image | replaceNullImg }}"
-			alt="{{ gameInfo.slug }}" />}
-			@else {
-				<app-spinner></app-spinner>
-			}
+		@if (gameInfo.background_image) {
+			<img
+				width="400px"
+				height="225px"
+				mat-card-image
+				src="{{ gameInfo.background_image | replaceNullImg }}"
+				alt="{{ gameInfo.slug }}" />
+		} @else {
+			<app-spinner></app-spinner>
+		}
 		@if (gameInfo.metacritic) {
 			<div class="metacritic-position">
 				{{ gameInfo.metacritic }}
