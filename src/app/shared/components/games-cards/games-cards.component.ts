@@ -5,11 +5,12 @@ import { AppMaterialModule } from '../../../app-material/app-material.module';
 import { ReplaceNullImgPipe } from '../../pipe/replace-null-img.pipe';
 import { SnackbarComponent } from '../snackbar/snackbar.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { SpinnerComponent } from '../spinner/spinner.component';
 
 @Component({
 	selector: 'app-games-cards',
 	standalone: true,
-	imports: [AppMaterialModule, ReplaceNullImgPipe],
+	imports: [AppMaterialModule, ReplaceNullImgPipe, SpinnerComponent],
 	templateUrl: './games-cards.component.html',
 	styleUrl: './games-cards.component.scss',
 })
@@ -35,7 +36,7 @@ export class GamesCardsComponent implements OnInit {
 	}
 
 	constructor(
-		private router: Router,
+		public router: Router,
 		private activatedRoute: ActivatedRoute,
 		private snackBar: MatSnackBar
 	) {}

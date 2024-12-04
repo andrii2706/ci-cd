@@ -1,4 +1,8 @@
-@if (!isLoading) {
+@if (isLoading || games.length < 0) {
+	<div class="default-height">
+		<app-spinner></app-spinner>
+	</div>
+} @else {
 	<section>
 		<div class="games-grid">
 			@for (
@@ -12,7 +16,7 @@
 					[isGameBought]="isGameBoughtStatus"
 					(boughtedGame)="buyGame($event)"></app-games-cards>
 			} @empty {
-				<div>Games not come wait a minute</div>
+				<h2>Games not come wait a minute</h2>
 			}
 		</div>
 		<div class="pagination">
@@ -23,8 +27,4 @@
 			</div>
 		</div>
 	</section>
-} @else {
-	<div class="default-height">
-		<app-spinner></app-spinner>
-	</div>
 }

@@ -1,7 +1,7 @@
 import { ResolveFn } from '@angular/router';
 import { inject } from '@angular/core';
 import { GamesService } from '../../shared/services/games.service';
-import { map } from 'rxjs';
+import { tap } from 'rxjs';
 
 /* eslint-disable  @typescript-eslint/no-explicit-any */
 
@@ -9,10 +9,9 @@ import { map } from 'rxjs';
 export const gamesResolver: ResolveFn<any> = (route, state) => {
 	const gamesService = inject(GamesService);
 
-	const games = gamesService.getAllGames(1).pipe(
-		map(games => {
+	return gamesService.getAllGames(1).pipe(
+		tap(games => {
 			return gamesService.gamesData.next(games);
 		})
 	);
-	return games;
 };

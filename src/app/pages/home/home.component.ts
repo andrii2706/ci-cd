@@ -9,6 +9,7 @@ import moment from 'moment';
 import { SpinnerComponent } from '../../shared/components/spinner/spinner.component';
 import { ClearObservableDirective } from '../../shared/classes';
 import { ErrorService } from '../../shared/services/error.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
 	selector: 'app-home',
@@ -24,18 +25,16 @@ import { ErrorService } from '../../shared/services/error.service';
 })
 export class HomeComponent extends ClearObservableDirective implements OnInit {
 	page = 1;
-	boughtGames: Game[] = [];
-
 	games: Game[] = [];
 	total: number;
 	dates: string;
-	isLoading: boolean;
+	isLoading = true;
 	isGameBoughtStatus = [];
-	userGames: Game[] = [];
 
 	constructor(
 		private gamesService: GamesService,
 		private errorService: ErrorService,
+		private route: ActivatedRoute,
 		private cdr: ChangeDetectorRef
 	) {
 		super();
@@ -43,17 +42,11 @@ export class HomeComponent extends ClearObservableDirective implements OnInit {
 
 	ngOnInit() {
 		this.isLoading = true;
-		this.gamesService.newGames
-			.pipe(takeUntil(this.destroy$))
-			.subscribe(games => {
-				if (games) {
-					this.total = games.count;
-					this.games = games.results;
-				}
-				this.isGameBought();
-				this.isLoading = false;
-				this.errorService.fullErrorObject(false);
-			});
+		if (this.route.snapshot.data['games'].results.length) {
+			this.games = this.route.snapshot.data['games'].results;
+			this.total = this.route.snapshot.data['games'].count;
+			this.isLoading = false;
+		}
 	}
 
 	getNewGames(page: number) {
@@ -69,11 +62,18 @@ export class HomeComponent extends ClearObservableDirective implements OnInit {
 				takeUntil(this.destroy$),
 				finalize(() => (this.isLoading = false))
 			)
-			.subscribe(games => {
-				this.total = games.count;
-				this.games = games.results;
-				this.errorService.fullErrorObject(false);
-			});
+			.subscribe(
+				games => {
+					this.total = games.count;
+					this.games = games.results;
+					this.errorService.fullErrorObject(false);
+				},
+				error => {
+					if (error) {
+						this.errorService.fullErrorObject(true);
+					}
+				}
+			);
 	}
 
 	buyGame(game: Game) {

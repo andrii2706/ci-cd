@@ -2,7 +2,7 @@ import { ResolveFn } from '@angular/router';
 import { inject } from '@angular/core';
 import { GamesService } from '../../shared/services/games.service';
 import moment from 'moment/moment';
-import { map } from 'rxjs';
+import { tap } from 'rxjs';
 
 /* eslint-disable  @typescript-eslint/no-explicit-any */
 
@@ -16,10 +16,7 @@ export const homeResolver: ResolveFn<any> = (route, state) => {
 		.endOf('year')
 		.format('YYYY-MM-DD');
 	const dates = `${firstYearDay},${lastYearDay}`;
-	const games = gamesService.getLastReleasedGames(1, dates).pipe(
-		map(games => {
-			return gamesService.newGames.next(games);
-		})
-	);
-	return games;
+	return gamesService
+		.getLastReleasedGames(1, dates)
+		.pipe(tap(games => gamesService.newGames.next(games)));
 };
