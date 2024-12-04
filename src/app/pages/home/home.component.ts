@@ -9,7 +9,7 @@ import moment from 'moment';
 import { SpinnerComponent } from '../../shared/components/spinner/spinner.component';
 import { ClearObservableDirective } from '../../shared/classes';
 import { ErrorService } from '../../shared/services/error.service';
-import { LoaderService } from '../../shared/services/loader.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
 	selector: 'app-home',
@@ -25,40 +25,32 @@ import { LoaderService } from '../../shared/services/loader.service';
 })
 export class HomeComponent extends ClearObservableDirective implements OnInit {
 	page = 1;
-	boughtGames: Game[] = [];
-
 	games: Game[] = [];
 	total: number;
 	dates: string;
-	isLoading: boolean;
+	isLoading = true;
 	isGameBoughtStatus = [];
-	userGames: Game[] = [];
 
 	constructor(
 		private gamesService: GamesService,
 		private errorService: ErrorService,
-		private loaderService: LoaderService,
+		private route: ActivatedRoute,
 		private cdr: ChangeDetectorRef
 	) {
 		super();
+
 	}
 
-	ngOnInit() {
-		this.loaderService.loaderStatus.subscribe(status => {
-			this.isLoading = status;
-		});
 
-		this.gamesService.newGames
-			.pipe(takeUntil(this.destroy$))
-			.subscribe(games => {
-				if (games) {
-					this.total = games.count;
-					this.games = games.results;
-				}
-				this.isGameBought();
-				this.loaderService.proceedLoaderStatus(false);
-				this.errorService.fullErrorObject(false);
-			});
+
+	ngOnInit() {
+    this.isLoading = true
+		if(this.route.snapshot.data['games'].results.length){
+			this.games = this.route.snapshot.data['games'].results;
+			this.total = this.route.snapshot.data['games'].count
+      this.isLoading = false
+		}
+
 	}
 
 	getNewGames(page: number) {
