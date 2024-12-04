@@ -36,7 +36,7 @@ export class GamesCardsComponent implements OnInit {
 	}
 
 	constructor(
-		private router: Router,
+		public router: Router,
 		private activatedRoute: ActivatedRoute,
 		private snackBar: MatSnackBar
 	) {}
