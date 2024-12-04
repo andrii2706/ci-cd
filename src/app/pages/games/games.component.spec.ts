@@ -87,8 +87,8 @@ describe('GamesComponent', () => {
 		// @ts-ignore
 		const updateUserDataSpy = jest
 			.spyOn(mockGamesService, 'updateUserData')
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
+			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+			// @ts-ignore
 			.mockResolvedValue();
 		const cdrSpy = jest
 			.spyOn(component['cdr'], 'detectChanges')
