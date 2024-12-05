@@ -43,10 +43,10 @@ export const routes: Routes = [
 		canActivate: [authGuard, errorPageGuard],
 		canDeactivate: [],
 	},
-  {
-    path: 'no-internet-connection',
-    component: NotInternetConectionComponent,
-    title: 'NoInternetConnection',
-    canActivate:[authGuard, errorPageGuard]
-  }
+	{
+		path: 'no-internet-connection',
+		component: NotInternetConectionComponent,
+		title: 'NoInternetConnection',
+		canActivate: [authGuard, errorPageGuard],
+	},
 ];

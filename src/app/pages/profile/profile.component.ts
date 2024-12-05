@@ -20,7 +20,7 @@ export class ProfileComponent
 	implements OnInit
 {
 	updateUserInfoForm: FormGroup;
-  confirmStatus = signal(null)
+	confirmStatus = signal(null);
 	user: User | null;
 	userGames: Game[] = [];
 	isLoading: boolean;
@@ -32,8 +32,8 @@ export class ProfileComponent
 	constructor(
 		private gamesService: GamesService,
 		private authService: AuthService,
-    private dialog :MatDialog,
-   private matDialogRef: MatDialogRef<ConfirmationComponent>,
+		private dialog: MatDialog,
+		private matDialogRef: MatDialogRef<ConfirmationComponent>,
 		private router: Router,
 		private activatedRoute: ActivatedRoute,
 		private cdr: ChangeDetectorRef
@@ -93,29 +93,31 @@ export class ProfileComponent
 	}
 
 	removeGames(gameInfo: Game) {
-     const dialogRef =  this.dialog.open(ConfirmationComponent, {
-        data: {
-          confirm: this.confirmStatus()
-        }
-      })
+		const dialogRef = this.dialog.open(ConfirmationComponent, {
+			data: {
+				confirm: this.confirmStatus(),
+			},
+		});
 
-    dialogRef.afterClosed().subscribe(status => {
-        if(status) {
-          if (this.user) {
-            this.isLoading = true;
-            this.gamesService.removeGameFromUser(this.user.uid, gameInfo).then(() => {
-            	if (this.user) {
-            		this.gamesService.getGameById(this.user.uid).then(userGames => {
-            			this.userGames = userGames.games;
-            		});
-            	}
-            	this.isLoading = false;
-            });
-          }
-        }else{
-          dialogRef.close(false)
-        }
-      })
+		dialogRef.afterClosed().subscribe(status => {
+			if (status) {
+				if (this.user) {
+					this.isLoading = true;
+					this.gamesService
+						.removeGameFromUser(this.user.uid, gameInfo)
+						.then(() => {
+							if (this.user) {
+								this.gamesService.getGameById(this.user.uid).then(userGames => {
+									this.userGames = userGames.games;
+								});
+							}
+							this.isLoading = false;
+						});
+				}
+			} else {
+				dialogRef.close(false);
+			}
+		});
 	}
 
 	async submitUpdateUserForm() {

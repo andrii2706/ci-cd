@@ -9,13 +9,13 @@
 		transform: scale(1.1);
 		box-shadow: 4px 3px 7px 7px rgba(0, 92, 187, 0.63);
 	}
-  @media (max-width:400px){
-    max-width: 300px;
-    img{
-      width: 100%;
-      height: 175px;
-    }
-  }
+	@media (max-width: 400px) {
+		max-width: 300px;
+		img {
+			width: 100%;
+			height: 175px;
+		}
+	}
 	::ng-deep .mat-mdc-card-header {
 		justify-content: flex-end;
 
@@ -24,11 +24,11 @@
 			overflow: hidden;
 			width: 330px;
 			white-space: nowrap;
-      @media (max-width: 400px) {
-        width: 100%;
-        inline-size: 265px;
-        overflow-wrap: break-word;
-      }
+			@media (max-width: 400px) {
+				width: 100%;
+				inline-size: 265px;
+				overflow-wrap: break-word;
+			}
 		}
 	}
 	::ng-deep .mat-mdc-card-subtitle {
@@ -72,8 +72,8 @@
 .goToDetails {
 	margin-right: 10px;
 }
-.add-to-wishlist{
-  @media (max-width: 400px) {
-    margin-top: 1rem;
-  }
+.add-to-wishlist {
+	@media (max-width: 400px) {
+		margin-top: 1rem;
+	}
 }
