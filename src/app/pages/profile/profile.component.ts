@@ -97,6 +97,7 @@ export class ProfileComponent
 			data: {
 				confirm: this.confirmStatus(),
 			},
+      disableClose: true,
 		});
 
 		dialogRef.afterClosed().subscribe(status => {
