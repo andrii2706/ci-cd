@@ -81,7 +81,7 @@ export class AppComponent implements OnInit, DoCheck, OnDestroy {
 		this.dialogWindow.open(BotComponent, {
 			width: '700px',
 			height: '800px',
-      disableClose: true,
+			disableClose: true,
 		});
 	}
 }
