@@ -47,6 +47,7 @@ export class HomeComponent extends ClearObservableDirective implements OnInit {
 			this.total = this.route.snapshot.data['games'].count;
 			this.isLoading = false;
 		}
+    this.isGameBought();
 	}
 
 	getNewGames(page: number) {

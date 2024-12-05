@@ -16,9 +16,13 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
 			} else {
 				errorMsg = `Error Code: ${error.status}\nMessage: ${error.message}`;
 
-				if (error.status === 404 || error.status === 500) {
+				if (error.status === 404 || error.status === 500 ) {
 					router.navigate(['/error']);
-				}
+				}else if (!navigator.onLine){
+          if (error.status === 0) {
+            router.navigate(['/no-internet-connection']);
+          }
+        }
 			}
 			errorService.fullErrorObject(true);
 			return throwError(() => new Error(errorMsg));

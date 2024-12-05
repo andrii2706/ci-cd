@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, signal } from '@angular/core';
 import { ClearObservableDirective } from '../../shared/classes';
 import { GamesService } from '../../shared/services/games.service';
 import { Game } from '../../shared/models/games.interface';
@@ -7,6 +7,8 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../shared/services/auth.service';
 import firebase from 'firebase/compat/app';
 import User = firebase.User;
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { ConfirmationComponent } from '../../shared/components/confirmation/confirmation.component';
 
 @Component({
 	selector: 'app-profile',
@@ -18,7 +20,7 @@ export class ProfileComponent
 	implements OnInit
 {
 	updateUserInfoForm: FormGroup;
-
+  confirmStatus = signal(null)
 	user: User | null;
 	userGames: Game[] = [];
 	isLoading: boolean;
@@ -30,6 +32,8 @@ export class ProfileComponent
 	constructor(
 		private gamesService: GamesService,
 		private authService: AuthService,
+    private dialog :MatDialog,
+   private matDialogRef: MatDialogRef<ConfirmationComponent>,
 		private router: Router,
 		private activatedRoute: ActivatedRoute,
 		private cdr: ChangeDetectorRef
@@ -89,17 +93,29 @@ export class ProfileComponent
 	}
 
 	removeGames(gameInfo: Game) {
-		if (this.user) {
-			this.isLoading = true;
-			this.gamesService.removeGameFromUser(this.user.uid, gameInfo).then(() => {
-				if (this.user) {
-					this.gamesService.getGameById(this.user.uid).then(userGames => {
-						this.userGames = userGames.games;
-					});
-				}
-				this.isLoading = false;
-			});
-		}
+     const dialogRef =  this.dialog.open(ConfirmationComponent, {
+        data: {
+          confirm: this.confirmStatus()
+        }
+      })
+
+    dialogRef.afterClosed().subscribe(status => {
+        if(status) {
+          if (this.user) {
+            this.isLoading = true;
+            this.gamesService.removeGameFromUser(this.user.uid, gameInfo).then(() => {
+            	if (this.user) {
+            		this.gamesService.getGameById(this.user.uid).then(userGames => {
+            			this.userGames = userGames.games;
+            		});
+            	}
+            	this.isLoading = false;
+            });
+          }
+        }else{
+          dialogRef.close(false)
+        }
+      })
 	}
 
 	async submitUpdateUserForm() {
