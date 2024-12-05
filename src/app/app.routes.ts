@@ -5,6 +5,7 @@ import { homeResolver } from './pages/home/home.resolver';
 import { gamesResolver } from './pages/games/games.resolver';
 import { ErrorPageComponent } from './pages/error-page/error-page.component';
 import { errorPageGuard } from './shared/guards/error-page.guard';
+import { NotInternetConectionComponent } from './pages/not-internet-conection/not-internet-conection.component';
 
 export const routes: Routes = [
 	{
@@ -41,5 +42,11 @@ export const routes: Routes = [
 		title: 'Error',
 		canActivate: [authGuard, errorPageGuard],
 		canDeactivate: [],
+	},
+	{
+		path: 'no-internet-connection',
+		component: NotInternetConectionComponent,
+		title: 'NoInternetConnection',
+		canActivate: [authGuard, errorPageGuard],
 	},
 ];
