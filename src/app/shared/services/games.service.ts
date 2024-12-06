@@ -139,6 +139,7 @@ export class GamesService {
 		const gameDoc = doc(this.fireStore, 'userGame', id);
 		const gameSnapshot = await getDoc(gameDoc);
 		if (gameSnapshot.exists()) {
+
 			return { id: +gameSnapshot.id, ...gameSnapshot.data() };
 		} else {
 			return null;

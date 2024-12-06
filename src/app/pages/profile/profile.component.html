@@ -1,9 +1,4 @@
 <section>
-	@if (isLoading || user === null) {
-		<div class="default-height">
-			<app-spinner></app-spinner>
-		</div>
-	} @else {
 		@if (user) {
 			@if (!updateUserInfoStatus) {
 				<div class="user-info">
@@ -117,5 +112,4 @@
 				}
 			</div>
 		</div>
-	}
 </section>

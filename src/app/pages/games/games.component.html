@@ -9,7 +9,6 @@
 			</mat-expansion-panel>
 		</mat-accordion>
 	</div>
-	@if (!isLoading || games) {
 		<div class="games-grid">
 			@for (
 				game of games
@@ -32,9 +31,4 @@
 					(pageChange)="navigateTo($event)"></pagination-controls>
 			</div>
 		</div>
-	} @else {
-		<div class="default-height">
-			<app-spinner></app-spinner>
-		</div>
-	}
 </section>

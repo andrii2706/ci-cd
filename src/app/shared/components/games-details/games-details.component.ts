@@ -7,6 +7,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { GameDetails, GameTrailers } from '../../models/games.interface';
 import { AppMaterialModule } from '../../../app-material/app-material.module';
 import { SpinnerComponent } from '../spinner/spinner.component';
+import { SpinnerService } from '../../services/spinner.service';
 
 @Component({
 	selector: 'app-games-details',
@@ -16,7 +17,6 @@ import { SpinnerComponent } from '../spinner/spinner.component';
 	styleUrl: './games-details.component.scss',
 })
 export class GamesDetailsComponent {
-	isLoading = false;
 	gameDetails: GameDetails;
 	gameTrailers: GameTrailers;
 	games: GameDetails[];
@@ -24,6 +24,7 @@ export class GamesDetailsComponent {
 	constructor(
 		private activatedRoute: ActivatedRoute,
 		private gamesService: GamesService,
+    private spinnerService:SpinnerService,
 		private snackbar: MatSnackBar
 	) {
 		this.activatedRoute.params.pipe(take(1)).subscribe(
@@ -31,7 +32,7 @@ export class GamesDetailsComponent {
 				this.gameDetailsById(id);
 			},
 			() => {
-				this.isLoading = true;
+        this.spinnerService.proceedSpinnerStatus(true);
 				this.snackbar.openFromComponent(SnackbarComponent, {
 					data: 'Server is out',
 					verticalPosition: 'top',

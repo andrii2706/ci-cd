@@ -6,6 +6,7 @@ import { FilterParams } from '../../shared/models/filter.interface';
 import { ClearObservableDirective } from '../../shared/classes';
 import { ErrorService } from '../../shared/services/error.service';
 import { ActivatedRoute } from '@angular/router';
+import { SpinnerService } from '../../shared/services/spinner.service';
 
 @Component({
 	selector: 'app-games',
@@ -16,7 +17,6 @@ export class GamesComponent extends ClearObservableDirective implements OnInit {
 	page = 1;
 	games: Game[] = [];
 	total: string | number;
-	isLoading: boolean;
 	boughtGames: Game[] = [];
 	filterParams: FilterParams | null;
 	totalGames: number;
@@ -25,18 +25,18 @@ export class GamesComponent extends ClearObservableDirective implements OnInit {
 	constructor(
 		private cdr: ChangeDetectorRef,
 		private gamesService: GamesService,
+    private spinnerService: SpinnerService,
 		private route: ActivatedRoute,
 		private errorService: ErrorService
 	) {
 		super();
+
 	}
 
 	ngOnInit() {
-		this.isLoading = true;
 		if (this.route.snapshot?.data['games'].results.length) {
 			this.games = this.route.snapshot?.data['games'].results;
 			this.total = this.route.snapshot?.data['games'].count;
-			this.isLoading = false;
 		}
 		this.isGameBought();
 	}
@@ -49,11 +49,13 @@ export class GamesComponent extends ClearObservableDirective implements OnInit {
 				games => {
 					this.games = games.results;
 					this.errorService.fullErrorObject(false);
+          this.spinnerService.proceedSpinnerStatus(true);
 					this.cdr.detectChanges();
 				},
 				error => {
 					if (error) {
 						this.errorService.fullErrorObject(true);
+            this.spinnerService.proceedSpinnerStatus(false);
 					}
 				}
 			);
@@ -98,7 +100,7 @@ export class GamesComponent extends ClearObservableDirective implements OnInit {
 	}
 
 	getFilterQuery(fp: FilterParams) {
-		this.isLoading = true;
+    this.spinnerService.proceedSpinnerStatus(true);
 		this.filterParams = fp;
 		if (
 			this.filterParams.search === '' &&
@@ -113,25 +115,24 @@ export class GamesComponent extends ClearObservableDirective implements OnInit {
 		} else {
 			return this.filteredGames(1, this.filterParams);
 		}
-		this.isLoading = false;
+    this.spinnerService.proceedSpinnerStatus(false);
 		this.cdr.detectChanges();
 	}
 
 	filteredGames(page: number, filter: FilterParams) {
-		this.isLoading = true;
+    this.spinnerService.proceedSpinnerStatus(true);
 		this.gamesService
 			.filterGames(page, filter)
 			.pipe(
 				takeUntil(this.destroy$),
 				finalize(() => {
-					this.isLoading = false;
+          this.spinnerService.proceedSpinnerStatus(false);
 				})
 			)
 			.subscribe(
 				games => {
 					this.totalGames = games.count;
 					this.games = games.results;
-					this.isLoading = false;
 					this.errorService.fullErrorObject(false);
 					this.cdr.detectChanges();
 				},
