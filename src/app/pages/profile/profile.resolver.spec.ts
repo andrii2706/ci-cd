@@ -4,14 +4,14 @@ import { ResolveFn } from '@angular/router';
 import { profileResolver } from './profile.resolver';
 
 describe('profileResolver', () => {
-  const executeResolver: ResolveFn<boolean> = (...resolverParameters) => 
-      TestBed.runInInjectionContext(() => profileResolver(...resolverParameters));
+	const executeResolver: ResolveFn<boolean> = (...resolverParameters) =>
+		TestBed.runInInjectionContext(() => profileResolver(...resolverParameters));
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({});
-  });
+	beforeEach(() => {
+		TestBed.configureTestingModule({});
+	});
 
-  it('should be created', () => {
-    expect(executeResolver).toBeTruthy();
-  });
+	it('should be created', () => {
+		expect(executeResolver).toBeTruthy();
+	});
 });

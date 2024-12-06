@@ -34,7 +34,7 @@ export class HomeComponent extends ClearObservableDirective implements OnInit {
 	constructor(
 		private gamesService: GamesService,
 		private errorService: ErrorService,
-    private spinnerService: SpinnerService,
+		private spinnerService: SpinnerService,
 		private route: ActivatedRoute,
 		private cdr: ChangeDetectorRef
 	) {
@@ -45,7 +45,7 @@ export class HomeComponent extends ClearObservableDirective implements OnInit {
 		if (this.route.snapshot.data['games'].results.length) {
 			this.games = this.route.snapshot.data['games'].results;
 			this.total = this.route.snapshot.data['games'].count;
-      this.spinnerService.proceedSpinnerStatus(false)
+			this.spinnerService.proceedSpinnerStatus(false);
 		}
 		this.isGameBought();
 	}
@@ -61,7 +61,7 @@ export class HomeComponent extends ClearObservableDirective implements OnInit {
 			.getLastReleasedGames(page, this.dates)
 			.pipe(
 				takeUntil(this.destroy$),
-				finalize(() => ( this.spinnerService.proceedSpinnerStatus(true)))
+				finalize(() => this.spinnerService.proceedSpinnerStatus(true))
 			)
 			.subscribe(
 				games => {

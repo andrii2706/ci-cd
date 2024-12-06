@@ -9,11 +9,11 @@ import { SpinnerService } from '../../shared/services/spinner.service';
 /* eslint-disable  @typescript-eslint/no-unused-vars */
 export const gamesResolver: ResolveFn<any> = (route, state) => {
 	const gamesService = inject(GamesService);
-  const spinnerService = inject(SpinnerService);
+	const spinnerService = inject(SpinnerService);
 
 	return gamesService.getAllGames(1).pipe(
 		tap(games => {
-      spinnerService.proceedSpinnerStatus(false);
+			spinnerService.proceedSpinnerStatus(false);
 			return gamesService.gamesData.next(games);
 		})
 	);

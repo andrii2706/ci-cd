@@ -34,7 +34,7 @@ export class ProfileComponent
 		private authService: AuthService,
 		private dialog: MatDialog,
 		private matDialogRef: MatDialogRef<ConfirmationComponent>,
-    private spinnerService: SpinnerService,
+		private spinnerService: SpinnerService,
 		private router: Router,
 		private activatedRoute: ActivatedRoute,
 		private cdr: ChangeDetectorRef
@@ -42,8 +42,8 @@ export class ProfileComponent
 		super();
 	}
 
-  ngOnInit() {
-    this.getUser();
+	ngOnInit() {
+		this.getUser();
 		this.initUpdateForm();
 	}
 
@@ -56,9 +56,9 @@ export class ProfileComponent
 				});
 				this.authService.getAvatarById(user.uid).then(avatar => {
 					this.userAvatar = avatar.photoUrl;
-          this.spinnerService.proceedSpinnerStatus(false);
+					this.spinnerService.proceedSpinnerStatus(false);
 				});
-      }
+			}
 		});
 	}
 
@@ -103,7 +103,7 @@ export class ProfileComponent
 		dialogRef.afterClosed().subscribe(status => {
 			if (status) {
 				if (this.user) {
-          this.spinnerService.proceedSpinnerStatus(true);
+					this.spinnerService.proceedSpinnerStatus(true);
 					this.gamesService
 						.removeGameFromUser(this.user.uid, gameInfo)
 						.then(() => {
@@ -112,7 +112,7 @@ export class ProfileComponent
 									this.userGames = userGames.games;
 								});
 							}
-              this.spinnerService.proceedSpinnerStatus(false);
+							this.spinnerService.proceedSpinnerStatus(false);
 						});
 				}
 			} else {
@@ -122,14 +122,14 @@ export class ProfileComponent
 	}
 
 	async submitUpdateUserForm() {
-    this.spinnerService.proceedSpinnerStatus(true);
+		this.spinnerService.proceedSpinnerStatus(true);
 		try {
 			this.authService.updateUserInfo(
 				this.updateUserInfoForm.get('displayName')?.value,
 				this.updateUserInfoForm.get('email')?.value,
 				this.userAvatar
 			);
-      this.spinnerService.proceedSpinnerStatus(false);
+			this.spinnerService.proceedSpinnerStatus(false);
 		} catch (error) {
 			console.error('Error updating user info', error);
 		}

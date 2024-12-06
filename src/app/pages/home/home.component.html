@@ -1,25 +1,23 @@
-	<section>
-		<div class="games-grid">
-			@for (
-				game of games
-					| paginate
-						: { itemsPerPage: 25, currentPage: page, totalItems: total };
-				track game.name
-			) {
-				<app-games-cards
-					[game]="game"
-					[isGameBought]="isGameBoughtStatus"
-					(boughtedGame)="buyGame($event)"></app-games-cards>
-			} @empty {
-				<h2>Games not come wait a minute</h2>
-			}
+<section>
+	<div class="games-grid">
+		@for (
+			game of games
+				| paginate: { itemsPerPage: 25, currentPage: page, totalItems: total };
+			track game.name
+		) {
+			<app-games-cards
+				[game]="game"
+				[isGameBought]="isGameBoughtStatus"
+				(boughtedGame)="buyGame($event)"></app-games-cards>
+		} @empty {
+			<h2>Games not come wait a minute</h2>
+		}
+	</div>
+	<div class="pagination">
+		<div class="pagination-controllers">
+			<pagination-controls
+				class="pagination"
+				(pageChange)="navigateTo($event)"></pagination-controls>
 		</div>
-		<div class="pagination">
-			<div class="pagination-controllers">
-				<pagination-controls
-					class="pagination"
-					(pageChange)="navigateTo($event)"></pagination-controls>
-			</div>
-		</div>
-	</section>
-
+	</div>
+</section>

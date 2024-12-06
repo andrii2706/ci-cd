@@ -14,7 +14,7 @@ export const routes: Routes = [
 		loadChildren: () =>
 			import('./pages/auth/auth.module').then(m => m.AuthModule),
 		title: 'Auth',
-    canActivate: [authGuard],
+		canActivate: [authGuard],
 	},
 	{
 		path: 'home',
@@ -37,7 +37,7 @@ export const routes: Routes = [
 			import('./pages/profile/profile.module').then(m => m.ProfileModule),
 		title: 'Profile',
 		canActivate: [authGuard],
-    resolve: { user: profileResolver },
+		resolve: { user: profileResolver },
 	},
 	{
 		path: 'error',

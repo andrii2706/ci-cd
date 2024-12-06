@@ -1,182 +1,178 @@
 @if (gameDetails !== undefined) {
-  <section>
-    <div class="back-btn">
-      <button
-        matTooltip="Previous page"
-        mat-flat-button
-        [color]="'primary'"
-        (click)="backButton()">
-        <mat-icon>arrow_back</mat-icon>
-      </button>
-    </div>
-    <div class="game-details page-container">
-      <div class="game-header">
-        <div class="game-image">
-          @if (gameDetails.metacritic) {
-            <div class="metacritic-position">
-              <span [innerText]="gameDetails.metacritic"></span>
-            </div>
-          }
-          <img
-            src="{{ gameDetails.background_image }}"
-            alt="Image Poster"
-            width="450px" />
-        </div>
-        <div class="game-name">
-          <h1>{{ gameDetails.name_original }}</h1>
-          <div class="game-rating">
-            <div>
-              <h2>Genres:</h2>
-              <ul>
-                @for (genre of gameDetails.genres; track gameDetails.genres) {
-                  <li>{{ genre.name }}</li>
-                } @empty {
-                  <h3>No genres found</h3>
-                }
-              </ul>
-            </div>
-            <p>Rating --- {{ gameDetails.rating }}</p>
-            <p>Rating --- {{ gameDetails.rating_top }}</p>
-          </div>
-          <a href="{{ gameDetails.website }}">Game WebSite </a>
-        </div>
-      </div>
-      <div class="games-description">
-        @if (gameDetails) {
-          <div [innerHTML]="gameDetails.description"></div>
-        }
-        <div>
-          <div class="stores-header"><h2>Stores</h2></div>
-          <mat-divider></mat-divider>
-          <div class="stores">
-            @for (str of gameDetails.stores; track gameDetails.stores) {
-              <div>
-                <a
-                  [matTooltip]="str.store.name"
-                  target="”_blank”"
-                  href="https://{{ str.store.domain }}"
-                >{{ str.store.name }}</a
-                >
-              </div>
-            } @empty {
-              <h3>No Stores found</h3>
-            }
-          </div>
-        </div>
-        <div>
-          <mat-tab-group class="tabs">
-            <mat-tab>
-              <ng-template mat-tab-label
-              ><span class="tab-header">Tags</span></ng-template
-              >
-              <div class="tags">
-                @for (tag of gameDetails.tags; track gameDetails.tags) {
-                  <div class="tag-item">
-                    <img
-                      src="{{ tag.image_background }}"
-                      alt="{{ tag.name }}" />
-                    <h2>{{ tag.name }}</h2>
-                    <span>games on this tag --- {{ tag.games_count }}</span>
-                  </div>
-                } @empty {
-                  <h3>No Tags found</h3>
-                }
-              </div>
-            </mat-tab>
-            <mat-tab>
-              <ng-template mat-tab-label
-              ><span class="tab-header"
-              >Metacritic platforms</span
-              ></ng-template
-              >
-              <div class="videos">
-                @for (
-                    metacriticPlatform of gameDetails.metacritic_platforms;
-                  track gameDetails.metacritic_platforms
-                  ) {
-                  <div class="video-item">
-                    <p>{{ metacriticPlatform.platform.name }}</p>
-                    <a
-                      matTooltip="Link to metacritic"
-                      href="{{ metacriticPlatform.url }}"
-                      target="_blank"
-                    >Link to metacritic</a
-                    >
-                    <p>{{ metacriticPlatform.metascore }}</p>
-                  </div>
-                } @empty {
-                  <h3>No Metacritic point's found</h3>
-                }
-              </div>
-            </mat-tab>
-            <mat-tab>
-              <ng-template mat-tab-label
-              ><span class="tab-header">Platforms</span></ng-template
-              >
-              <div class="platforms">
-                @for (
-                    pm of gameDetails.platforms;
-                  track gameDetails.platforms
-                  ) {
-                  <div class="platform-item">
-                    <img
-                      src="{{ pm.platform.image_background }}"
-                      alt="{{ pm.platform.name }}" />
-                    <h2>{{ pm.platform.name }}</h2>
-                    <span
-                    >games on this platform ---
-                      {{ pm.platform.games_count }}</span
-                    >
-                  </div>
-                } @empty {
-                  <h3>No Platforms found</h3>
-                }
-              </div>
-            </mat-tab>
-            <mat-tab>
-              <ng-template mat-tab-label
-              ><span class="tab-header">Developers</span></ng-template
-              >
-              @for (
-                  developer of gameDetails.developers;
-                track gameDetails.developers
-                ) {
-                <div class="developer">
-                  <img
-                    src="{{ developer.image_background }}"
-                    alt="{{ developer.name }}" />
-                  <h2>{{ developer.name }}</h2>
-                </div>
-              } @empty {
-                <h3>No developers found</h3>
-              }
-            </mat-tab>
-            <mat-tab>
-              <ng-template mat-tab-label
-              ><span class="tab-header">Trailers</span></ng-template
-              >
-              @for (
-                  gameTrailer of gameTrailers.results;
-                track gameDetails.developers
-                ) {
-                <div class="videos">
-                  <h2>{{ gameTrailer.name }}</h2>
-                  <video controls>
-                    <source
-                      src="{{ gameTrailer.data.max }}"
-                      type="video/mp4" />
-                    <source
-                      src="{{ gameTrailer.preview }}"
-                      type="video/jgp" />
-                  </video>
-                </div>
-              } @empty {
-                <h3>No Trailers found</h3>
-              }
-            </mat-tab>
-          </mat-tab-group>
-        </div>
-      </div>
-    </div>
-  </section>
+	<section>
+		<div class="back-btn">
+			<button
+				matTooltip="Previous page"
+				mat-flat-button
+				[color]="'primary'"
+				(click)="backButton()">
+				<mat-icon>arrow_back</mat-icon>
+			</button>
+		</div>
+		<div class="game-details page-container">
+			<div class="game-header">
+				<div class="game-image">
+					@if (gameDetails.metacritic) {
+						<div class="metacritic-position">
+							<span [innerText]="gameDetails.metacritic"></span>
+						</div>
+					}
+					<img
+						src="{{ gameDetails.background_image }}"
+						alt="Image Poster"
+						width="450px" />
+				</div>
+				<div class="game-name">
+					<h1>{{ gameDetails.name_original }}</h1>
+					<div class="game-rating">
+						<div>
+							<h2>Genres:</h2>
+							<ul>
+								@for (genre of gameDetails.genres; track gameDetails.genres) {
+									<li>{{ genre.name }}</li>
+								} @empty {
+									<h3>No genres found</h3>
+								}
+							</ul>
+						</div>
+						<p>Rating --- {{ gameDetails.rating }}</p>
+						<p>Rating --- {{ gameDetails.rating_top }}</p>
+					</div>
+					<a href="{{ gameDetails.website }}">Game WebSite </a>
+				</div>
+			</div>
+			<div class="games-description">
+				@if (gameDetails) {
+					<div [innerHTML]="gameDetails.description"></div>
+				}
+				<div>
+					<div class="stores-header"><h2>Stores</h2></div>
+					<mat-divider></mat-divider>
+					<div class="stores">
+						@for (str of gameDetails.stores; track gameDetails.stores) {
+							<div>
+								<a
+									[matTooltip]="str.store.name"
+									target="”_blank”"
+									href="https://{{ str.store.domain }}"
+									>{{ str.store.name }}</a
+								>
+							</div>
+						} @empty {
+							<h3>No Stores found</h3>
+						}
+					</div>
+				</div>
+				<div>
+					<mat-tab-group class="tabs">
+						<mat-tab>
+							<ng-template mat-tab-label
+								><span class="tab-header">Tags</span></ng-template
+							>
+							<div class="tags">
+								@for (tag of gameDetails.tags; track gameDetails.tags) {
+									<div class="tag-item">
+										<img
+											src="{{ tag.image_background }}"
+											alt="{{ tag.name }}" />
+										<h2>{{ tag.name }}</h2>
+										<span>games on this tag --- {{ tag.games_count }}</span>
+									</div>
+								} @empty {
+									<h3>No Tags found</h3>
+								}
+							</div>
+						</mat-tab>
+						<mat-tab>
+							<ng-template mat-tab-label
+								><span class="tab-header"
+									>Metacritic platforms</span
+								></ng-template
+							>
+							<div class="videos">
+								@for (
+									metacriticPlatform of gameDetails.metacritic_platforms;
+									track gameDetails.metacritic_platforms
+								) {
+									<div class="video-item">
+										<p>{{ metacriticPlatform.platform.name }}</p>
+										<a
+											matTooltip="Link to metacritic"
+											href="{{ metacriticPlatform.url }}"
+											target="_blank"
+											>Link to metacritic</a
+										>
+										<p>{{ metacriticPlatform.metascore }}</p>
+									</div>
+								} @empty {
+									<h3>No Metacritic point's found</h3>
+								}
+							</div>
+						</mat-tab>
+						<mat-tab>
+							<ng-template mat-tab-label
+								><span class="tab-header">Platforms</span></ng-template
+							>
+							<div class="platforms">
+								@for (
+									pm of gameDetails.platforms;
+									track gameDetails.platforms
+								) {
+									<div class="platform-item">
+										<img
+											src="{{ pm.platform.image_background }}"
+											alt="{{ pm.platform.name }}" />
+										<h2>{{ pm.platform.name }}</h2>
+										<span
+											>games on this platform ---
+											{{ pm.platform.games_count }}</span
+										>
+									</div>
+								} @empty {
+									<h3>No Platforms found</h3>
+								}
+							</div>
+						</mat-tab>
+						<mat-tab>
+							<ng-template mat-tab-label
+								><span class="tab-header">Developers</span></ng-template
+							>
+							@for (
+								developer of gameDetails.developers;
+								track gameDetails.developers
+							) {
+								<div class="developer">
+									<img
+										src="{{ developer.image_background }}"
+										alt="{{ developer.name }}" />
+									<h2>{{ developer.name }}</h2>
+								</div>
+							} @empty {
+								<h3>No developers found</h3>
+							}
+						</mat-tab>
+						<mat-tab>
+							<ng-template mat-tab-label
+								><span class="tab-header">Trailers</span></ng-template
+							>
+							@for (
+								gameTrailer of gameTrailers.results;
+								track gameDetails.developers
+							) {
+								<div class="videos">
+									<h2>{{ gameTrailer.name }}</h2>
+									<video controls>
+										<source src="{{ gameTrailer.data.max }}" type="video/mp4" />
+										<source src="{{ gameTrailer.preview }}" type="video/jgp" />
+									</video>
+								</div>
+							} @empty {
+								<h3>No Trailers found</h3>
+							}
+						</mat-tab>
+					</mat-tab-group>
+				</div>
+			</div>
+		</div>
+	</section>
 }

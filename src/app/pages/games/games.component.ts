@@ -25,12 +25,11 @@ export class GamesComponent extends ClearObservableDirective implements OnInit {
 	constructor(
 		private cdr: ChangeDetectorRef,
 		private gamesService: GamesService,
-    private spinnerService: SpinnerService,
+		private spinnerService: SpinnerService,
 		private route: ActivatedRoute,
 		private errorService: ErrorService
 	) {
 		super();
-
 	}
 
 	ngOnInit() {
@@ -49,13 +48,13 @@ export class GamesComponent extends ClearObservableDirective implements OnInit {
 				games => {
 					this.games = games.results;
 					this.errorService.fullErrorObject(false);
-          this.spinnerService.proceedSpinnerStatus(true);
+					this.spinnerService.proceedSpinnerStatus(true);
 					this.cdr.detectChanges();
 				},
 				error => {
 					if (error) {
 						this.errorService.fullErrorObject(true);
-            this.spinnerService.proceedSpinnerStatus(false);
+						this.spinnerService.proceedSpinnerStatus(false);
 					}
 				}
 			);
@@ -100,7 +99,7 @@ export class GamesComponent extends ClearObservableDirective implements OnInit {
 	}
 
 	getFilterQuery(fp: FilterParams) {
-    this.spinnerService.proceedSpinnerStatus(true);
+		this.spinnerService.proceedSpinnerStatus(true);
 		this.filterParams = fp;
 		if (
 			this.filterParams.search === '' &&
@@ -115,18 +114,18 @@ export class GamesComponent extends ClearObservableDirective implements OnInit {
 		} else {
 			return this.filteredGames(1, this.filterParams);
 		}
-    this.spinnerService.proceedSpinnerStatus(false);
+		this.spinnerService.proceedSpinnerStatus(false);
 		this.cdr.detectChanges();
 	}
 
 	filteredGames(page: number, filter: FilterParams) {
-    this.spinnerService.proceedSpinnerStatus(true);
+		this.spinnerService.proceedSpinnerStatus(true);
 		this.gamesService
 			.filterGames(page, filter)
 			.pipe(
 				takeUntil(this.destroy$),
 				finalize(() => {
-          this.spinnerService.proceedSpinnerStatus(false);
+					this.spinnerService.proceedSpinnerStatus(false);
 				})
 			)
 			.subscribe(

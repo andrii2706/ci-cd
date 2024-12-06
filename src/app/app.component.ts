@@ -17,16 +17,16 @@ import { SpinnerService } from './shared/services/spinner.service';
 @Component({
 	selector: 'app-root',
 	standalone: true,
-  imports: [RouterOutlet, AppMaterialModule, RouterLink, SpinnerComponent],
+	imports: [RouterOutlet, AppMaterialModule, RouterLink, SpinnerComponent],
 	templateUrl: './app.component.html',
 	styleUrls: ['./app.component.scss'],
 })
-export class AppComponent implements OnInit, DoCheck, OnDestroy  {
-  destroy$ = new Subject<boolean>();
+export class AppComponent implements OnInit, DoCheck, OnDestroy {
+	destroy$ = new Subject<boolean>();
 	events: string[] = [];
 	opened = false;
 	userStatus = false;
-  isLoading: boolean;
+	isLoading: boolean;
 	/* eslint-disable  @typescript-eslint/no-explicit-any */
 	private logoutTimer: any;
 	private readonly timeoutDuration = 8 * 60 * 60 * 1000;
@@ -41,19 +41,20 @@ export class AppComponent implements OnInit, DoCheck, OnDestroy  {
 	constructor(
 		private router: Router,
 		private dialogWindow: MatDialog,
-    private spinnerStatusService: SpinnerService,
+		private spinnerStatusService: SpinnerService,
 		private authService: AuthService
-	) {
-  }
+	) {}
 
 	ngOnInit() {
 		if (this.authService.LoginStatus) {
 			this.authService.userLoginStatus.next(true);
 		}
 
-    this.spinnerStatusService.spinnerStatus.pipe(takeUntil(this.destroy$)).subscribe(spinnerStatus => {
-      this.isLoading = spinnerStatus
-    })
+		this.spinnerStatusService.spinnerStatus
+			.pipe(takeUntil(this.destroy$))
+			.subscribe(spinnerStatus => {
+				this.isLoading = spinnerStatus;
+			});
 		this.resetLogoutTimer();
 	}
 	ngDoCheck() {
@@ -84,8 +85,8 @@ export class AppComponent implements OnInit, DoCheck, OnDestroy  {
 
 	ngOnDestroy() {
 		this.clearLogoutTimer();
-    this.destroy$.next(true)
-    this.destroy$.complete();
+		this.destroy$.next(true);
+		this.destroy$.complete();
 	}
 
 	openBotModal() {

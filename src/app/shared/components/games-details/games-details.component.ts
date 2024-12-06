@@ -24,7 +24,7 @@ export class GamesDetailsComponent {
 	constructor(
 		private activatedRoute: ActivatedRoute,
 		private gamesService: GamesService,
-    private spinnerService:SpinnerService,
+		private spinnerService: SpinnerService,
 		private snackbar: MatSnackBar
 	) {
 		this.activatedRoute.params.pipe(take(1)).subscribe(
@@ -32,7 +32,7 @@ export class GamesDetailsComponent {
 				this.gameDetailsById(id);
 			},
 			() => {
-        this.spinnerService.proceedSpinnerStatus(true);
+				this.spinnerService.proceedSpinnerStatus(true);
 				this.snackbar.openFromComponent(SnackbarComponent, {
 					data: 'Server is out',
 					verticalPosition: 'top',
