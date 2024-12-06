@@ -46,7 +46,6 @@ describe('GamesComponent', () => {
 		}).compileComponents();
 
 		fixture = TestBed.createComponent(GamesComponent);
-		/* eslint-disable  @typescript-eslint/no-unused-vars */
 		service = TestBed.inject(GamesService);
 		component = fixture.componentInstance;
 		fixture.detectChanges(); // Trigger ngOnInit
@@ -59,7 +58,6 @@ describe('GamesComponent', () => {
 	it('should load games on init', () => {
 		expect(component.games).toEqual(mockGamesResponse.results);
 		expect(component.total).toEqual(mockGamesResponse.count);
-		expect(component.isLoading).toBe(false);
 	});
 
 	it('should get games on page change', () => {
@@ -209,6 +207,5 @@ describe('GamesComponent', () => {
 		});
 		expect(component.totalGames).toEqual(mockResponse.count);
 		expect(component.games).toEqual(mockResponse.results);
-		expect(component.isLoading).toBe(false);
 	});
 });

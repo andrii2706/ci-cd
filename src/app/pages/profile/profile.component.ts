@@ -9,6 +9,8 @@ import firebase from 'firebase/compat/app';
 import User = firebase.User;
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ConfirmationComponent } from '../../shared/components/confirmation/confirmation.component';
+import { SpinnerService } from '../../shared/services/spinner.service';
+import { takeUntil } from 'rxjs';
 
 @Component({
 	selector: 'app-profile',
@@ -23,17 +25,16 @@ export class ProfileComponent
 	confirmStatus = signal(null);
 	user: User | null;
 	userGames: Game[] = [];
-	isLoading: boolean;
 	userAvatar = '';
 	showAvatar = false;
 	updateUserInfoStatus = false;
-	private userId: string;
 
 	constructor(
 		private gamesService: GamesService,
 		private authService: AuthService,
 		private dialog: MatDialog,
 		private matDialogRef: MatDialogRef<ConfirmationComponent>,
+		private spinnerService: SpinnerService,
 		private router: Router,
 		private activatedRoute: ActivatedRoute,
 		private cdr: ChangeDetectorRef
@@ -47,8 +48,7 @@ export class ProfileComponent
 	}
 
 	getUser() {
-		this.isLoading = true;
-		this.authService.user$.subscribe(user => {
+		this.authService.user$.pipe(takeUntil(this.destroy$)).subscribe(user => {
 			if (user) {
 				this.user = user;
 				this.gamesService.getGameById(user.uid).then(userGames => {
@@ -56,9 +56,9 @@ export class ProfileComponent
 				});
 				this.authService.getAvatarById(user.uid).then(avatar => {
 					this.userAvatar = avatar.photoUrl;
+					this.spinnerService.proceedSpinnerStatus(false);
 				});
 			}
-			this.isLoading = false;
 		});
 	}
 
@@ -97,12 +97,13 @@ export class ProfileComponent
 			data: {
 				confirm: this.confirmStatus(),
 			},
+			disableClose: true,
 		});
 
 		dialogRef.afterClosed().subscribe(status => {
 			if (status) {
 				if (this.user) {
-					this.isLoading = true;
+					this.spinnerService.proceedSpinnerStatus(true);
 					this.gamesService
 						.removeGameFromUser(this.user.uid, gameInfo)
 						.then(() => {
@@ -111,7 +112,7 @@ export class ProfileComponent
 									this.userGames = userGames.games;
 								});
 							}
-							this.isLoading = false;
+							this.spinnerService.proceedSpinnerStatus(false);
 						});
 				}
 			} else {
@@ -121,13 +122,14 @@ export class ProfileComponent
 	}
 
 	async submitUpdateUserForm() {
+		this.spinnerService.proceedSpinnerStatus(true);
 		try {
 			this.authService.updateUserInfo(
 				this.updateUserInfoForm.get('displayName')?.value,
 				this.updateUserInfoForm.get('email')?.value,
 				this.userAvatar
 			);
-			console.log('User info updated successfully');
+			this.spinnerService.proceedSpinnerStatus(false);
 		} catch (error) {
 			console.error('Error updating user info', error);
 		}

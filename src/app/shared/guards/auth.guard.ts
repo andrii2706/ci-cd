@@ -5,7 +5,6 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { SnackbarComponent } from '../components/snackbar/snackbar.component';
 import { map } from 'rxjs/operators';
 
-/* eslint-disable  @typescript-eslint/no-unused-vars */
 export const authGuard: CanActivateFn = (route, state) => {
 	const authService = inject(AuthService);
 	const snackbar = inject(MatSnackBar);
@@ -13,7 +12,16 @@ export const authGuard: CanActivateFn = (route, state) => {
 
 	return authService.userLoginStatus.pipe(
 		map(status => {
+			if (status && state.url === '/') {
+				router.navigate(['/home']);
+				return false;
+			}
+
 			if (status) {
+				return true;
+			}
+
+			if (state.url === '/') {
 				return true;
 			} else {
 				snackbar.openFromComponent(SnackbarComponent, {

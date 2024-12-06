@@ -10,6 +10,7 @@ import { SpinnerComponent } from '../../shared/components/spinner/spinner.compon
 import { ClearObservableDirective } from '../../shared/classes';
 import { ErrorService } from '../../shared/services/error.service';
 import { ActivatedRoute } from '@angular/router';
+import { SpinnerService } from '../../shared/services/spinner.service';
 
 @Component({
 	selector: 'app-home',
@@ -28,12 +29,12 @@ export class HomeComponent extends ClearObservableDirective implements OnInit {
 	games: Game[] = [];
 	total: number;
 	dates: string;
-	isLoading = true;
 	isGameBoughtStatus = [];
 
 	constructor(
 		private gamesService: GamesService,
 		private errorService: ErrorService,
+		private spinnerService: SpinnerService,
 		private route: ActivatedRoute,
 		private cdr: ChangeDetectorRef
 	) {
@@ -41,11 +42,10 @@ export class HomeComponent extends ClearObservableDirective implements OnInit {
 	}
 
 	ngOnInit() {
-		this.isLoading = true;
 		if (this.route.snapshot.data['games'].results.length) {
 			this.games = this.route.snapshot.data['games'].results;
 			this.total = this.route.snapshot.data['games'].count;
-			this.isLoading = false;
+			this.spinnerService.proceedSpinnerStatus(false);
 		}
 		this.isGameBought();
 	}
@@ -61,7 +61,7 @@ export class HomeComponent extends ClearObservableDirective implements OnInit {
 			.getLastReleasedGames(page, this.dates)
 			.pipe(
 				takeUntil(this.destroy$),
-				finalize(() => (this.isLoading = false))
+				finalize(() => this.spinnerService.proceedSpinnerStatus(true))
 			)
 			.subscribe(
 				games => {

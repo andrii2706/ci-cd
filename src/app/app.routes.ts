@@ -6,6 +6,7 @@ import { gamesResolver } from './pages/games/games.resolver';
 import { ErrorPageComponent } from './pages/error-page/error-page.component';
 import { errorPageGuard } from './shared/guards/error-page.guard';
 import { NotInternetConectionComponent } from './pages/not-internet-conection/not-internet-conection.component';
+import { profileResolver } from './pages/profile/profile.resolver';
 
 export const routes: Routes = [
 	{
@@ -13,6 +14,7 @@ export const routes: Routes = [
 		loadChildren: () =>
 			import('./pages/auth/auth.module').then(m => m.AuthModule),
 		title: 'Auth',
+		canActivate: [authGuard],
 	},
 	{
 		path: 'home',
@@ -35,13 +37,13 @@ export const routes: Routes = [
 			import('./pages/profile/profile.module').then(m => m.ProfileModule),
 		title: 'Profile',
 		canActivate: [authGuard],
+		resolve: { user: profileResolver },
 	},
 	{
 		path: 'error',
 		component: ErrorPageComponent,
 		title: 'Error',
 		canActivate: [authGuard, errorPageGuard],
-		canDeactivate: [],
 	},
 	{
 		path: 'no-internet-connection',

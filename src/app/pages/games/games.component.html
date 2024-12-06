@@ -9,32 +9,25 @@
 			</mat-expansion-panel>
 		</mat-accordion>
 	</div>
-	@if (!isLoading || games) {
-		<div class="games-grid">
-			@for (
-				game of games
-					| paginate
-						: { itemsPerPage: 25, currentPage: page, totalItems: total };
-				track game.name
-			) {
-				<app-games-cards
-					[game]="game"
-					[isGameBought]="isGameBoughtStatus"
-					(boughtedGame)="buyGame($event)"></app-games-cards>
-			} @empty {
-				<div>Games not come wait a minute</div>
-			}
+	<div class="games-grid">
+		@for (
+			game of games
+				| paginate: { itemsPerPage: 25, currentPage: page, totalItems: total };
+			track game.name
+		) {
+			<app-games-cards
+				[game]="game"
+				[isGameBought]="isGameBoughtStatus"
+				(boughtedGame)="buyGame($event)"></app-games-cards>
+		} @empty {
+			<div>Games not come wait a minute</div>
+		}
+	</div>
+	<div class="pagination">
+		<div class="pagination-controllers">
+			<pagination-controls
+				class="pagination"
+				(pageChange)="navigateTo($event)"></pagination-controls>
 		</div>
-		<div class="pagination">
-			<div class="pagination-controllers">
-				<pagination-controls
-					class="pagination"
-					(pageChange)="navigateTo($event)"></pagination-controls>
-			</div>
-		</div>
-	} @else {
-		<div class="default-height">
-			<app-spinner></app-spinner>
-		</div>
-	}
+	</div>
 </section>

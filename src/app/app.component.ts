@@ -8,21 +8,25 @@ import {
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { AppMaterialModule } from './app-material/app-material.module';
 import { AuthService } from './shared/services/auth.service';
-import { noop } from 'rxjs';
+import { noop, Subject, takeUntil } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { BotComponent } from './pages/bot/bot.component';
+import { SpinnerComponent } from './shared/components/spinner/spinner.component';
+import { SpinnerService } from './shared/services/spinner.service';
 
 @Component({
 	selector: 'app-root',
 	standalone: true,
-	imports: [RouterOutlet, AppMaterialModule, RouterLink],
+	imports: [RouterOutlet, AppMaterialModule, RouterLink, SpinnerComponent],
 	templateUrl: './app.component.html',
-	styleUrls: ['./app.component.scss'], // змінив на 'styleUrls' (зверни увагу на помилку в 'styleUrl')
+	styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit, DoCheck, OnDestroy {
+	destroy$ = new Subject<boolean>();
 	events: string[] = [];
 	opened = false;
 	userStatus = false;
+	isLoading: boolean;
 	/* eslint-disable  @typescript-eslint/no-explicit-any */
 	private logoutTimer: any;
 	private readonly timeoutDuration = 8 * 60 * 60 * 1000;
@@ -37,14 +41,20 @@ export class AppComponent implements OnInit, DoCheck, OnDestroy {
 	constructor(
 		private router: Router,
 		private dialogWindow: MatDialog,
+		private spinnerStatusService: SpinnerService,
 		private authService: AuthService
 	) {}
 
 	ngOnInit() {
 		if (this.authService.LoginStatus) {
 			this.authService.userLoginStatus.next(true);
-			this.router.navigate(['/home']);
 		}
+
+		this.spinnerStatusService.spinnerStatus
+			.pipe(takeUntil(this.destroy$))
+			.subscribe(spinnerStatus => {
+				this.isLoading = spinnerStatus;
+			});
 		this.resetLogoutTimer();
 	}
 	ngDoCheck() {
@@ -75,12 +85,15 @@ export class AppComponent implements OnInit, DoCheck, OnDestroy {
 
 	ngOnDestroy() {
 		this.clearLogoutTimer();
+		this.destroy$.next(true);
+		this.destroy$.complete();
 	}
 
 	openBotModal() {
 		this.dialogWindow.open(BotComponent, {
 			width: '700px',
 			height: '800px',
+			disableClose: true,
 		});
 	}
 }
