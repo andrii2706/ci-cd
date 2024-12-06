@@ -1,86 +1,134 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { AuthComponent } from './auth.component';
+import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
-import { AngularFireModule } from '@angular/fire/compat';
-import { environment } from '../../../environment/environment';
-import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { AuthComponent } from './auth.component';
 import { AuthService } from '../../shared/services/auth.service';
 
-//TODO write unit test
-
-xdescribe('AuthComponent', () => {
+describe('AuthComponent', () => {
 	let component: AuthComponent;
 	let fixture: ComponentFixture<AuthComponent>;
-	let authService: AuthService;
+	let authServiceMock: jest.Mocked<AuthService>;
 
 	beforeEach(async () => {
+		authServiceMock = {
+			loginWithCredentials: jest.fn().mockResolvedValue(true),
+			googleLogin: jest.fn(),
+			signInWithCredentials: jest.fn(),
+			forgotPassword: jest.fn().mockResolvedValue(true),
+		} as unknown as jest.Mocked<AuthService>;
+
 		await TestBed.configureTestingModule({
-			imports: [
-				ReactiveFormsModule,
-				AngularFireModule.initializeApp(environment.firebaseConfig),
-			],
-			providers: [HttpClient],
+			imports: [ReactiveFormsModule],
 			declarations: [AuthComponent],
-			schemas: [NO_ERRORS_SCHEMA],
+			providers: [{ provide: AuthService, useValue: authServiceMock }],
 		}).compileComponents();
 
 		fixture = TestBed.createComponent(AuthComponent);
-		authService = TestBed.inject(AuthService);
 		component = fixture.componentInstance;
-
 		fixture.detectChanges();
 	});
 
-	it('should create', () => {
+	it('should create the component', () => {
 		expect(component).toBeTruthy();
 	});
 
-	it('should sign up', () => {
-		component.signUp();
+	it('should initialize all forms on ngOnInit', () => {
+		component.ngOnInit();
+		expect(component.authForm).toBeDefined();
+		expect(component.registerForm).toBeDefined();
+		expect(component.resetPasswordForm).toBeDefined();
+	});
+
+	it('should call AuthService.loginWithCredentials on submitAuth', async () => {
+		component.authForm.setValue({
+			email: 'test@example.com',
+			password: 'password123',
+		});
+
+		await component.submitAuth();
+
+		expect(authServiceMock.loginWithCredentials).toHaveBeenCalledWith(
+			'test@example.com',
+			'password123'
+		);
+	});
+
+	it('should call AuthService.googleLogin on submitGoogleAuth', () => {
+		component.submitGoogleAuth();
+
+		expect(authServiceMock.googleLogin).toHaveBeenCalled();
+	});
+
+	it('should reset authForm and update signInForm on cancelSubmitAuthForm', () => {
 		component.signInForm = true;
+		component.authForm.setValue({
+			email: 'test@example.com',
+			password: 'password123',
+		});
+
+		component.cancelSubmitAuthForm();
+
+		expect(component.signInForm).toBe(false);
+		expect(component.authForm.value).toEqual({
+			email: null,
+			password: null,
+		});
+	});
+
+	it('should call AuthService.signInWithCredentials on submitRegister', () => {
+		component.registerForm.setValue({
+			email: 'newuser@example.com',
+			password: 'password1234',
+		});
+
+		component.submitRegister();
+
+		expect(authServiceMock.signInWithCredentials).toHaveBeenCalledWith(
+			'newuser@example.com',
+			'password1234'
+		);
+	});
+
+	it('should toggle signInForm on signUp', () => {
+		component.signInForm = false;
+
+		component.signUp();
+
 		expect(component.signInForm).toBe(true);
 	});
 
-	it('should submitRegister', () => {
-		const signInSpy = jest
-			.spyOn(authService, 'signInWithCredentials')
-			.mockReturnValue();
-		component.registerForm.setValue({
-			email: 'test@example.com',
-			password: 'testpassword',
-		});
-		component.submitRegister();
+	it('should toggle showForgotPassword on forgotPasswordFormShow', () => {
+		component.showForgotPassword = false;
 
-		expect(signInSpy).toHaveBeenCalledWith('test@example.com', 'testpassword');
-	});
+		component.forgotPasswordFormShow();
 
-	// xit('should submitGoogleAuth', () => {
-	// 	const signInSpy = jest.spyOn(authService, 'googleLogin').mockReturnValue();
-	// 	component.submitGoogleAuth();
-	//
-	// 	expect(signInSpy).toHaveBeenCalled();
-	// });
-
-	it('should cancelSubmitAuthForm', () => {
-		component.signInForm = true;
-		component.cancelSubmitAuthForm();
-		component.authForm.reset();
-
+		expect(component.showForgotPassword).toBe(true);
 		expect(component.signInForm).toBe(false);
 	});
 
-	it('should submitAuth', () => {
-		component.authForm.setValue({
-			email: 'test@example.com',
-			password: 'testpassword',
+	it('should call AuthService.forgotPassword on forgotPasswordFormSend', async () => {
+		component.resetPasswordForm.setValue({
+			email: 'forgot@example.com',
 		});
-		const signInSpy = jest
-			.spyOn(authService, 'loginWithCredentials')
-			.mockResolvedValue();
-		component.submitAuth();
 
-		expect(signInSpy).toHaveBeenCalledWith('test@example.com', 'testpassword');
+		await component.forgotPasswordFormSend();
+
+		expect(authServiceMock.forgotPassword).toHaveBeenCalledWith(
+			'forgot@example.com'
+		);
+		expect(component.showForgotPassword).toBe(false);
+		expect(component.signInForm).toBe(false);
+	});
+
+	it('should log error if forgotPasswordFormSend fails', async () => {
+		const consoleSpy = jest.spyOn(console, 'log');
+		authServiceMock.forgotPassword.mockRejectedValueOnce(new Error('Failed'));
+
+		component.resetPasswordForm.setValue({
+			email: 'error@example.com',
+		});
+
+		await component.forgotPasswordFormSend();
+
+		expect(consoleSpy).toHaveBeenCalledWith(expect.any(Error));
 	});
 });
