@@ -123,8 +123,8 @@ export class AuthService {
 			});
 	}
 
-	signInWithCredentials(email: string, password: string) {
-		this.afAuth
+	async signInWithCredentials(email: string, password: string) {
+	return this.afAuth
 			.createUserWithEmailAndPassword(email, password)
 			.then(userInfo => {
 				this.changeLoginStatus(true, userInfo.user);
