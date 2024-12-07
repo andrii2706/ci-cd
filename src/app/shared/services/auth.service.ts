@@ -124,7 +124,7 @@ export class AuthService {
 	}
 
 	async signInWithCredentials(email: string, password: string) {
-	return this.afAuth
+		return this.afAuth
 			.createUserWithEmailAndPassword(email, password)
 			.then(userInfo => {
 				this.changeLoginStatus(true, userInfo.user);

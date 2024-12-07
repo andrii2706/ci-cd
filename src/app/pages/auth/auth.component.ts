@@ -66,10 +66,14 @@ export class AuthComponent extends ClearObservableDirective implements OnInit {
 	}
 
 	submitRegister() {
-		this.authService.signInWithCredentials(
-			this.registerForm.get('email')?.value,
-			this.registerForm.get('password')?.value
-		)?.then(() => {noop()})
+		this.authService
+			.signInWithCredentials(
+				this.registerForm.get('email')?.value,
+				this.registerForm.get('password')?.value
+			)
+			?.then(() => {
+				noop();
+			});
 	}
 
 	signUp() {
