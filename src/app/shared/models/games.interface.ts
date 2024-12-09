@@ -77,9 +77,9 @@ export interface GameDetails {
 			percent: number;
 		},
 	];
-  /* eslint-disable  @typescript-eslint/consistent-indexed-object-style */
+	/* eslint-disable  @typescript-eslint/consistent-indexed-object-style */
 	reactions: {
-    [key: string]: number
+		[key: string]: number;
 	};
 	platforms: [
 		{
