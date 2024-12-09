@@ -3,6 +3,8 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../shared/services/auth.service';
 import { noop } from 'rxjs';
 import { ClearObservableDirective } from '../../shared/classes';
+import { SnackbarComponent } from '../../shared/components/snackbar/snackbar.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
 	selector: 'app-auth',
@@ -16,7 +18,10 @@ export class AuthComponent extends ClearObservableDirective implements OnInit {
 	signInForm: boolean;
 	showForgotPassword: boolean;
 
-	constructor(private authService: AuthService) {
+	constructor(
+		private authService: AuthService,
+		private snackbarComponent: MatSnackBar
+	) {
 		super();
 	}
 
@@ -92,8 +97,14 @@ export class AuthComponent extends ClearObservableDirective implements OnInit {
 				this.showForgotPassword = false;
 				this.signInForm = false;
 			})
+			/* eslint-disable  @typescript-eslint/no-unused-vars */
 			.catch(error => {
-				console.log(error);
+				this.snackbarComponent.openFromComponent(SnackbarComponent, {
+					duration: 5000,
+					data: { text: 'User update is not responding', status: 'error' },
+					verticalPosition: 'top',
+					horizontalPosition: 'center',
+				});
 			});
 	}
 }
