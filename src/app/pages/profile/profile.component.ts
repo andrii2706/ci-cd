@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit, signal } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { ClearObservableDirective } from '../../shared/classes';
 import { GamesService } from '../../shared/services/games.service';
 import { Game } from '../../shared/models/games.interface';
@@ -7,10 +7,12 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../shared/services/auth.service';
 import firebase from 'firebase/compat/app';
 import User = firebase.User;
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationComponent } from '../../shared/components/confirmation/confirmation.component';
 import { SpinnerService } from '../../shared/services/spinner.service';
 import { takeUntil } from 'rxjs';
+import { SnackbarComponent } from '../../shared/components/snackbar/snackbar.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
 	selector: 'app-profile',
@@ -33,11 +35,10 @@ export class ProfileComponent
 		private gamesService: GamesService,
 		private authService: AuthService,
 		private dialog: MatDialog,
-		private matDialogRef: MatDialogRef<ConfirmationComponent>,
+    private snackbarComponent: MatSnackBar,
 		private spinnerService: SpinnerService,
 		private router: Router,
 		private activatedRoute: ActivatedRoute,
-		private cdr: ChangeDetectorRef
 	) {
 		super();
 	}
@@ -130,8 +131,14 @@ export class ProfileComponent
 				this.userAvatar
 			);
 			this.spinnerService.proceedSpinnerStatus(false);
+      /* eslint-disable  @typescript-eslint/no-unused-vars */
 		} catch (error) {
-			console.error('Error updating user info', error);
+      this.snackbarComponent.openFromComponent(SnackbarComponent, {
+        duration: 5000,
+        data: { text: 'Error updating user info', status: 'error' },
+        verticalPosition: 'top',
+        horizontalPosition: 'center',
+      });
 		}
 	}
 }

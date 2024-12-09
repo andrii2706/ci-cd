@@ -11,7 +11,6 @@ import {
 	Auth,
 	onAuthStateChanged,
 	sendPasswordResetEmail,
-	updatePassword,
 	updateProfile,
 } from '@angular/fire/auth';
 import { SnackbarComponent } from '../components/snackbar/snackbar.component';
@@ -155,29 +154,18 @@ export class AuthService {
 				.then(() => {
 					noop();
 				})
+        /* eslint-disable  @typescript-eslint/no-unused-vars */
 				.catch(error => {
-					console.error(error);
+          this.snackbarComponent.openFromComponent(SnackbarComponent, {
+            duration: 5000,
+            data: { text: 'Error updating user info', status: 'error' },
+            verticalPosition: 'top',
+            horizontalPosition: 'center',
+          });
 				});
 			this.userAvatarUrl(auth.uid, photoUrl).then(() => {
 				noop();
 			});
-		}
-	}
-
-	async updateUserPassword(newPassword: string): Promise<void> {
-		const user = this.auth.currentUser;
-		if (user) {
-			try {
-				await updatePassword(user, newPassword);
-				/* eslint-disable  @typescript-eslint/no-unused-vars */
-			} catch (error) {
-				this.snackbarComponent.openFromComponent(SnackbarComponent, {
-					duration: 5000,
-					data: { text: 'User update is not responding', status: 'error' },
-					verticalPosition: 'top',
-					horizontalPosition: 'center',
-				});
-			}
 		}
 	}
 
@@ -209,6 +197,7 @@ export class AuthService {
 				verticalPosition: 'top',
 				horizontalPosition: 'center',
 			});
+      /* eslint-disable  @typescript-eslint/no-unused-vars */
 		} catch (error) {
 			this.snackbarComponent.openFromComponent(SnackbarComponent, {
 				duration: 5000,
@@ -216,7 +205,6 @@ export class AuthService {
 				verticalPosition: 'top',
 				horizontalPosition: 'center',
 			});
-			console.error(error);
 		}
 	}
 
