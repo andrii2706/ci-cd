@@ -123,7 +123,7 @@ export class GamesService {
 				verticalPosition: 'top',
 				horizontalPosition: 'center',
 			});
-      /* eslint-disable  @typescript-eslint/no-unused-vars */
+			/* eslint-disable  @typescript-eslint/no-unused-vars */
 		} catch (error) {
 			this.snackbarComponent.openFromComponent(SnackbarComponent, {
 				duration: 5000,
@@ -157,7 +157,7 @@ export class GamesService {
 				verticalPosition: 'top',
 				horizontalPosition: 'center',
 			});
-      /* eslint-disable  @typescript-eslint/no-unused-vars */
+			/* eslint-disable  @typescript-eslint/no-unused-vars */
 		} catch (error) {
 			this.snackbarComponent.openFromComponent(SnackbarComponent, {
 				duration: 5000,

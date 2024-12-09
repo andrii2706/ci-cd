@@ -18,7 +18,10 @@ export class AuthComponent extends ClearObservableDirective implements OnInit {
 	signInForm: boolean;
 	showForgotPassword: boolean;
 
-	constructor(private authService: AuthService, private snackbarComponent: MatSnackBar) {
+	constructor(
+		private authService: AuthService,
+		private snackbarComponent: MatSnackBar
+	) {
 		super();
 	}
 
@@ -94,14 +97,14 @@ export class AuthComponent extends ClearObservableDirective implements OnInit {
 				this.showForgotPassword = false;
 				this.signInForm = false;
 			})
-      /* eslint-disable  @typescript-eslint/no-unused-vars */
+			/* eslint-disable  @typescript-eslint/no-unused-vars */
 			.catch(error => {
-        this.snackbarComponent.openFromComponent(SnackbarComponent, {
-          duration: 5000,
-          data: { text: 'User update is not responding', status: 'error' },
-          verticalPosition: 'top',
-          horizontalPosition: 'center',
-        });
+				this.snackbarComponent.openFromComponent(SnackbarComponent, {
+					duration: 5000,
+					data: { text: 'User update is not responding', status: 'error' },
+					verticalPosition: 'top',
+					horizontalPosition: 'center',
+				});
 			});
 	}
 }

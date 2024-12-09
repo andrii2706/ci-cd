@@ -169,7 +169,7 @@ export class AuthService {
 		if (user) {
 			try {
 				await updatePassword(user, newPassword);
-        /* eslint-disable  @typescript-eslint/no-unused-vars */
+				/* eslint-disable  @typescript-eslint/no-unused-vars */
 			} catch (error) {
 				this.snackbarComponent.openFromComponent(SnackbarComponent, {
 					duration: 5000,
@@ -230,7 +230,7 @@ export class AuthService {
 				verticalPosition: 'top',
 				horizontalPosition: 'center',
 			});
-      /* eslint-disable  @typescript-eslint/no-unused-vars */
+			/* eslint-disable  @typescript-eslint/no-unused-vars */
 		} catch (error) {
 			this.snackbarComponent.openFromComponent(SnackbarComponent, {
 				duration: 5000,
@@ -265,7 +265,7 @@ export class AuthService {
 	async forgotPassword(email: string): Promise<void> {
 		try {
 			await sendPasswordResetEmail(this.auth, email);
-      /* eslint-disable  @typescript-eslint/no-unused-vars */
+			/* eslint-disable  @typescript-eslint/no-unused-vars */
 		} catch (error) {
 			this.snackbarComponent.openFromComponent(SnackbarComponent, {
 				duration: 5000,
