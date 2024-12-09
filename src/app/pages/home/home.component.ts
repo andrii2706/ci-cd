@@ -26,8 +26,8 @@ import { SpinnerService } from '../../shared/services/spinner.service';
 })
 export class HomeComponent extends ClearObservableDirective implements OnInit {
 	page = 1;
-	games: Game[] = [];
-	total: number;
+	games: Game[] | undefined = [];
+	total: number | undefined;
 	dates: string;
 	isGameBoughtStatus = [];
 

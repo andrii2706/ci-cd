@@ -15,11 +15,11 @@ import { SpinnerService } from '../../shared/services/spinner.service';
 })
 export class GamesComponent extends ClearObservableDirective implements OnInit {
 	page = 1;
-	games: Game[] = [];
+	games: Game[] | undefined = [];
 	total: string | number;
 	boughtGames: Game[] = [];
 	filterParams: FilterParams | null;
-	totalGames: number;
+	totalGames: number | undefined;
 	isGameBoughtStatus: Game[] = [];
 
 	constructor(

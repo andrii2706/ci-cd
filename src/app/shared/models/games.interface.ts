@@ -1,10 +1,10 @@
 export interface Games {
-	count: number;
-	next: string | null;
-	previous: string | null;
-	results: Game[];
-	seo_title: string;
-	seo_h1: string;
+	count?: number;
+	next?: string | null;
+	previous?: string | null;
+	results?: Game[];
+	seo_title?: string;
+	seo_h1?: string;
 }
 
 interface Platforms {

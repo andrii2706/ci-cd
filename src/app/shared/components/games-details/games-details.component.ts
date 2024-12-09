@@ -22,8 +22,8 @@ export class GamesDetailsComponent {
 	games: GameDetails[];
 
 	constructor(
-		private activatedRoute: ActivatedRoute,
-		private gamesService: GamesService,
+		public activatedRoute: ActivatedRoute,
+		public gamesService: GamesService,
 		private spinnerService: SpinnerService,
 		private snackbar: MatSnackBar
 	) {
@@ -43,16 +43,15 @@ export class GamesDetailsComponent {
 	}
 
 	gameDetailsById(id: string) {
+		this.gamesService.getGameMovieById(id).subscribe(gameVideo => {
+			this.gameTrailers = gameVideo;
+		});
 		this.gamesService
 			.getGameByIdFromBE(id)
 			.pipe(take(1))
 			.subscribe(gameDetails => {
 				this.gameDetails = gameDetails;
-				console.log(this.gameDetails);
 			});
-		this.gamesService.getGameMovieById(id).subscribe(gameVideo => {
-			this.gameTrailers = gameVideo;
-		});
 	}
 
 	backButton() {
