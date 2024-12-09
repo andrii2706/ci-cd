@@ -154,14 +154,14 @@ export class AuthService {
 				.then(() => {
 					noop();
 				})
-        /* eslint-disable  @typescript-eslint/no-unused-vars */
+				/* eslint-disable  @typescript-eslint/no-unused-vars */
 				.catch(error => {
-          this.snackbarComponent.openFromComponent(SnackbarComponent, {
-            duration: 5000,
-            data: { text: 'Error updating user info', status: 'error' },
-            verticalPosition: 'top',
-            horizontalPosition: 'center',
-          });
+					this.snackbarComponent.openFromComponent(SnackbarComponent, {
+						duration: 5000,
+						data: { text: 'Error updating user info', status: 'error' },
+						verticalPosition: 'top',
+						horizontalPosition: 'center',
+					});
 				});
 			this.userAvatarUrl(auth.uid, photoUrl).then(() => {
 				noop();
@@ -197,7 +197,7 @@ export class AuthService {
 				verticalPosition: 'top',
 				horizontalPosition: 'center',
 			});
-      /* eslint-disable  @typescript-eslint/no-unused-vars */
+			/* eslint-disable  @typescript-eslint/no-unused-vars */
 		} catch (error) {
 			this.snackbarComponent.openFromComponent(SnackbarComponent, {
 				duration: 5000,

@@ -35,10 +35,10 @@ export class ProfileComponent
 		private gamesService: GamesService,
 		private authService: AuthService,
 		private dialog: MatDialog,
-    private snackbarComponent: MatSnackBar,
+		private snackbarComponent: MatSnackBar,
 		private spinnerService: SpinnerService,
 		private router: Router,
-		private activatedRoute: ActivatedRoute,
+		private activatedRoute: ActivatedRoute
 	) {
 		super();
 	}
@@ -131,14 +131,14 @@ export class ProfileComponent
 				this.userAvatar
 			);
 			this.spinnerService.proceedSpinnerStatus(false);
-      /* eslint-disable  @typescript-eslint/no-unused-vars */
+			/* eslint-disable  @typescript-eslint/no-unused-vars */
 		} catch (error) {
-      this.snackbarComponent.openFromComponent(SnackbarComponent, {
-        duration: 5000,
-        data: { text: 'Error updating user info', status: 'error' },
-        verticalPosition: 'top',
-        horizontalPosition: 'center',
-      });
+			this.snackbarComponent.openFromComponent(SnackbarComponent, {
+				duration: 5000,
+				data: { text: 'Error updating user info', status: 'error' },
+				verticalPosition: 'top',
+				horizontalPosition: 'center',
+			});
 		}
 	}
 }
