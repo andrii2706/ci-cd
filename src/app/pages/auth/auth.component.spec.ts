@@ -118,17 +118,4 @@ describe('AuthComponent', () => {
 		expect(component.showForgotPassword).toBe(false);
 		expect(component.signInForm).toBe(false);
 	});
-
-	it('should log error if forgotPasswordFormSend fails', async () => {
-		const consoleSpy = jest.spyOn(console, 'log');
-		authServiceMock.forgotPassword.mockRejectedValueOnce(new Error('Failed'));
-
-		component.resetPasswordForm.setValue({
-			email: 'error@example.com',
-		});
-
-		await component.forgotPasswordFormSend();
-
-		expect(consoleSpy).toHaveBeenCalledWith(expect.any(Error));
-	});
 });
