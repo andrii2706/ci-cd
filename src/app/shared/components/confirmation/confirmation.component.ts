@@ -13,7 +13,7 @@ export class ConfirmationComponent {
 	data = inject<{ confirm: boolean }>(MAT_DIALOG_DATA);
 	confirmStatus = model(this.data.confirm);
 
-  constructor(public dialogRef: MatDialogRef<ConfirmationComponent>) {}
+	constructor(public dialogRef: MatDialogRef<ConfirmationComponent>) {}
 
 	statusOfDeleteGame(status: boolean) {
 		this.dialogRef.close(status);

@@ -43,9 +43,9 @@ export class GamesDetailsComponent {
 	}
 
 	gameDetailsById(id: string) {
-    this.gamesService.getGameMovieById(id).subscribe(gameVideo => {
-      this.gameTrailers = gameVideo;
-    });
+		this.gamesService.getGameMovieById(id).subscribe(gameVideo => {
+			this.gameTrailers = gameVideo;
+		});
 		this.gamesService
 			.getGameByIdFromBE(id)
 			.pipe(take(1))

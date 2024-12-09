@@ -29,10 +29,10 @@ describe('GamesDetailsComponent', () => {
 			}),
 		} as unknown as jest.Mocked<AngularFirestore>;
 
-    await TestBed.configureTestingModule({
+		await TestBed.configureTestingModule({
 			imports: [
 				GamesDetailsComponent,
-        HttpClientTestingModule,
+				HttpClientTestingModule,
 				AngularFireModule.initializeApp(environment.firebaseConfig), // Initialize Firebase with your environment config
 			],
 			providers: [
@@ -43,7 +43,7 @@ describe('GamesDetailsComponent', () => {
 
 		fixture = TestBed.createComponent(GamesDetailsComponent);
 		component = fixture.componentInstance;
-    gamesServiceMock = TestBed.inject(GamesService);
+		gamesServiceMock = TestBed.inject(GamesService);
 		fixture.detectChanges();
 	});
 
@@ -59,30 +59,29 @@ describe('GamesDetailsComponent', () => {
 		expect(historySpy).toHaveBeenCalled();
 	});
 
-  it('should call gameDetailsById with correct id when route param changes', () => {
-    const gameDetailsByIdSpy = jest.spyOn(component, 'gameDetailsById');
-    component.activatedRoute.params.subscribe(() => {
-      expect(gameDetailsByIdSpy).toHaveBeenCalledWith('123');
-    });
-  });
+	it('should call gameDetailsById with correct id when route param changes', () => {
+		const gameDetailsByIdSpy = jest.spyOn(component, 'gameDetailsById');
+		component.activatedRoute.params.subscribe(() => {
+			expect(gameDetailsByIdSpy).toHaveBeenCalledWith('123');
+		});
+	});
 
-  it('should call history.back() when backButton is called', () => {
-    const backSpy = jest.spyOn(window.history, 'back');
-    component.backButton();
-    expect(backSpy).toHaveBeenCalled();
-  });
-  it('should handle game details successfully and assign values to gameDetails and gameTrailers',() => {
-    const mockGameDetails = { id: '123', name: 'Test Game' };
-    const mockGameTrailers = { id: '123', trailer: 'trailer_url' };
+	it('should call history.back() when backButton is called', () => {
+		const backSpy = jest.spyOn(window.history, 'back');
+		component.backButton();
+		expect(backSpy).toHaveBeenCalled();
+	});
+	it('should handle game details successfully and assign values to gameDetails and gameTrailers', () => {
+		const mockGameDetails = { id: '123', name: 'Test Game' };
+		const mockGameTrailers = { id: '123', trailer: 'trailer_url' };
 
-    component.gameDetailsById('123');
+		component.gameDetailsById('123');
 
-    gamesServiceMock.getGameByIdFromBE('123').subscribe(() => {
-      expect(component.gameDetails).toBe(mockGameDetails);
-    })
-    gamesServiceMock.getGameMovieById('123').subscribe(() => {
-      expect(component.gameTrailers).toBe(mockGameTrailers);
-    })
-  });
-
+		gamesServiceMock.getGameByIdFromBE('123').subscribe(() => {
+			expect(component.gameDetails).toBe(mockGameDetails);
+		});
+		gamesServiceMock.getGameMovieById('123').subscribe(() => {
+			expect(component.gameTrailers).toBe(mockGameTrailers);
+		});
+	});
 });
