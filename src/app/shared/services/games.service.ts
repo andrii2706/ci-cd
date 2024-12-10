@@ -123,7 +123,7 @@ export class GamesService {
 				verticalPosition: 'top',
 				horizontalPosition: 'center',
 			});
-		} catch  {
+		} catch {
 			this.snackbarComponent.openFromComponent(SnackbarComponent, {
 				duration: 5000,
 				data: { text: `Game is not added`, status: 'error' },
@@ -156,7 +156,6 @@ export class GamesService {
 				verticalPosition: 'top',
 				horizontalPosition: 'center',
 			});
-
 		} catch {
 			this.snackbarComponent.openFromComponent(SnackbarComponent, {
 				duration: 5000,

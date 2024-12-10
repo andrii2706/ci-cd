@@ -57,7 +57,7 @@ export class AppComponent implements OnInit, DoCheck, OnDestroy {
 			.subscribe(spinnerStatus => {
 				this.isLoading = spinnerStatus;
 			});
-    this.resetLogoutTimer();
+		this.resetLogoutTimer();
 	}
 	ngDoCheck() {
 		this.userStatus = this.authService.LoginStatus;

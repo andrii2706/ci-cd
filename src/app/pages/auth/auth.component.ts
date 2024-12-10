@@ -33,7 +33,7 @@ export class AuthComponent extends ClearObservableDirective implements OnInit {
 		this.initAuthForm();
 		this.initRegisterForm();
 		this.forgotPasswordFormInit();
-    this.isLoading = false;
+		this.isLoading = false;
 	}
 
 	initAuthForm() {
@@ -57,7 +57,7 @@ export class AuthComponent extends ClearObservableDirective implements OnInit {
 	}
 
 	submitAuth() {
-    this.isLoading = true
+		this.isLoading = true;
 		const emailCreads = this.authForm.get('email')?.value;
 		const passwordCreads = this.authForm.get('password')?.value;
 		this.authService

@@ -9,13 +9,21 @@
 	<span>My App</span>
 	<span class="example-spacer"></span>
 	@if (userStatus) {
-    <button mat-raised-button class="mr-20px" [color]="'primary'" (click)="logoutUser()">
-      <mat-icon>android</mat-icon>
-      <span mat-line>Bot</span>
-    </button>
-    <button mat-raised-button class="mr-20px" [color]="'primary'" (click)="logoutUser()">
+		<button
+			mat-raised-button
+			class="mr-20px"
+			[color]="'primary'"
+			(click)="logoutUser()">
+			<mat-icon>android</mat-icon>
+			<span mat-line>Bot</span>
+		</button>
+		<button
+			mat-raised-button
+			class="mr-20px"
+			[color]="'primary'"
+			(click)="logoutUser()">
 			Log out
-    </button>
+		</button>
 		<button mat-icon-button class="example-icon" (click)="goToProfile()">
 			<mat-icon>account_circle</mat-icon>
 		</button>
