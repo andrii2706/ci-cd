@@ -33,6 +33,7 @@ export class AuthComponent extends ClearObservableDirective implements OnInit {
 		this.initAuthForm();
 		this.initRegisterForm();
 		this.forgotPasswordFormInit();
+		this.isLoading = false;
 	}
 
 	initAuthForm() {
@@ -56,6 +57,7 @@ export class AuthComponent extends ClearObservableDirective implements OnInit {
 	}
 
 	submitAuth() {
+		this.isLoading = true;
 		const emailCreads = this.authForm.get('email')?.value;
 		const passwordCreads = this.authForm.get('password')?.value;
 		this.authService
@@ -104,8 +106,7 @@ export class AuthComponent extends ClearObservableDirective implements OnInit {
 				this.showForgotPassword = false;
 				this.signInForm = false;
 			})
-			/* eslint-disable  @typescript-eslint/no-unused-vars */
-			.catch(error => {
+			.catch(() => {
 				this.snackbarComponent.openFromComponent(SnackbarComponent, {
 					duration: 5000,
 					data: { text: 'User update is not responding', status: 'error' },
