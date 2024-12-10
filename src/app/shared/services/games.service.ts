@@ -123,8 +123,7 @@ export class GamesService {
 				verticalPosition: 'top',
 				horizontalPosition: 'center',
 			});
-			/* eslint-disable  @typescript-eslint/no-unused-vars */
-		} catch (error) {
+		} catch  {
 			this.snackbarComponent.openFromComponent(SnackbarComponent, {
 				duration: 5000,
 				data: { text: `Game is not added`, status: 'error' },
@@ -157,8 +156,8 @@ export class GamesService {
 				verticalPosition: 'top',
 				horizontalPosition: 'center',
 			});
-			/* eslint-disable  @typescript-eslint/no-unused-vars */
-		} catch (error) {
+
+		} catch {
 			this.snackbarComponent.openFromComponent(SnackbarComponent, {
 				duration: 5000,
 				data: { text: `Game is not deleted`, status: 'error' },

@@ -132,7 +132,7 @@ export class ProfileComponent
 			);
 			this.spinnerService.proceedSpinnerStatus(false);
 			/* eslint-disable  @typescript-eslint/no-unused-vars */
-		} catch (error) {
+		} catch  {
 			this.snackbarComponent.openFromComponent(SnackbarComponent, {
 				duration: 5000,
 				data: { text: 'Error updating user info', status: 'error' },

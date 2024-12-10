@@ -9,9 +9,13 @@
 	<span>My App</span>
 	<span class="example-spacer"></span>
 	@if (userStatus) {
-		<button mat-raised-button [color]="'primary'" (click)="logoutUser()">
+    <button mat-raised-button class="mr-20px" [color]="'primary'" (click)="logoutUser()">
+      <mat-icon>android</mat-icon>
+      <span mat-line>Bot</span>
+    </button>
+    <button mat-raised-button class="mr-20px" [color]="'primary'" (click)="logoutUser()">
 			Log out
-		</button>
+    </button>
 		<button mat-icon-button class="example-icon" (click)="goToProfile()">
 			<mat-icon>account_circle</mat-icon>
 		</button>
@@ -33,12 +37,6 @@
 				<mat-icon matListItemIcon>videogame_asset</mat-icon>
 				<h3 mat-line>Games</h3>
 			</mat-list-item>
-			@if (userStatus) {
-				<mat-list-item class="listItem" (click)="openBotModal()">
-					<mat-icon matListItemIcon>android</mat-icon>
-					<h3 mat-line>Bot</h3>
-				</mat-list-item>
-			}
 		</mat-nav-list>
 	</mat-sidenav>
 
