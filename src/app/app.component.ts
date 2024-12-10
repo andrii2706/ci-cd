@@ -1,10 +1,10 @@
 import {
-  ChangeDetectorRef,
-  Component,
-  DoCheck,
-  HostListener,
-  OnDestroy,
-  OnInit,
+	ChangeDetectorRef,
+	Component,
+	DoCheck,
+	HostListener,
+	OnDestroy,
+	OnInit,
 } from '@angular/core';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { AppMaterialModule } from './app-material/app-material.module';
@@ -44,7 +44,7 @@ export class AppComponent implements OnInit, DoCheck, OnDestroy {
 		private dialogWindow: MatDialog,
 		private spinnerStatusService: SpinnerService,
 		private authService: AuthService,
-    private cdr : ChangeDetectorRef
+		private cdr: ChangeDetectorRef
 	) {}
 
 	ngOnInit() {

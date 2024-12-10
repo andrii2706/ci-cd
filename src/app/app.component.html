@@ -1,11 +1,11 @@
 <mat-toolbar>
-  <button
-    mat-icon-button
-    class="example-icon"
-    aria-label="Example icon-button with menu icon"
-    (click)="sidenav.toggle()">
-    <mat-icon>menu</mat-icon>
-  </button>
+	<button
+		mat-icon-button
+		class="example-icon"
+		aria-label="Example icon-button with menu icon"
+		(click)="sidenav.toggle()">
+		<mat-icon>menu</mat-icon>
+	</button>
 	<span>My App</span>
 	<span class="example-spacer"></span>
 	@if (userStatus) {
@@ -33,12 +33,12 @@
 				<mat-icon matListItemIcon>videogame_asset</mat-icon>
 				<h3 mat-line>Games</h3>
 			</mat-list-item>
-      @if (userStatus) {
-        <mat-list-item class="listItem" (click)="openBotModal()">
-          <mat-icon matListItemIcon>android</mat-icon>
-          <h3 mat-line>Bot</h3>
-        </mat-list-item>
-      }
+			@if (userStatus) {
+				<mat-list-item class="listItem" (click)="openBotModal()">
+					<mat-icon matListItemIcon>android</mat-icon>
+					<h3 mat-line>Bot</h3>
+				</mat-list-item>
+			}
 		</mat-nav-list>
 	</mat-sidenav>
 

@@ -18,30 +18,29 @@ export class AuthComponent extends ClearObservableDirective implements OnInit {
 	resetPasswordForm: FormGroup;
 	signInForm: boolean;
 	showForgotPassword: boolean;
-  isLoading: boolean;
+	isLoading: boolean;
 
 	constructor(
 		private authService: AuthService,
-    private spinnerService :SpinnerService,
+		private spinnerService: SpinnerService,
 		private snackbarComponent: MatSnackBar
 	) {
 		super();
-    this.spinnerService.proceedSpinnerStatus(false)
-  }
+		this.spinnerService.proceedSpinnerStatus(false);
+	}
 
 	ngOnInit() {
-
 		this.initAuthForm();
 		this.initRegisterForm();
 		this.forgotPasswordFormInit();
 	}
 
 	initAuthForm() {
-    this.authForm = new FormGroup({
-      email: new FormControl('', [Validators.required, Validators.email]),
-      password: new FormControl('', [Validators.required]),
-    });
-  }
+		this.authForm = new FormGroup({
+			email: new FormControl('', [Validators.required, Validators.email]),
+			password: new FormControl('', [Validators.required]),
+		});
+	}
 
 	initRegisterForm() {
 		this.registerForm = new FormGroup({
@@ -83,9 +82,10 @@ export class AuthComponent extends ClearObservableDirective implements OnInit {
 			)
 			?.then(() => {
 				this.spinnerService.proceedSpinnerStatus(true);
-			}).finally(() => {
-        this.spinnerService.proceedSpinnerStatus(false);
-    })
+			})
+			.finally(() => {
+				this.spinnerService.proceedSpinnerStatus(false);
+			});
 	}
 
 	signUp() {
