@@ -1,4 +1,5 @@
 import {
+	ChangeDetectorRef,
 	Component,
 	DoCheck,
 	HostListener,
@@ -42,7 +43,8 @@ export class AppComponent implements OnInit, DoCheck, OnDestroy {
 		private router: Router,
 		private dialogWindow: MatDialog,
 		private spinnerStatusService: SpinnerService,
-		private authService: AuthService
+		private authService: AuthService,
+		private cdr: ChangeDetectorRef
 	) {}
 
 	ngOnInit() {

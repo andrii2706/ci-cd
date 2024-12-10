@@ -5,6 +5,7 @@ import { noop } from 'rxjs';
 import { ClearObservableDirective } from '../../shared/classes';
 import { SnackbarComponent } from '../../shared/components/snackbar/snackbar.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { SpinnerService } from '../../shared/services/spinner.service';
 
 @Component({
 	selector: 'app-auth',
@@ -17,12 +18,15 @@ export class AuthComponent extends ClearObservableDirective implements OnInit {
 	resetPasswordForm: FormGroup;
 	signInForm: boolean;
 	showForgotPassword: boolean;
+	isLoading: boolean;
 
 	constructor(
 		private authService: AuthService,
+		private spinnerService: SpinnerService,
 		private snackbarComponent: MatSnackBar
 	) {
 		super();
+		this.spinnerService.proceedSpinnerStatus(false);
 	}
 
 	ngOnInit() {
@@ -77,7 +81,10 @@ export class AuthComponent extends ClearObservableDirective implements OnInit {
 				this.registerForm.get('password')?.value
 			)
 			?.then(() => {
-				noop();
+				this.spinnerService.proceedSpinnerStatus(true);
+			})
+			.finally(() => {
+				this.spinnerService.proceedSpinnerStatus(false);
 			});
 	}
 
