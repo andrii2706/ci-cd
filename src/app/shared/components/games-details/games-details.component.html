@@ -31,9 +31,9 @@
 								@for (genre of gameDetails.genres; track gameDetails.genres) {
 									<li>{{ genre.name }}</li>
 								} @empty {
-                  <div class="flex-block mt-15">
-                    <h3>No genres found</h3>
-                  </div>
+									<div class="flex-block mt-15">
+										<h3>No genres found</h3>
+									</div>
 								}
 							</ul>
 						</div>
@@ -61,9 +61,9 @@
 								>
 							</div>
 						} @empty {
-              <div class="flex-block mt-15">
-                <h3>No Stores found</h3>
-              </div>
+							<div class="flex-block mt-15">
+								<h3>No Stores found</h3>
+							</div>
 						}
 					</div>
 				</div>
@@ -83,9 +83,9 @@
 										<span>games on this tag --- {{ tag.games_count }}</span>
 									</div>
 								} @empty {
-                  <div class="flex-block mt-15">
-                    <h3>No Tags found</h3>
-                  </div>
+									<div class="flex-block mt-15">
+										<h3>No Tags found</h3>
+									</div>
 								}
 							</div>
 						</mat-tab>
@@ -111,9 +111,9 @@
 										<p>{{ metacriticPlatform.metascore }}</p>
 									</div>
 								} @empty {
-                  <div class="flex-block mt-15">
-                    <h3>No Metacritic point's found</h3>
-                  </div>
+									<div class="flex-block mt-15">
+										<h3>No Metacritic point's found</h3>
+									</div>
 								}
 							</div>
 						</mat-tab>
@@ -137,9 +137,9 @@
 										>
 									</div>
 								} @empty {
-                  <div class="flex-block mt-15">
-                    <h3>No Platforms found</h3>
-                  </div>
+									<div class="flex-block mt-15">
+										<h3>No Platforms found</h3>
+									</div>
 								}
 							</div>
 						</mat-tab>
@@ -158,9 +158,9 @@
 									<h2>{{ developer.name }}</h2>
 								</div>
 							} @empty {
-                <div class="flex-block mt-15">
-                  <h3>No developers found</h3>
-                </div>
+								<div class="flex-block mt-15">
+									<h3>No developers found</h3>
+								</div>
 							}
 						</mat-tab>
 						<mat-tab>
@@ -179,9 +179,9 @@
 									</video>
 								</div>
 							} @empty {
-                <div class="flex-block mt-15">
-                  <h3>No Trailers found</h3>
-                </div>
+								<div class="flex-block mt-15">
+									<h3>No Trailers found</h3>
+								</div>
 							}
 						</mat-tab>
 					</mat-tab-group>
