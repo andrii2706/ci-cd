@@ -41,12 +41,11 @@
 	</mat-sidenav>
 
 	<mat-sidenav-content>
-		@if (isLoading) {
-			<app-spinner></app-spinner>
-		} @else {
-			<div class="example-sidenav-content">
-				<router-outlet></router-outlet>
-			</div>
-		}
+		<div class="example-sidenav-content">
+			<router-outlet></router-outlet>
+			@if (isLoading) {
+				<app-spinner></app-spinner>
+			}
+		</div>
 	</mat-sidenav-content>
 </mat-sidenav-container>
