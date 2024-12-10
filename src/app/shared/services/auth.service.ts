@@ -50,7 +50,7 @@ export class AuthService {
 		localStorage.setItem('loggedIn', 'false');
 	}
 	/* eslint-disable  @typescript-eslint/no-explicit-any */
-	changeLoginStatus(status: boolean, userInfo: User| null) {
+	changeLoginStatus(status: boolean, userInfo: User | null) {
 		this.loggedInStatus = status;
 		localStorage.setItem('loggedIn', `${this.loggedInStatus}`);
 		if (userInfo) {
