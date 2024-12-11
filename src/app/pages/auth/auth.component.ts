@@ -40,9 +40,9 @@ export class AuthComponent extends ClearObservableDirective implements OnInit {
 		this.initAuthForm();
 		this.initRegisterForm();
 		this.forgotPasswordFormInit();
-    this.spinnerService.spinnerStatus.pipe(take(1)).subscribe(
-      isLoading => (this.isLoading = isLoading)
-    );
+		this.spinnerService.spinnerStatus
+			.pipe(take(1))
+			.subscribe(isLoading => (this.isLoading = isLoading));
 	}
 
 	initAuthForm() {

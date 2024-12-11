@@ -105,7 +105,7 @@ export class AuthService {
 		return this.afAuth
 			.signInWithEmailAndPassword(email, password)
 			.then(userInfo => {
-        this.spinnerStatus.proceedSpinnerStatus(true);
+				this.spinnerStatus.proceedSpinnerStatus(true);
 				this.changeLoginStatus(true, userInfo.user);
 				this.userLoggingWithFireBase.next(userInfo.user);
 				this.userPasswordWithFireBase.next(password);
