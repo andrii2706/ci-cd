@@ -17,7 +17,7 @@
 			</mat-form-field>
 			<mat-form-field class="auth-input">
 				<mat-label>Password</mat-label>
-				<input type="password" matInput formControlName="password" />
+				<input type="password" matInput formControlName="password" (keydown.space)="$event.preventDefault()" />
 				@if (authForm.hasError('required')) {
 					<mat-error>Password is <strong>required</strong></mat-error>
 				}
@@ -34,8 +34,8 @@
 			</button>
 		</div>
 	} @else if (showForgotPassword) {
-		<div>
-			<form [formGroup]="resetPasswordForm">
+		<div class="flex-direction-columns ">
+			<form [formGroup]="resetPasswordForm" class="flex-block w-full">
 				<mat-form-field class="auth-input">
 					<mat-label>Email</mat-label>
 					<input
@@ -55,6 +55,7 @@
 				</mat-form-field>
 			</form>
 			<div class="flex-block sign-up-block">
+        <button mat-flat-button (click)="showForgotPassword = false">Cancel</button>
 				<button mat-flat-button (click)="forgotPasswordFormSend()">
 					Update password
 				</button>
@@ -73,27 +74,32 @@
 							matInput
 							formControlName="email"
 							placeholder="Ex. pat@example.com" />
-						@if (authForm.hasError('email') && !authForm.hasError('required')) {
-							<mat-error>Please enter a valid email address</mat-error>
-						}
-						@if (authForm.hasError('required')) {
-							<mat-error>Email is <strong>required</strong></mat-error>
-						}
+            @if (authForm.invalid || authForm.hasError('email')) {
+              <mat-error>Please enter a valid email address</mat-error>
+            }
 					</mat-form-field>
+
 					<mat-form-field class="auth-input">
 						<mat-label>Password</mat-label>
 						<input
 							type="password"
 							matInput
 							formControlName="password"
-							placeholder="Ex. pat@example.com" />
+              (keydown.space)="$event.preventDefault()"
+            />
+            @if (authForm.invalid || authForm.hasError('required')) {
+              <mat-error>Please enter a valid password</mat-error>
+            }
 					</mat-form-field>
+
 				</form>
 				<div class="flex-direction-columns">
 					<div class="flex-block gap-1rem">
-						<button mat-flat-button (click)="cancelSubmitAuthForm()">
-							Cancel
-						</button>
+            @if(authForm.valid || authForm.value.length){
+            <button mat-flat-button (click)="cancelSubmitAuthForm()">
+              Cancel
+            </button>
+            }
 						<button
 							mat-flat-button
 							[disabled]="!authForm.valid"

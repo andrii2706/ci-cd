@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { AuthService } from '../../shared/services/auth.service';
 import { noop } from 'rxjs';
 import { ClearObservableDirective } from '../../shared/classes';
@@ -46,7 +46,7 @@ export class AuthComponent extends ClearObservableDirective implements OnInit {
 	initRegisterForm() {
 		this.registerForm = new FormGroup({
 			email: new FormControl('', [Validators.required, Validators.email]),
-			password: new FormControl('', [Validators.required, Validators.min(8)]),
+			password: new FormControl('', [Validators.required, Validators.min(8), this.noWhitespaceValidator()]),
 		});
 	}
 
@@ -56,6 +56,13 @@ export class AuthComponent extends ClearObservableDirective implements OnInit {
 		});
 	}
 
+  noWhitespaceValidator(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const isWhitespace = (control.value || '').trim().length === 0;
+      return isWhitespace ? { whitespace: true } : null;
+    };
+  }
+
 	submitAuth() {
 		this.isLoading = true;
 		const emailCreads = this.authForm.get('email')?.value;
@@ -63,7 +70,8 @@ export class AuthComponent extends ClearObservableDirective implements OnInit {
 		this.authService
 			.loginWithCredentials(emailCreads, passwordCreads)
 			.then(() => noop());
-	}
+  this.spinnerService.spinnerStatus.subscribe(isLoading => this.isLoading = isLoading);
+  }
 
 	submitGoogleAuth() {
 		this.authService.googleLogin();
