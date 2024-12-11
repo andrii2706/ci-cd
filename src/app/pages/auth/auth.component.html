@@ -9,13 +9,17 @@
 						matInput
 						formControlName="email"
 						placeholder="Ex. pat@example.com" />
-					@if (authForm.hasError('email') && !authForm.hasError('required')) {
+					@if (
+						!registerForm.hasError('email') &&
+						!registerForm.hasError('required')
+					) {
 						<mat-error>Please enter a valid email address</mat-error>
 					}
-					@if (authForm.hasError('required')) {
+					@if (registerForm.hasError('required')) {
 						<mat-error>Email is <strong>required</strong></mat-error>
 					}
 				</mat-form-field>
+
 				<mat-form-field class="auth-input">
 					<mat-label>Password</mat-label>
 					<input
@@ -23,8 +27,14 @@
 						matInput
 						formControlName="password"
 						(keydown.space)="$event.preventDefault()" />
-					@if (authForm.hasError('required')) {
+					@if (registerForm.hasError('required')) {
 						<mat-error>Password is <strong>required</strong></mat-error>
+					}
+					@if (
+						!registerForm.hasError('minlength') &&
+						!registerForm.hasError('required')
+					) {
+						<mat-error>Password is must be more than 8 characters</mat-error>
 					}
 				</mat-form-field>
 			</form>
@@ -93,7 +103,7 @@
 							formControlName="password"
 							(keydown.space)="$event.preventDefault()" />
 						@if (authForm.invalid || authForm.hasError('required')) {
-							<mat-error>Please enter a valid password</mat-error>
+							<mat-error>Password is must be more than 8 characters </mat-error>
 						}
 					</mat-form-field>
 				</form>

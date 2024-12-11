@@ -46,7 +46,11 @@ export class AuthComponent extends ClearObservableDirective implements OnInit {
 	initAuthForm() {
 		this.authForm = new FormGroup({
 			email: new FormControl('', [Validators.required, Validators.email]),
-			password: new FormControl('', [Validators.required]),
+			password: new FormControl('', [
+				Validators.required,
+				Validators.minLength(8),
+				this.noWhitespaceValidator(),
+			]),
 		});
 	}
 
@@ -55,7 +59,7 @@ export class AuthComponent extends ClearObservableDirective implements OnInit {
 			email: new FormControl('', [Validators.required, Validators.email]),
 			password: new FormControl('', [
 				Validators.required,
-				Validators.min(8),
+				Validators.minLength(8),
 				this.noWhitespaceValidator(),
 			]),
 		});
