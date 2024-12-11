@@ -48,25 +48,25 @@ export class AppComponent implements OnInit, DoCheck, OnDestroy {
 	) {}
 
 	ngOnInit() {
-    const loggedIn = localStorage.getItem('loggedIn')
-    if(loggedIn) {
-      if (this.authService.LoginStatus) {
-        this.authService.userLoginStatus.next(true);
-      }
+		const loggedIn = localStorage.getItem('loggedIn');
+		if (loggedIn) {
+			if (this.authService.LoginStatus) {
+				this.authService.userLoginStatus.next(true);
+			}
 
-      this.spinnerStatusService.spinnerStatus
-        .pipe(takeUntil(this.destroy$))
-        .subscribe(spinnerStatus => {
-          this.isLoading = spinnerStatus;
-        });
-      this.resetLogoutTimer();
-    }
+			this.spinnerStatusService.spinnerStatus
+				.pipe(takeUntil(this.destroy$))
+				.subscribe(spinnerStatus => {
+					this.isLoading = spinnerStatus;
+				});
+			this.resetLogoutTimer();
+		}
 	}
 	ngDoCheck() {
-	const loggedIn = localStorage.getItem('loggedIn')
-    if(loggedIn) {
-      this.userStatus = this.authService.LoginStatus;
-    }
+		const loggedIn = localStorage.getItem('loggedIn');
+		if (loggedIn) {
+			this.userStatus = this.authService.LoginStatus;
+		}
 	}
 
 	private resetLogoutTimer() {
