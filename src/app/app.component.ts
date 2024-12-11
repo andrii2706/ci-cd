@@ -60,7 +60,9 @@ export class AppComponent implements OnInit, DoCheck, OnDestroy {
 		this.resetLogoutTimer();
 	}
 	ngDoCheck() {
-		this.userStatus = this.authService.LoginStatus;
+    if (this.authService.LoginStatus) {
+      this.userStatus = this.authService.LoginStatus;
+    }
 	}
 
 	private resetLogoutTimer() {
