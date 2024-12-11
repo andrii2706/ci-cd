@@ -1,45 +1,7 @@
-<section>
-	@if (signInForm) {
-		<form class="flex-direction-columns" [formGroup]="registerForm">
-			<mat-form-field class="auth-input">
-				<mat-label>Email</mat-label>
-				<input
-					type="email"
-					matInput
-					formControlName="email"
-					placeholder="Ex. pat@example.com" />
-				@if (authForm.hasError('email') && !authForm.hasError('required')) {
-					<mat-error>Please enter a valid email address</mat-error>
-				}
-				@if (authForm.hasError('required')) {
-					<mat-error>Email is <strong>required</strong></mat-error>
-				}
-			</mat-form-field>
-			<mat-form-field class="auth-input">
-				<mat-label>Password</mat-label>
-				<input
-					type="password"
-					matInput
-					formControlName="password"
-					(keydown.space)="$event.preventDefault()" />
-				@if (authForm.hasError('required')) {
-					<mat-error>Password is <strong>required</strong></mat-error>
-				}
-			</mat-form-field>
-		</form>
-		<div class="flex-block">
-			<button mat-flat-button (click)="cancelSubmitAuthForm()">Cancel</button>
-			<button
-				mat-flat-button
-				class="submit-button"
-				[disabled]="!registerForm.valid"
-				(click)="submitRegister()">
-				Submit
-			</button>
-		</div>
-	} @else if (showForgotPassword) {
-		<div class="flex-direction-columns">
-			<form [formGroup]="resetPasswordForm" class="flex-block w-full">
+<section class="flex-block w-full">
+	<div class="w-full">
+		@if (signInForm) {
+			<form class="flex-direction-columns" [formGroup]="registerForm">
 				<mat-form-field class="auth-input">
 					<mat-label>Email</mat-label>
 					<input
@@ -47,28 +9,66 @@
 						matInput
 						formControlName="email"
 						placeholder="Ex. pat@example.com" />
-					@if (
-						resetPasswordForm.hasError('email') &&
-						!authForm.hasError('required')
-					) {
+					@if (authForm.hasError('email') && !authForm.hasError('required')) {
 						<mat-error>Please enter a valid email address</mat-error>
 					}
-					@if (resetPasswordForm.hasError('required')) {
+					@if (authForm.hasError('required')) {
 						<mat-error>Email is <strong>required</strong></mat-error>
 					}
 				</mat-form-field>
+				<mat-form-field class="auth-input">
+					<mat-label>Password</mat-label>
+					<input
+						type="password"
+						matInput
+						formControlName="password"
+						(keydown.space)="$event.preventDefault()" />
+					@if (authForm.hasError('required')) {
+						<mat-error>Password is <strong>required</strong></mat-error>
+					}
+				</mat-form-field>
 			</form>
-			<div class="flex-block sign-up-block">
-				<button mat-flat-button (click)="showForgotPassword = false">
-					Cancel
-				</button>
-				<button mat-flat-button (click)="forgotPasswordFormSend()">
-					Update password
+			<div class="flex-block">
+				<button mat-flat-button (click)="cancelSubmitAuthForm()">Cancel</button>
+				<button
+					mat-flat-button
+					class="submit-button"
+					[disabled]="!registerForm.valid"
+					(click)="submitRegister()">
+					Submit
 				</button>
 			</div>
-		</div>
-	} @else {
-		<div>
+		} @else if (showForgotPassword) {
+			<div class="flex-direction-columns">
+				<form [formGroup]="resetPasswordForm" class="flex-block w-full">
+					<mat-form-field class="auth-input">
+						<mat-label>Email</mat-label>
+						<input
+							type="email"
+							matInput
+							formControlName="email"
+							placeholder="Ex. pat@example.com" />
+						@if (
+							resetPasswordForm.hasError('email') &&
+							!authForm.hasError('required')
+						) {
+							<mat-error>Please enter a valid email address</mat-error>
+						}
+						@if (resetPasswordForm.hasError('required')) {
+							<mat-error>Email is <strong>required</strong></mat-error>
+						}
+					</mat-form-field>
+				</form>
+				<div class="flex-block sign-up-block">
+					<button mat-flat-button (click)="showForgotPassword = false">
+						Cancel
+					</button>
+					<button mat-flat-button (click)="forgotPasswordFormSend()">
+						Update password
+					</button>
+				</div>
+			</div>
+		} @else {
 			@if (isLoading) {
 				<app-spinner></app-spinner>
 			} @else {
@@ -149,6 +149,6 @@
 					</button>
 				</div>
 			}
-		</div>
-	}
+		}
+	</div>
 </section>
