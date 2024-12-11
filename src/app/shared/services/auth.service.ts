@@ -39,7 +39,7 @@ export class AuthService {
 	constructor(
 		private afAuth: AngularFireAuth,
 		private snackbarComponent: MatSnackBar,
-    private spinnerStatus: SpinnerService,
+		private spinnerStatus: SpinnerService,
 		private fireStore: Firestore,
 		private auth: Auth,
 		private router: Router
@@ -111,21 +111,20 @@ export class AuthService {
 				this.proceedUserLoginStatus(true);
 				this.router.navigate(['/home']);
 			})
-			.catch((error) => {
-        if(error.message.includes('auth/invalid-credential')){
-          this.snackbarComponent.openFromComponent(SnackbarComponent, {
-            duration: 5000,
-            data: {
-              text: `You have a problem with login please check your credentials. Or Register into app `,
-              status: 'error',
-            },
-            verticalPosition: 'top',
-            horizontalPosition: 'center',
-          });
-          this.spinnerStatus.proceedSpinnerStatus(false);
-        }
-
-      });
+			.catch(error => {
+				if (error.message.includes('auth/invalid-credential')) {
+					this.snackbarComponent.openFromComponent(SnackbarComponent, {
+						duration: 5000,
+						data: {
+							text: `You have a problem with login please check your credentials. Or Register into app `,
+							status: 'error',
+						},
+						verticalPosition: 'top',
+						horizontalPosition: 'center',
+					});
+					this.spinnerStatus.proceedSpinnerStatus(false);
+				}
+			});
 	}
 
 	async signInWithCredentials(email: string, password: string) {
