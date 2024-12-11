@@ -8,7 +8,7 @@ import {
 	Validators,
 } from '@angular/forms';
 import { AuthService } from '../../shared/services/auth.service';
-import { noop } from 'rxjs';
+import { noop, take } from 'rxjs';
 import { ClearObservableDirective } from '../../shared/classes';
 import { SnackbarComponent } from '../../shared/components/snackbar/snackbar.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -40,7 +40,9 @@ export class AuthComponent extends ClearObservableDirective implements OnInit {
 		this.initAuthForm();
 		this.initRegisterForm();
 		this.forgotPasswordFormInit();
-		this.isLoading = false;
+    this.spinnerService.spinnerStatus.pipe(take(1)).subscribe(
+      isLoading => (this.isLoading = isLoading)
+    );
 	}
 
 	initAuthForm() {
@@ -85,9 +87,6 @@ export class AuthComponent extends ClearObservableDirective implements OnInit {
 		this.authService
 			.loginWithCredentials(emailCreads, passwordCreads)
 			.then(() => noop());
-		this.spinnerService.spinnerStatus.subscribe(
-			isLoading => (this.isLoading = isLoading)
-		);
 	}
 
 	submitGoogleAuth() {
