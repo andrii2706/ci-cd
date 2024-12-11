@@ -1,43 +1,49 @@
 <section class="flex-block w-full">
 	<div class="w-full">
 		@if (signInForm) {
-			<form class="flex-direction-columns" [formGroup]="registerForm">
-				<mat-form-field class="auth-input">
-					<mat-label>Email</mat-label>
-					<input
-						type="email"
-						matInput
-						formControlName="email"
-						placeholder="Ex. pat@example.com" />
-					@if (authForm.hasError('email') && !authForm.hasError('required')) {
-						<mat-error>Please enter a valid email address</mat-error>
-					}
-					@if (authForm.hasError('required')) {
-						<mat-error>Email is <strong>required</strong></mat-error>
-					}
-				</mat-form-field>
-				<mat-form-field class="auth-input">
-					<mat-label>Password</mat-label>
-					<input
-						type="password"
-						matInput
-						formControlName="password"
-						(keydown.space)="$event.preventDefault()" />
-					@if (authForm.hasError('required')) {
-						<mat-error>Password is <strong>required</strong></mat-error>
-					}
-				</mat-form-field>
-			</form>
-			<div class="flex-block">
-				<button mat-flat-button (click)="cancelSubmitAuthForm()">Cancel</button>
-				<button
-					mat-flat-button
-					class="submit-button"
-					[disabled]="!registerForm.valid"
-					(click)="submitRegister()">
-					Submit
-				</button>
-			</div>
+      <form class="flex-direction-columns" [formGroup]="registerForm">
+        <mat-form-field class="auth-input">
+          <mat-label>Email</mat-label>
+          <input
+            type="email"
+            matInput
+            formControlName="email"
+            placeholder="Ex. pat@example.com"
+
+          />
+          @if (!registerForm.hasError('email') && !registerForm.hasError('required')) {
+            <mat-error>Please enter a valid email address</mat-error>
+          }
+          @if (registerForm.hasError('required')) {
+            <mat-error>Email is <strong>required</strong></mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field class="auth-input">
+          <mat-label>Password</mat-label>
+          <input
+            type="password"
+            matInput
+            formControlName="password"
+            (keydown.space)="$event.preventDefault()" />
+          @if (registerForm.hasError('required')) {
+            <mat-error>Password is <strong>required</strong></mat-error>
+          }
+          @if(!registerForm.hasError("minlength") && !registerForm.hasError('required')){
+            <mat-error>Password is must be more than 8 characters</mat-error>
+          }
+        </mat-form-field>
+      </form>
+      <div class="flex-block">
+        <button mat-flat-button (click)="cancelSubmitAuthForm()">Cancel</button>
+        <button
+          mat-flat-button
+          class="submit-button"
+          [disabled]="!registerForm.valid"
+          (click)="submitRegister()">
+          Submit
+        </button>
+      </div>
 		} @else if (showForgotPassword) {
 			<div class="flex-direction-columns">
 				<form [formGroup]="resetPasswordForm" class="flex-block w-full">
@@ -93,7 +99,7 @@
 							formControlName="password"
 							(keydown.space)="$event.preventDefault()" />
 						@if (authForm.invalid || authForm.hasError('required')) {
-							<mat-error>Please enter a valid password</mat-error>
+              <mat-error>Password is must be more than 8 characters </mat-error>
 						}
 					</mat-form-field>
 				</form>
