@@ -87,6 +87,9 @@ export class AuthComponent extends ClearObservableDirective implements OnInit {
 		this.authService
 			.loginWithCredentials(emailCreads, passwordCreads)
 			.then(() => noop());
+		this.spinnerService.spinnerStatus
+			.pipe(take(1))
+			.subscribe(isLoading => (this.isLoading = isLoading));
 	}
 
 	submitGoogleAuth() {
