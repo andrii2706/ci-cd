@@ -123,7 +123,7 @@ export class AuthService {
 						verticalPosition: 'top',
 						horizontalPosition: 'center',
 					});
-				return this.spinnerStatus.proceedSpinnerStatus(false);
+					return this.spinnerStatus.proceedSpinnerStatus(false);
 				}
 			});
 	}

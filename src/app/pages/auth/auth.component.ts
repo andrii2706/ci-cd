@@ -86,11 +86,11 @@ export class AuthComponent extends ClearObservableDirective implements OnInit {
 		const passwordCreads = this.authForm.get('password')?.value;
 		this.authService
 			.loginWithCredentials(emailCreads, passwordCreads)
-			.then(() => noop())
-    this.spinnerService.spinnerStatus
-      .pipe(take(1))
-      .subscribe(isLoading => (this.isLoading = isLoading));
-  }
+			.then(() => noop());
+		this.spinnerService.spinnerStatus
+			.pipe(take(1))
+			.subscribe(isLoading => (this.isLoading = isLoading));
+	}
 
 	submitGoogleAuth() {
 		this.authService.googleLogin();

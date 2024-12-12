@@ -61,11 +61,11 @@
 						@if (
 							!resetPasswordForm.hasError('email') &&
 							!resetPasswordForm.hasError('required') &&
-              resetPasswordForm.value["email"].length > 0
+							resetPasswordForm.value['email'].length > 0
 						) {
 							<mat-error>Please enter a valid email address</mat-error>
 						}
-						@if (resetPasswordForm.value["email"].length === 0) {
+						@if (resetPasswordForm.value['email'].length === 0) {
 							<mat-error>Email is <strong>required</strong></mat-error>
 						}
 					</mat-form-field>
@@ -74,7 +74,10 @@
 					<button mat-flat-button (click)="showForgotPassword = false">
 						Cancel
 					</button>
-					<button mat-flat-button [disabled]="!resetPasswordForm.valid" (click)="forgotPasswordFormSend()">
+					<button
+						mat-flat-button
+						[disabled]="!resetPasswordForm.valid"
+						(click)="forgotPasswordFormSend()">
 						Update password
 					</button>
 				</div>
