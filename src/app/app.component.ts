@@ -85,6 +85,7 @@ export class AppComponent implements OnInit, DoCheck, OnDestroy {
 
 	logoutUser() {
 		this.authService.logout().then(() => noop());
+    this.opened = false
 	}
 
 	goToProfile() {
