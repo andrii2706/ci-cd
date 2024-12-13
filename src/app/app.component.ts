@@ -55,7 +55,7 @@ export class AppComponent implements OnInit, DoCheck, OnDestroy {
 			}
 
 			this.spinnerStatusService.spinnerStatus
-        .pipe(takeUntil(this.destroy$))
+				.pipe(takeUntil(this.destroy$))
 				.subscribe(spinnerStatus => {
 					this.isLoading = spinnerStatus;
 				});
