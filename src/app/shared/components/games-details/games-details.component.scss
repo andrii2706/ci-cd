@@ -334,9 +334,10 @@
 }
 
 .game-website-link {
-	text-decoration: underline;
+	text-decoration: underline !important;
 	&:hover {
 		color: #005cbb !important;
+
 		transition: 800ms;
 	}
 }
