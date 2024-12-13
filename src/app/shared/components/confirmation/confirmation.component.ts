@@ -7,7 +7,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 	standalone: true,
 	imports: [AppMaterialModule],
 	templateUrl: './confirmation.component.html',
-	styleUrls: ['./confirmation.component.scss', '../../styles/shared.scss']
+	styleUrls: ['./confirmation.component.scss', '../../styles/shared.scss'],
 })
 export class ConfirmationComponent {
 	data = inject<{ confirm: boolean }>(MAT_DIALOG_DATA);

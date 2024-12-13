@@ -1,10 +1,11 @@
 import {
-  ChangeDetectorRef,
-  Component,
-  DoCheck,
-  HostListener, inject,
-  OnDestroy,
-  OnInit,
+	ChangeDetectorRef,
+	Component,
+	DoCheck,
+	HostListener,
+	inject,
+	OnDestroy,
+	OnInit,
 } from '@angular/core';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { AppMaterialModule } from './app-material/app-material.module';
@@ -32,11 +33,10 @@ export class AppComponent implements OnInit, DoCheck, OnDestroy {
 	/* eslint-disable  @typescript-eslint/no-explicit-any */
 	private logoutTimer: any;
 	private readonly timeoutDuration = 8 * 60 * 60 * 1000;
-  mobileQuery: MediaQueryList;
-  private _mobileQueryListener: () => void;
+	mobileQuery: MediaQueryList;
+	private _mobileQueryListener: () => void;
 
-
-  @HostListener('document:mousemove')
+	@HostListener('document:mousemove')
 	@HostListener('document:keydown')
 	@HostListener('document:click')
 	handleUserActivity() {
@@ -50,13 +50,13 @@ export class AppComponent implements OnInit, DoCheck, OnDestroy {
 		private authService: AuthService,
 		private cdr: ChangeDetectorRef
 	) {
-    const changeDetectorRef = inject(ChangeDetectorRef);
-    const media = inject(MediaMatcher);
+		const changeDetectorRef = inject(ChangeDetectorRef);
+		const media = inject(MediaMatcher);
 
-    this.mobileQuery = media.matchMedia('(max-width: 1800px)');
-    this._mobileQueryListener = () => changeDetectorRef.detectChanges();
-    this.mobileQuery.addListener(this._mobileQueryListener);
-  }
+		this.mobileQuery = media.matchMedia('(max-width: 1800px)');
+		this._mobileQueryListener = () => changeDetectorRef.detectChanges();
+		this.mobileQuery.addListener(this._mobileQueryListener);
+	}
 
 	ngOnInit() {
 		const loggedIn = localStorage.getItem('loggedIn');
@@ -104,7 +104,7 @@ export class AppComponent implements OnInit, DoCheck, OnDestroy {
 
 	ngOnDestroy() {
 		this.clearLogoutTimer();
-    this.mobileQuery.removeListener(this._mobileQueryListener);
+		this.mobileQuery.removeListener(this._mobileQueryListener);
 		this.destroy$.next(true);
 		this.destroy$.complete();
 	}

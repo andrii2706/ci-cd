@@ -17,7 +17,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
 	selector: 'app-profile',
 	templateUrl: './profile.component.html',
-	styleUrls: ['./profile.component.scss', '../../shared/styles/shared.scss']
+	styleUrls: ['./profile.component.scss', '../../shared/styles/shared.scss'],
 })
 export class ProfileComponent
 	extends ClearObservableDirective
@@ -49,16 +49,21 @@ export class ProfileComponent
 	}
 
 	getUser() {
-		this.authService.user$.pipe(takeUntil(this.destroy$), filter(user => user)).subscribe(user => {
-      this.user = user;
-      this.gamesService.getGameById(user.uid).then(userGames => {
-        this.userGames = userGames.games;
-      });
-      this.authService.getAvatarById(user.uid).then(avatar => {
-        this.userAvatar = avatar.photoUrl;
-        this.spinnerService.proceedSpinnerStatus(false);
-      });
-		});
+		this.authService.user$
+			.pipe(
+				takeUntil(this.destroy$),
+				filter(user => user)
+			)
+			.subscribe(user => {
+				this.user = user;
+				this.gamesService.getGameById(user.uid).then(userGames => {
+					this.userGames = userGames.games;
+				});
+				this.authService.getAvatarById(user.uid).then(avatar => {
+					this.userAvatar = avatar.photoUrl;
+					this.spinnerService.proceedSpinnerStatus(false);
+				});
+			});
 	}
 
 	/* eslint-disable  @typescript-eslint/no-explicit-any */

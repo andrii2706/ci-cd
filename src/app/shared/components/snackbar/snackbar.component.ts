@@ -10,7 +10,7 @@ import {
 	standalone: true,
 	imports: [AppMaterialModule],
 	templateUrl: './snackbar.component.html',
-	styleUrls: ['./snackbar.component.scss', '../../styles/shared.scss']
+	styleUrls: ['./snackbar.component.scss', '../../styles/shared.scss'],
 })
 export class SnackbarComponent implements OnInit {
 	public dataSnackbar: string;

@@ -20,7 +20,10 @@ import {
 @Component({
 	selector: 'app-games-filter',
 	templateUrl: './games-filter.component.html',
-	styleUrls: ['./games-filter.component.scss','../../../../shared/styles/shared.scss']
+	styleUrls: [
+		'./games-filter.component.scss',
+		'../../../../shared/styles/shared.scss',
+	],
 })
 export class GamesFilterComponent implements OnInit {
 	filterForm: FormGroup;
