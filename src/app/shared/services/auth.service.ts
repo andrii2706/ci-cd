@@ -101,17 +101,18 @@ export class AuthService {
 			});
 	}
 
-	async loginWithCredentials(email: string, password: string) {
+	loginWithCredentials(email: string, password: string) {
+    this.spinnerStatus.proceedSpinnerStatus(true);
 		return this.afAuth
 			.signInWithEmailAndPassword(email, password)
 			.then(userInfo => {
-				this.spinnerStatus.proceedSpinnerStatus(false);
-				this.changeLoginStatus(true, userInfo.user);
-				this.userLoggingWithFireBase.next(userInfo.user);
-				this.userPasswordWithFireBase.next(password);
-				this.proceedUserLoginStatus(true);
-				this.router.navigate(['/home']);
-			})
+        console.log(this.spinnerStatus.spinnerStatus.value);
+        this.changeLoginStatus(true, userInfo.user);
+        this.userLoggingWithFireBase.next(userInfo.user);
+        this.userPasswordWithFireBase.next(password);
+        this.proceedUserLoginStatus(true);
+        this.router.navigate(['/home']);
+      })
 			.catch(error => {
 				if (error.message.includes('auth/invalid-credential')) {
 					this.snackbarComponent.openFromComponent(SnackbarComponent, {
@@ -123,7 +124,8 @@ export class AuthService {
 						verticalPosition: 'top',
 						horizontalPosition: 'center',
 					});
-					return this.spinnerStatus.proceedSpinnerStatus(false);
+          console.log('hello');
+					this.spinnerStatus.proceedSpinnerStatus(false);
 				}
 			});
 	}
