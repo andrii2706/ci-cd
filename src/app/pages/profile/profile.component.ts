@@ -10,14 +10,14 @@ import User = firebase.User;
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationComponent } from '../../shared/components/confirmation/confirmation.component';
 import { SpinnerService } from '../../shared/services/spinner.service';
-import { takeUntil } from 'rxjs';
+import { filter, takeUntil } from 'rxjs';
 import { SnackbarComponent } from '../../shared/components/snackbar/snackbar.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
 	selector: 'app-profile',
 	templateUrl: './profile.component.html',
-	styleUrl: './profile.component.scss',
+	styleUrls: ['./profile.component.scss', '../../shared/styles/shared.scss']
 })
 export class ProfileComponent
 	extends ClearObservableDirective
@@ -49,17 +49,15 @@ export class ProfileComponent
 	}
 
 	getUser() {
-		this.authService.user$.pipe(takeUntil(this.destroy$)).subscribe(user => {
-			if (user) {
-				this.user = user;
-				this.gamesService.getGameById(user.uid).then(userGames => {
-					this.userGames = userGames.games;
-				});
-				this.authService.getAvatarById(user.uid).then(avatar => {
-					this.userAvatar = avatar.photoUrl;
-					this.spinnerService.proceedSpinnerStatus(false);
-				});
-			}
+		this.authService.user$.pipe(takeUntil(this.destroy$), filter(user => user)).subscribe(user => {
+      this.user = user;
+      this.gamesService.getGameById(user.uid).then(userGames => {
+        this.userGames = userGames.games;
+      });
+      this.authService.getAvatarById(user.uid).then(avatar => {
+        this.userAvatar = avatar.photoUrl;
+        this.spinnerService.proceedSpinnerStatus(false);
+      });
 		});
 	}
 

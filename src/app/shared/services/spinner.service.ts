@@ -6,7 +6,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 })
 export class SpinnerService {
 	spinnerStatus = new BehaviorSubject<boolean>(true);
-	private spinnerStatus$: Observable<boolean> =
+	spinnerStatus$: Observable<boolean> =
 		this.spinnerStatus.asObservable();
 
 	proceedSpinnerStatus(status: boolean) {

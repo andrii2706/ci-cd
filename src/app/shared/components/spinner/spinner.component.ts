@@ -6,6 +6,6 @@ import { AppMaterialModule } from '../../../app-material/app-material.module';
 	standalone: true,
 	imports: [AppMaterialModule],
 	templateUrl: './spinner.component.html',
-	styleUrl: './spinner.component.scss',
+	styleUrls: ['./spinner.component.scss', '../../styles/shared.scss'],
 })
 export class SpinnerComponent {}

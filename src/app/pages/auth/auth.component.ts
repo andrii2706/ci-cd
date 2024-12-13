@@ -17,7 +17,7 @@ import { SpinnerService } from '../../shared/services/spinner.service';
 @Component({
 	selector: 'app-auth',
 	templateUrl: './auth.component.html',
-	styleUrl: './auth.component.scss',
+	styleUrls: ['./auth.component.scss','../../shared/styles/shared.scss']
 })
 export class AuthComponent extends ClearObservableDirective implements OnInit {
 	authForm: FormGroup;

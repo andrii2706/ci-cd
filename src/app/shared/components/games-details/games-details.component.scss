@@ -213,7 +213,7 @@
 			width: 100%;
 			max-width: 400px;
 			@media (min-width: 405px) {
-				margin: 25px;
+				margin-top: 25px;
 			}
 			@media (max-width: 405px) {
 				margin-top: 25px;
@@ -331,4 +331,12 @@
 
 .mt-15 {
 	margin-top: 3rem;
+}
+
+.game-website-link {
+  text-decoration: underline;
+  &:hover{
+    color: #005cbb !important;
+    transition: 800ms;
+  }
 }

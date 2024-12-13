@@ -1,61 +1,65 @@
-<mat-toolbar>
-	@if (userStatus) {
-		<button
-			mat-icon-button
-			class="example-icon"
-			aria-label="Example icon-button with menu icon"
-			(click)="sidenav.toggle()">
-			<mat-icon>menu</mat-icon>
-		</button>
-	}
-	<span>My App</span>
-	<span class="example-spacer"></span>
-	@if (userStatus) {
-		<button
-			mat-raised-button
-			class="mr-20px"
-			[color]="'primary'"
-			(click)="openBotModal()">
-			<mat-icon>android</mat-icon>
-			<span mat-line>Bot</span>
-		</button>
-		<button
-			mat-raised-button
-			class="mr-20px"
-			[color]="'primary'"
-			(click)="logoutUser()">
-			Log out
-		</button>
-		<button mat-icon-button class="example-icon" (click)="goToProfile()">
-			<mat-icon>account_circle</mat-icon>
-		</button>
-	}
-</mat-toolbar>
-<mat-sidenav-container class="sidenav-container">
-	<mat-sidenav
-		#sidenav
-		mode="side"
-		[(opened)]="opened"
-		(opened)="events.push('open!')"
-		(closed)="events.push('close!')">
-		<mat-nav-list class="sidenav">
-			<mat-list-item class="listItem" routerLink="home">
-				<mat-icon matListItemIcon>home</mat-icon>
-				<h3 mat-line>Home</h3>
-			</mat-list-item>
-			<mat-list-item class="listItem" routerLink="games">
-				<mat-icon matListItemIcon>videogame_asset</mat-icon>
-				<h3 mat-line>Games</h3>
-			</mat-list-item>
-		</mat-nav-list>
-	</mat-sidenav>
+<div class="example-container" [class.example-is-mobile]="mobileQuery.matches">
+  <mat-toolbar>
+    @if (userStatus) {
+      <button
+        mat-icon-button
+        class="example-icon"
+        aria-label="Example icon-button with menu icon"
+        (click)="sidenav.toggle()">
+        <mat-icon>menu</mat-icon>
+      </button>
+    }
+    <span>My App</span>
+    <span class="example-spacer"></span>
+    @if (userStatus) {
+      <button
+        mat-raised-button
+        class="mr-20px"
+        [color]="'primary'"
+        (click)="openBotModal()">
+        <mat-icon>android</mat-icon>
+        <span mat-line>Bot</span>
+      </button>
+      <button
+        mat-raised-button
+        class="mr-20px"
+        [color]="'primary'"
+        (click)="logoutUser()">
+        Log out
+      </button>
+      <button mat-icon-button class="example-icon" (click)="goToProfile()">
+        <mat-icon>account_circle</mat-icon>
+      </button>
+    }
+  </mat-toolbar>
+  <mat-sidenav-container class="sidenav-container"
+  >
+    <mat-sidenav
+      #sidenav
+      [mode]="mobileQuery.matches ? 'over' : 'side'"
+      [fixedInViewport]="mobileQuery.matches" fixedTopGap="64"
+      [(opened)]="opened"
+      (opened)="events.push('open!')"
+      (closed)="events.push('close!')">
+      <mat-nav-list class="sidenav">
+        <mat-list-item class="listItem" routerLink="home">
+          <mat-icon matListItemIcon>home</mat-icon>
+          <h3 mat-line>Home</h3>
+        </mat-list-item>
+        <mat-list-item class="listItem" routerLink="games">
+          <mat-icon matListItemIcon>videogame_asset</mat-icon>
+          <h3 mat-line>Games</h3>
+        </mat-list-item>
+      </mat-nav-list>
+    </mat-sidenav>
 
-	<mat-sidenav-content>
-		<div class="example-sidenav-content">
-			<router-outlet></router-outlet>
-			@if (isLoading) {
-				<app-spinner></app-spinner>
-			}
-		</div>
-	</mat-sidenav-content>
-</mat-sidenav-container>
+    <mat-sidenav-content>
+      <div class="example-sidenav-content">
+        <router-outlet></router-outlet>
+        @if (isLoading) {
+          <app-spinner></app-spinner>
+        }
+      </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>
