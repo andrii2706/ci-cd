@@ -21,7 +21,13 @@ import { AsyncPipe } from '@angular/common';
 @Component({
 	selector: 'app-root',
 	standalone: true,
-  imports: [RouterOutlet, AppMaterialModule, RouterLink, SpinnerComponent, AsyncPipe],
+	imports: [
+		RouterOutlet,
+		AppMaterialModule,
+		RouterLink,
+		SpinnerComponent,
+		AsyncPipe,
+	],
 	templateUrl: './app.component.html',
 	styleUrls: ['./app.component.scss'],
 })
