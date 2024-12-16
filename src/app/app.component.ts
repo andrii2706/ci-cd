@@ -65,7 +65,7 @@ export class AppComponent implements OnInit, OnDestroy {
 	}
 
 	ngOnInit() {
-   this.userStatus = this.authService.userLoginStatus$
+		this.userStatus = this.authService.userLoginStatus$;
 		const loggedIn = localStorage.getItem('loggedIn');
 		if (loggedIn) {
 			if (this.authService.LoginStatus) {

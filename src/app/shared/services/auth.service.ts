@@ -31,8 +31,7 @@ export class AuthService {
 	private userSubject = new BehaviorSubject<any>(null);
 	public user$ = this.userSubject.asObservable();
 	userLoginStatus = new BehaviorSubject<boolean>(false);
-	userLoginStatus$: Observable<boolean> =
-		this.userLoginStatus.asObservable();
+	userLoginStatus$: Observable<boolean> = this.userLoginStatus.asObservable();
 
 	private loggedInStatus: boolean;
 
