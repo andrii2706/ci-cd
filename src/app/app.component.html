@@ -1,6 +1,6 @@
 <div class="example-container" [class.example-is-mobile]="mobileQuery.matches">
 	<mat-toolbar>
-		@if (userStatus) {
+		@if (userStatus | async) {
 			<button
 				mat-icon-button
 				class="example-icon"
@@ -11,7 +11,7 @@
 		}
 		<span>My App</span>
 		<span class="example-spacer"></span>
-		@if (userStatus) {
+		@if (userStatus | async) {
 			<button
 				mat-raised-button
 				class="mr-20px"

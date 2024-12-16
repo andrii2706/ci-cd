@@ -31,7 +31,7 @@ export class AuthService {
 	private userSubject = new BehaviorSubject<any>(null);
 	public user$ = this.userSubject.asObservable();
 	userLoginStatus = new BehaviorSubject<boolean>(false);
-	private userLoginStatus$: Observable<boolean> =
+	userLoginStatus$: Observable<boolean> =
 		this.userLoginStatus.asObservable();
 
 	private loggedInStatus: boolean;
@@ -106,7 +106,6 @@ export class AuthService {
 		return this.afAuth
 			.signInWithEmailAndPassword(email, password)
 			.then(userInfo => {
-				console.log(this.spinnerStatus.spinnerStatus.value);
 				this.changeLoginStatus(true, userInfo.user);
 				this.userLoggingWithFireBase.next(userInfo.user);
 				this.userPasswordWithFireBase.next(password);

@@ -1,7 +1,6 @@
 import {
 	ChangeDetectorRef,
 	Component,
-	DoCheck,
 	HostListener,
 	inject,
 	OnDestroy,
@@ -31,11 +30,11 @@ import { AsyncPipe } from '@angular/common';
 	templateUrl: './app.component.html',
 	styleUrls: ['./app.component.scss'],
 })
-export class AppComponent implements OnInit, DoCheck, OnDestroy {
+export class AppComponent implements OnInit, OnDestroy {
 	destroy$ = new Subject<boolean>();
 	events: string[] = [];
 	opened = false;
-	userStatus = false;
+	userStatus: Observable<boolean>;
 	isLoading: Observable<boolean>;
 	/* eslint-disable  @typescript-eslint/no-explicit-any */
 	private logoutTimer: any;
@@ -66,6 +65,7 @@ export class AppComponent implements OnInit, DoCheck, OnDestroy {
 	}
 
 	ngOnInit() {
+   this.userStatus = this.authService.userLoginStatus$
 		const loggedIn = localStorage.getItem('loggedIn');
 		if (loggedIn) {
 			if (this.authService.LoginStatus) {
@@ -73,12 +73,6 @@ export class AppComponent implements OnInit, DoCheck, OnDestroy {
 			}
 			this.isLoading = this.spinnerStatusService.spinnerStatus$;
 			this.resetLogoutTimer();
-		}
-	}
-	ngDoCheck() {
-		const loggedIn = localStorage.getItem('loggedIn');
-		if (loggedIn) {
-			this.userStatus = this.authService.LoginStatus;
 		}
 	}
 
