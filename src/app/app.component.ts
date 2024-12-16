@@ -10,17 +10,18 @@ import {
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { AppMaterialModule } from './app-material/app-material.module';
 import { AuthService } from './shared/services/auth.service';
-import { noop, Subject, takeUntil } from 'rxjs';
+import { noop, Observable, Subject } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { BotComponent } from './pages/bot/bot.component';
 import { SpinnerComponent } from './shared/components/spinner/spinner.component';
 import { SpinnerService } from './shared/services/spinner.service';
 import { MediaMatcher } from '@angular/cdk/layout';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
 	selector: 'app-root',
 	standalone: true,
-	imports: [RouterOutlet, AppMaterialModule, RouterLink, SpinnerComponent],
+  imports: [RouterOutlet, AppMaterialModule, RouterLink, SpinnerComponent, AsyncPipe],
 	templateUrl: './app.component.html',
 	styleUrls: ['./app.component.scss'],
 })
@@ -29,7 +30,7 @@ export class AppComponent implements OnInit, DoCheck, OnDestroy {
 	events: string[] = [];
 	opened = false;
 	userStatus = false;
-	isLoading: boolean;
+	isLoading: Observable<boolean>;
 	/* eslint-disable  @typescript-eslint/no-explicit-any */
 	private logoutTimer: any;
 	private readonly timeoutDuration = 8 * 60 * 60 * 1000;
@@ -64,11 +65,7 @@ export class AppComponent implements OnInit, DoCheck, OnDestroy {
 			if (this.authService.LoginStatus) {
 				this.authService.userLoginStatus.next(true);
 			}
-			this.spinnerStatusService.spinnerStatus
-				.pipe(takeUntil(this.destroy$))
-				.subscribe(spinnerStatus => {
-					this.isLoading = spinnerStatus;
-				});
+			this.isLoading = this.spinnerStatusService.spinnerStatus$;
 			this.resetLogoutTimer();
 		}
 	}

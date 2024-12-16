@@ -56,7 +56,7 @@
 		<mat-sidenav-content>
 			<div class="example-sidenav-content">
 				<router-outlet></router-outlet>
-				@if (isLoading) {
+				@if (isLoading | async) {
 					<app-spinner></app-spinner>
 				}
 			</div>
