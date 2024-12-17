@@ -54,7 +54,6 @@ export class AppComponent implements OnInit, OnDestroy {
 		private dialogWindow: MatDialog,
 		private spinnerStatusService: SpinnerService,
 		private authService: AuthService,
-		private cdr: ChangeDetectorRef
 	) {
 		const changeDetectorRef = inject(ChangeDetectorRef);
 		const media = inject(MediaMatcher);
