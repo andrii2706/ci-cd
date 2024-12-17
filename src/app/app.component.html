@@ -42,11 +42,17 @@
 			(opened)="events.push('open!')"
 			(closed)="events.push('close!')">
 			<mat-nav-list class="sidenav">
-				<mat-list-item class="listItem" routerLink="home" (click)="opened = false">
+				<mat-list-item
+					class="listItem"
+					routerLink="home"
+					(click)="opened = false">
 					<mat-icon matListItemIcon>home</mat-icon>
 					<h3 mat-line>Home</h3>
 				</mat-list-item>
-				<mat-list-item class="listItem" routerLink="games" (click)="opened = false">
+				<mat-list-item
+					class="listItem"
+					routerLink="games"
+					(click)="opened = false">
 					<mat-icon matListItemIcon>videogame_asset</mat-icon>
 					<h3 mat-line>Games</h3>
 				</mat-list-item>
