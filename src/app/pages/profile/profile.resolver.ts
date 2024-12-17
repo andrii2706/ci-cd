@@ -9,9 +9,8 @@ import { Games } from '../../shared/models/games.interface';
 export const profileResolver: ResolveFn<Games> = (route, state) => {
 	const spinnerService = inject(SpinnerService);
 	const authService = inject(AuthService);
-	/* eslint-disable  @typescript-eslint/no-unused-vars */
 	return authService.user$.pipe(
-		tap(user => {
+		tap(() => {
 			return spinnerService.proceedSpinnerStatus(false);
 		})
 	);
