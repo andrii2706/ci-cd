@@ -14,7 +14,7 @@ import { SpinnerService } from '../../services/spinner.service';
 	standalone: true,
 	imports: [AppMaterialModule, SpinnerComponent],
 	templateUrl: './games-details.component.html',
-	styleUrl: './games-details.component.scss',
+	styleUrls: ['./games-details.component.scss', '../../styles/shared.scss'],
 })
 export class GamesDetailsComponent {
 	gameDetails: GameDetails;

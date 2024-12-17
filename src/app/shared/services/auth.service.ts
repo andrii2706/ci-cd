@@ -31,8 +31,7 @@ export class AuthService {
 	private userSubject = new BehaviorSubject<any>(null);
 	public user$ = this.userSubject.asObservable();
 	userLoginStatus = new BehaviorSubject<boolean>(false);
-	private userLoginStatus$: Observable<boolean> =
-		this.userLoginStatus.asObservable();
+	userLoginStatus$: Observable<boolean> = this.userLoginStatus.asObservable();
 
 	private loggedInStatus: boolean;
 
@@ -101,11 +100,11 @@ export class AuthService {
 			});
 	}
 
-	async loginWithCredentials(email: string, password: string) {
+	loginWithCredentials(email: string, password: string) {
+		this.spinnerStatus.proceedSpinnerStatus(true);
 		return this.afAuth
 			.signInWithEmailAndPassword(email, password)
 			.then(userInfo => {
-				this.spinnerStatus.proceedSpinnerStatus(true);
 				this.changeLoginStatus(true, userInfo.user);
 				this.userLoggingWithFireBase.next(userInfo.user);
 				this.userPasswordWithFireBase.next(password);
@@ -123,6 +122,7 @@ export class AuthService {
 						verticalPosition: 'top',
 						horizontalPosition: 'center',
 					});
+					console.log('hello');
 					this.spinnerStatus.proceedSpinnerStatus(false);
 				}
 			});

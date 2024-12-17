@@ -9,33 +9,16 @@ body {
 	font-family: Roboto, 'Helvetica Neue', sans-serif;
 }
 
-.flex-direction-columns {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	flex-direction: column;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+	margin: 0 !important;
 }
-.flex-block {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-}
-.flex-block-end {
-	display: flex;
-	justify-content: flex-end;
-	align-items: center;
-}
-.flex-block-between {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-}
-.gap-1rem {
-	gap: 1rem;
-}
-.gap-4rem {
-	gap: 4rem;
-}
+
 .pagination .ngx-pagination .current {
 	background: #005cbb;
 	border-radius: 15px;

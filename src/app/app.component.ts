@@ -1,36 +1,46 @@
 import {
 	ChangeDetectorRef,
 	Component,
-	DoCheck,
 	HostListener,
+	inject,
 	OnDestroy,
 	OnInit,
 } from '@angular/core';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { AppMaterialModule } from './app-material/app-material.module';
 import { AuthService } from './shared/services/auth.service';
-import { noop, Subject, takeUntil } from 'rxjs';
+import { noop, Observable, Subject } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { BotComponent } from './pages/bot/bot.component';
 import { SpinnerComponent } from './shared/components/spinner/spinner.component';
 import { SpinnerService } from './shared/services/spinner.service';
+import { MediaMatcher } from '@angular/cdk/layout';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
 	selector: 'app-root',
 	standalone: true,
-	imports: [RouterOutlet, AppMaterialModule, RouterLink, SpinnerComponent],
+	imports: [
+		RouterOutlet,
+		AppMaterialModule,
+		RouterLink,
+		SpinnerComponent,
+		AsyncPipe,
+	],
 	templateUrl: './app.component.html',
 	styleUrls: ['./app.component.scss'],
 })
-export class AppComponent implements OnInit, DoCheck, OnDestroy {
+export class AppComponent implements OnInit, OnDestroy {
 	destroy$ = new Subject<boolean>();
 	events: string[] = [];
 	opened = false;
-	userStatus = false;
-	isLoading: boolean;
+	userStatus: Observable<boolean>;
+	isLoading: Observable<boolean>;
 	/* eslint-disable  @typescript-eslint/no-explicit-any */
 	private logoutTimer: any;
 	private readonly timeoutDuration = 8 * 60 * 60 * 1000;
+	mobileQuery: MediaQueryList;
+	private _mobileQueryListener: () => void;
 
 	@HostListener('document:mousemove')
 	@HostListener('document:keydown')
@@ -45,27 +55,24 @@ export class AppComponent implements OnInit, DoCheck, OnDestroy {
 		private spinnerStatusService: SpinnerService,
 		private authService: AuthService,
 		private cdr: ChangeDetectorRef
-	) {}
+	) {
+		const changeDetectorRef = inject(ChangeDetectorRef);
+		const media = inject(MediaMatcher);
+
+		this.mobileQuery = media.matchMedia('(max-width: 1800px)');
+		this._mobileQueryListener = () => changeDetectorRef.detectChanges();
+		this.mobileQuery.addListener(this._mobileQueryListener);
+	}
 
 	ngOnInit() {
+		this.userStatus = this.authService.userLoginStatus$;
 		const loggedIn = localStorage.getItem('loggedIn');
 		if (loggedIn) {
 			if (this.authService.LoginStatus) {
 				this.authService.userLoginStatus.next(true);
 			}
-
-			this.spinnerStatusService.spinnerStatus
-				.pipe(takeUntil(this.destroy$))
-				.subscribe(spinnerStatus => {
-					this.isLoading = spinnerStatus;
-				});
+			this.isLoading = this.spinnerStatusService.spinnerStatus$;
 			this.resetLogoutTimer();
-		}
-	}
-	ngDoCheck() {
-		const loggedIn = localStorage.getItem('loggedIn');
-		if (loggedIn) {
-			this.userStatus = this.authService.LoginStatus;
 		}
 	}
 
@@ -85,6 +92,7 @@ export class AppComponent implements OnInit, DoCheck, OnDestroy {
 
 	logoutUser() {
 		this.authService.logout().then(() => noop());
+		this.opened = false;
 	}
 
 	goToProfile() {
@@ -93,6 +101,7 @@ export class AppComponent implements OnInit, DoCheck, OnDestroy {
 
 	ngOnDestroy() {
 		this.clearLogoutTimer();
+		this.mobileQuery.removeListener(this._mobileQueryListener);
 		this.destroy$.next(true);
 		this.destroy$.complete();
 	}

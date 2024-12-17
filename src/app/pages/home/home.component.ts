@@ -22,7 +22,7 @@ import { SpinnerService } from '../../shared/services/spinner.service';
 		SpinnerComponent,
 	],
 	templateUrl: './home.component.html',
-	styleUrl: './home.component.scss',
+	styleUrls: ['./home.component.scss', '../../shared/styles/shared.scss'],
 })
 export class HomeComponent extends ClearObservableDirective implements OnInit {
 	page = 1;

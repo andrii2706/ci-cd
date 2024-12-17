@@ -11,7 +11,7 @@ import { SpinnerService } from '../../shared/services/spinner.service';
 @Component({
 	selector: 'app-games',
 	templateUrl: './games.component.html',
-	styleUrl: './games.component.scss',
+	styleUrls: ['./games.component.scss', '../../shared/styles/shared.scss'],
 })
 export class GamesComponent extends ClearObservableDirective implements OnInit {
 	page = 1;

@@ -13,7 +13,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 	standalone: true,
 	imports: [AppMaterialModule, ReactiveFormsModule, NgClass],
 	templateUrl: './bot.component.html',
-	styleUrl: './bot.component.scss',
+	styleUrls: ['./bot.component.scss', '../../shared/styles/shared.scss'],
 })
 export class BotComponent extends ClearObservableDirective implements OnInit {
 	botForm: FormGroup;

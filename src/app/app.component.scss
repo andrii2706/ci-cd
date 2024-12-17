@@ -5,6 +5,8 @@
 mat-toolbar {
 	background: #d7e3ff;
 	color: #005cbb;
+	padding-top: 20px;
+	padding-bottom: 20px;
 }
 mat-icon {
 	color: #005cbb;
@@ -56,4 +58,26 @@ mat-icon {
 }
 .mr-20px {
 	margin-right: 20px !important;
+}
+.example-is-mobile .example-toolbar {
+	position: fixed;
+	z-index: 2;
+}
+
+.example-sidenav-container {
+	flex: 1;
+}
+.example-container {
+	display: flex;
+	flex-direction: column;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+}
+.sidenav-container {
+	::ng-deep mat-sidenav {
+		box-shadow: 10px 5px 5px gainsboro !important;
+	}
 }

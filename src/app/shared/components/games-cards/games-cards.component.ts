@@ -12,7 +12,7 @@ import { SpinnerComponent } from '../spinner/spinner.component';
 	standalone: true,
 	imports: [AppMaterialModule, ReplaceNullImgPipe, SpinnerComponent],
 	templateUrl: './games-cards.component.html',
-	styleUrl: './games-cards.component.scss',
+	styleUrls: ['./games-cards.component.scss', '../../styles/shared.scss'],
 })
 export class GamesCardsComponent implements OnInit {
 	@Input() set game(_game: Game) {
