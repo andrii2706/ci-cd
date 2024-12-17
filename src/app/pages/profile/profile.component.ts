@@ -134,7 +134,6 @@ export class ProfileComponent
 				this.userAvatar
 			);
 			this.spinnerService.proceedSpinnerStatus(false);
-			/* eslint-disable  @typescript-eslint/no-unused-vars */
 		} catch {
 			this.snackbarComponent.openFromComponent(SnackbarComponent, {
 				duration: 5000,

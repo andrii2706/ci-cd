@@ -5,8 +5,6 @@ import { tap } from 'rxjs';
 import { SpinnerService } from '../../shared/services/spinner.service';
 import { Games } from '../../shared/models/games.interface';
 
-/* eslint-disable  @typescript-eslint/no-explicit-any */
-
 /* eslint-disable  @typescript-eslint/no-unused-vars */
 export const gamesResolver: ResolveFn<Games> = (route, state) => {
 	const gamesService = inject(GamesService);
