@@ -1,7 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { GamesFilterComponent } from './games-filter.component';
-import moment from 'moment';
 
 describe('GamesFilterComponent', () => {
 	let component: GamesFilterComponent;
@@ -23,7 +22,6 @@ describe('GamesFilterComponent', () => {
 
 	it('should initialize the filter form on ngOnInit', () => {
 		expect(component.filterForm).toBeDefined();
-		expect(component.filterForm.controls['search']).toBeDefined();
 		expect(component.filterForm.controls['genres']).toBeDefined();
 		expect(component.filterForm.controls['platforms']).toBeDefined();
 		expect(component.filterForm.controls['developers']).toBeDefined(); // No error here now
@@ -35,7 +33,6 @@ describe('GamesFilterComponent', () => {
 	it('should emit filter event with form values when submitFilter is called', () => {
 		jest.spyOn(component.filter, 'emit');
 		component.filterForm.patchValue({
-			search: 'test',
 			genres: 'action',
 			platforms: 'pc',
 			developers: 'dev1',
@@ -50,17 +47,8 @@ describe('GamesFilterComponent', () => {
 		);
 	});
 
-	it('should set the correct dates when lastGames is called', () => {
-		const firstDate = moment().startOf('year').format('YYYY-MM-DD');
-		const lastDate = moment().add(1, 'year').endOf('year').format('YYYY-MM-DD');
-
-		component.lastGames();
-		expect(component.dates).toBe(`${firstDate},${lastDate}`);
-	});
-
 	it('should clear the filter form when clearFilterForm is called', () => {
 		component.filterForm.patchValue({
-			search: 'test',
 			genres: 'action',
 			platforms: 'pc',
 			developers: 'dev1',
@@ -73,7 +61,6 @@ describe('GamesFilterComponent', () => {
 		component.clearFilterForm();
 
 		expect(component.filterForm.value).toEqual({
-			search: '',
 			genres: '',
 			platforms: '',
 			developers: '',

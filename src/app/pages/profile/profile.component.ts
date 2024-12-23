@@ -6,13 +6,13 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../shared/services/auth.service';
 import firebase from 'firebase/compat/app';
-import User = firebase.User;
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationComponent } from '../../shared/components/confirmation/confirmation.component';
 import { SpinnerService } from '../../shared/services/spinner.service';
 import { filter, takeUntil } from 'rxjs';
 import { SnackbarComponent } from '../../shared/components/snackbar/snackbar.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import User = firebase.User;
 
 @Component({
 	selector: 'app-profile',
@@ -46,6 +46,13 @@ export class ProfileComponent
 	ngOnInit() {
 		this.getUser();
 		this.initUpdateForm();
+		if (this.userGames.length === 0 && localStorage.getItem('user') !== null) {
+			const user = JSON.parse(localStorage.getItem('user') as string);
+			if (user) {
+				user.games = [];
+				localStorage.setItem('user', JSON.stringify(user));
+			}
+		}
 	}
 
 	getUser() {
@@ -60,7 +67,9 @@ export class ProfileComponent
 					this.userGames = userGames.games;
 				});
 				this.authService.getAvatarById(user.uid).then(avatar => {
-					this.userAvatar = avatar.photoUrl;
+					if (avatar.photoUrl) {
+						this.userAvatar = avatar.photoUrl;
+					}
 					this.spinnerService.proceedSpinnerStatus(false);
 				});
 			});
@@ -108,6 +117,16 @@ export class ProfileComponent
 			if (status) {
 				if (this.user) {
 					this.spinnerService.proceedSpinnerStatus(true);
+					if (localStorage.getItem('user') !== null) {
+						const user = JSON.parse(localStorage.getItem('user') as string);
+						if (user) {
+							const userGames: Game[] = user.games;
+							user.games = userGames.filter(
+								userInfo => userInfo.id !== gameInfo.id
+							);
+							localStorage.setItem('user', JSON.stringify(user));
+						}
+					}
 					this.gamesService
 						.removeGameFromUser(this.user.uid, gameInfo)
 						.then(() => {

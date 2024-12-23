@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { ProfileRouterModule } from './profile.router.module';
 import { ProfileComponent } from './profile.component';
 import { AppMaterialModule } from '../../app-material/app-material.module';
@@ -16,6 +16,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 		SpinnerComponent,
 		ReplaceNullImgPipe,
 		ReactiveFormsModule,
+		NgOptimizedImage,
 	],
 })
 export class ProfileModule {}

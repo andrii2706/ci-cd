@@ -1,11 +1,11 @@
 export interface FilterParams {
 	search: string;
-	platforms: string;
-	ordering: string;
-	metacritic: string;
-	developers: string;
-	dates: string;
-	genres: string;
+	platforms?: string;
+	ordering?: string;
+	metacritic?: string;
+	developers?: string;
+	dates?: string;
+	genres?: string;
 }
 
 export interface Genres {

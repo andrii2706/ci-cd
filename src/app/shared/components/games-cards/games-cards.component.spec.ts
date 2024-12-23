@@ -113,8 +113,11 @@ describe('GamesCardsComponent', () => {
 			//@ts-ignore
 			component.router.url = '/home';
 
-			component.goToGameDetails();
+			const event: Partial<Event> = { stopPropagation: jest.fn() }; // Mock події
 
+			component.goToGameDetails(event as Event);
+
+			expect(event.stopPropagation).toHaveBeenCalled(); // Перевірка, чи викликали stopPropagation
 			expect(routerMock.navigate).toHaveBeenCalledWith(['/games/1'], {
 				relativeTo: activatedRouteMock,
 			});
@@ -127,8 +130,11 @@ describe('GamesCardsComponent', () => {
 			//@ts-ignore
 			component.router.url = '/other';
 
-			component.goToGameDetails();
+			const event: Partial<Event> = { stopPropagation: jest.fn() }; // Mock події
 
+			component.goToGameDetails(event as Event);
+
+			expect(event.stopPropagation).toHaveBeenCalled(); // Перевірка, чи викликали stopPropagation
 			expect(routerMock.navigate).toHaveBeenCalledWith([1], {
 				relativeTo: activatedRouteMock,
 			});
