@@ -1,5 +1,5 @@
 @if (gameInfo) {
-	<mat-card class="game-card">
+	<mat-card class="game-card" (click)="onCardClick()">
 		<mat-card-header>
 			<mat-card-title>{{ gameInfo.name }}</mat-card-title>
 			<mat-card-subtitle>{{ gameInfo.released }}</mat-card-subtitle>
@@ -28,7 +28,7 @@
 					matTooltip="See game Details"
 					class="goToDetails"
 					[color]="'primary'"
-					(click)="goToGameDetails()">
+					(click)="goToGameDetails($event)">
 					To game details
 				</button>
 				<button
@@ -37,7 +37,7 @@
 					[disabled]="showLabel"
 					class="add-to-wishlist"
 					[color]="'primary'"
-					(click)="buyGame(gameInfo)">
+					(click)="buyGame(gameInfo, $event)">
 					<mat-icon>add_shopping_cart</mat-icon>
 					@if (showLabel) {
 						<span>Game Has been bought</span>

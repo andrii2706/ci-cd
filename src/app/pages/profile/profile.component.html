@@ -4,12 +4,10 @@
 			<div class="user-info">
 				<div>
 					@if (userAvatar && userAvatar.length) {
-						<img class="avatar" src="{{ userAvatar }}" alt="User Icon" />
-					} @else {
-						<img
-							class="avatar"
-							src="{{ user?.photoURL | replaceNullImg }}"
-							alt="User Icon" />
+            <img
+              class="avatar"
+              src="{{ userAvatar | replaceNullImg }}"
+              alt="User Avatar Image" />
 					}
 					<h3>{{ user.displayName }}</h3>
 					<p>{{ user.email }}</p>
@@ -74,7 +72,7 @@
 
 	<div class="wishList">
 		<div>
-			@for (gameInfo of userGames; track gameInfo.slug) {
+			@for (gameInfo of userGames; track gameInfo.id) {
 				<div class="game-wishListCard">
 					<div>
 						<img
@@ -88,7 +86,6 @@
 						<p>Metacritic: {{ gameInfo.metacritic }}</p>
 						<p>Rating: {{ gameInfo.rating }}</p>
 						<p>Release data: {{ gameInfo.released | date }}</p>
-						<p>Description: {{ gameInfo.description }}</p>
 					</div>
 					<div class="buttons">
 						<button

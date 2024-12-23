@@ -1,13 +1,6 @@
 <section>
 	<div class="filter-btn">
-		<mat-accordion>
-			<mat-expansion-panel hideToggle>
-				<mat-expansion-panel-header>
-					<mat-icon>filter_list</mat-icon>
-				</mat-expansion-panel-header>
-				<app-games-filter (filter)="getFilterQuery($event)"></app-games-filter>
-			</mat-expansion-panel>
-		</mat-accordion>
+  <app-games-filter (filter)="getFilterQuery($event)"></app-games-filter>
 	</div>
 	<div class="games-grid">
 		@for (
@@ -19,15 +12,18 @@
 				[game]="game"
 				[isGameBought]="isGameBoughtStatus"
 				(boughtedGame)="buyGame($event)"></app-games-cards>
+
 		} @empty {
-			<div>Games not come wait a minute</div>
+			<div class="height-60vh">Games not found</div>
 		}
 	</div>
-	<div class="pagination">
-		<div class="pagination-controllers">
-			<pagination-controls
-				class="pagination"
-				(pageChange)="navigateTo($event)"></pagination-controls>
-		</div>
-	</div>
+  @if(games?.length){
+    <div class="pagination">
+      <div class="pagination-controllers">
+        <pagination-controls
+          class="pagination"
+          (pageChange)="navigateTo($event)"></pagination-controls>
+      </div>
+    </div>
+  }
 </section>

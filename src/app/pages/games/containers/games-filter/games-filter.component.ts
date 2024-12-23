@@ -8,7 +8,6 @@ import {
 	OrderByInfos,
 	PlatformsFilters,
 } from '../../../../shared/models/filter.interface';
-import moment from 'moment';
 import {
 	developersFilter,
 	genresFilter,
@@ -27,6 +26,7 @@ import {
 })
 export class GamesFilterComponent implements OnInit {
 	filterForm: FormGroup;
+  searchFiledForm: FormGroup;
 	dates = '';
 	genres: GenresFilters[] = genresFilter;
 	developers: DevelopersFilters[] = developersFilter;
@@ -34,16 +34,17 @@ export class GamesFilterComponent implements OnInit {
 	orderByInfos: OrderByInfos[] = orderByInfos;
 	metacritics: Metacritics[] = metacriticNumbers;
 
+
 	@Output()
 	filter = new EventEmitter<FilterParams>();
 
 	ngOnInit(): void {
 		this.iniFilterForm();
+    this.initSearchFilter();
 	}
 
 	private iniFilterForm() {
 		this.filterForm = new FormGroup({
-			search: new FormControl(''),
 			genres: new FormControl(''),
 			platforms: new FormControl(''),
 			developers: new FormControl(''),
@@ -52,22 +53,21 @@ export class GamesFilterComponent implements OnInit {
 			dates: new FormControl(''),
 		});
 	}
+  private initSearchFilter(): void {
+    this.searchFiledForm = new FormGroup({
+      search: new FormControl(''),
+    })
+  }
 
 	submitFilter() {
 		this.filterForm.value.dates = this.dates;
 		this.filter.emit(this.filterForm.value);
 	}
 
-	lastGames() {
-		const firstDate = moment().startOf('year').format('YYYY-MM-DD');
-		const lastDate = moment().add(1, 'year').endOf('year').format('YYYY-MM-DD');
-		this.dates = `${firstDate},${lastDate}`;
-	}
 
 	clearFilterForm() {
 		this.dates = '';
 		const clearForm = {
-			search: '',
 			genres: '',
 			platforms: '',
 			developers: '',
@@ -76,5 +76,20 @@ export class GamesFilterComponent implements OnInit {
 			dates: '',
 		};
 		this.filterForm.patchValue(clearForm);
+    this.filter.emit(this.filterForm.value);
 	}
+
+  clearSearchForm(): void {
+    this.searchFiledForm.patchValue({search: ''});
+    this.filter.emit(this.searchFiledForm.value);
+  }
+
+  searchGames(){
+    if(this.searchFiledForm.value.search.length > 3){
+      setTimeout(() => {
+        this.filter.emit({search: this.searchFiledForm.value.search})
+      }, 800)
+    }
+  }
+
 }

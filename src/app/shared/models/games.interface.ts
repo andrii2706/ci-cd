@@ -190,10 +190,10 @@ export interface IAchivments {
 }
 
 export interface FilterParams {
-	search: string;
-	platforms: string;
-	ordering: string;
-	metacritic: string;
-	developers: string;
-	dates: string;
+	search?: string;
+	platforms?: string;
+	ordering?: string;
+	metacritic?: string;
+	developers?: string;
+	dates?: string;
 }

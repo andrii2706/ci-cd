@@ -9,3 +9,10 @@
 		margin-bottom: 17px;
 	}
 }
+
+.search-input {
+
+ > mat-form-field {
+   width: 100%;
+ }
+}

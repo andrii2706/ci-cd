@@ -106,32 +106,39 @@ describe('GamesCardsComponent', () => {
 	});
 
 	describe('goToGameDetails', () => {
-		it('should navigate to the game details page when in /home route', () => {
-			component.gameInfo = { id: 1, name: 'Test Game', released: '2024-01-01' };
-			routerMock.navigate.mockResolvedValue(true);
-			/* eslint-disable   @typescript-eslint/ban-ts-comment */
-			//@ts-ignore
-			component.router.url = '/home';
+    it('should navigate to the game details page when in /home route', () => {
+      component.gameInfo = { id: 1, name: 'Test Game', released: '2024-01-01' };
+      routerMock.navigate.mockResolvedValue(true);
+      /* eslint-disable   @typescript-eslint/ban-ts-comment */
+      //@ts-ignore
+      component.router.url = '/home';
 
-			component.goToGameDetails();
+      const event: Partial<Event> = { stopPropagation: jest.fn() }; // Mock події
 
-			expect(routerMock.navigate).toHaveBeenCalledWith(['/games/1'], {
-				relativeTo: activatedRouteMock,
-			});
-		});
+      component.goToGameDetails(event as Event);
 
-		it('should navigate to the game details page when not in /home route', () => {
-			component.gameInfo = { id: 1, name: 'Test Game', released: '2024-01-01' };
-			routerMock.navigate.mockResolvedValue(true);
-			/* eslint-disable   @typescript-eslint/ban-ts-comment */
-			//@ts-ignore
-			component.router.url = '/other';
+      expect(event.stopPropagation).toHaveBeenCalled(); // Перевірка, чи викликали stopPropagation
+      expect(routerMock.navigate).toHaveBeenCalledWith(['/games/1'], {
+        relativeTo: activatedRouteMock,
+      });
+    });
 
-			component.goToGameDetails();
+    it('should navigate to the game details page when not in /home route', () => {
+      component.gameInfo = { id: 1, name: 'Test Game', released: '2024-01-01' };
+      routerMock.navigate.mockResolvedValue(true);
+      /* eslint-disable   @typescript-eslint/ban-ts-comment */
+      //@ts-ignore
+      component.router.url = '/other';
 
-			expect(routerMock.navigate).toHaveBeenCalledWith([1], {
-				relativeTo: activatedRouteMock,
-			});
-		});
-	});
+      const event: Partial<Event> = { stopPropagation: jest.fn() }; // Mock події
+
+      component.goToGameDetails(event as Event);
+
+      expect(event.stopPropagation).toHaveBeenCalled(); // Перевірка, чи викликали stopPropagation
+      expect(routerMock.navigate).toHaveBeenCalledWith([1], {
+        relativeTo: activatedRouteMock,
+      });
+    });
+
+  });
 });
