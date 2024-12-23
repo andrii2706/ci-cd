@@ -97,8 +97,8 @@ export class AuthComponent extends ClearObservableDirective implements OnInit {
 			this.signInForm = false;
 		}
 		this.authForm.reset();
-    this.registerForm.reset();
-    this.resetPasswordForm.reset();
+		this.registerForm.reset();
+		this.resetPasswordForm.reset();
 	}
 
 	submitRegister() {
@@ -117,13 +117,13 @@ export class AuthComponent extends ClearObservableDirective implements OnInit {
 
 	signUp() {
 		this.signInForm = true;
-    this.authForm.reset();
+		this.authForm.reset();
 	}
 
 	forgotPasswordFormShow() {
 		this.showForgotPassword = true;
 		this.signInForm = false;
-    this.authForm.reset();
+		this.authForm.reset();
 	}
 
 	forgotPasswordFormSend() {

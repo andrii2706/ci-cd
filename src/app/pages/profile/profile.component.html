@@ -4,10 +4,10 @@
 			<div class="user-info">
 				<div>
 					@if (userAvatar && userAvatar.length) {
-            <img
-              class="avatar"
-              src="{{ userAvatar | replaceNullImg }}"
-              alt="User Avatar Image" />
+						<img
+							class="avatar"
+							src="{{ userAvatar | replaceNullImg }}"
+							alt="User Avatar Image" />
 					}
 					<h3>{{ user.displayName }}</h3>
 					<p>{{ user.email }}</p>

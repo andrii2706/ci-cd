@@ -141,16 +141,15 @@ export class AuthService {
 					this.userAvatarUrl(userInfo.user.uid, '').then();
 				}
 			})
-			.catch((error) => {
-        if(error.message.includes('auth/email-already-in-use')) {
-          this.snackbarComponent.openFromComponent(SnackbarComponent, {
-            duration: 5000,
-            data: { text: 'User is already exist', status: 'error' },
-            verticalPosition: 'top',
-            horizontalPosition: 'center',
-          });
-        }
-
+			.catch(error => {
+				if (error.message.includes('auth/email-already-in-use')) {
+					this.snackbarComponent.openFromComponent(SnackbarComponent, {
+						duration: 5000,
+						data: { text: 'User is already exist', status: 'error' },
+						verticalPosition: 'top',
+						horizontalPosition: 'center',
+					});
+				}
 			});
 	}
 

@@ -46,15 +46,14 @@ export class ProfileComponent
 	ngOnInit() {
 		this.getUser();
 		this.initUpdateForm();
-    if(this.userGames.length === 0 && localStorage.getItem('user') !== null){
-      const user = JSON.parse(localStorage.getItem('user') as string)
-      if(user){
-        user.games = []
-        localStorage.setItem('user', JSON.stringify(user));
-      }
-    }
-
-  }
+		if (this.userGames.length === 0 && localStorage.getItem('user') !== null) {
+			const user = JSON.parse(localStorage.getItem('user') as string);
+			if (user) {
+				user.games = [];
+				localStorage.setItem('user', JSON.stringify(user));
+			}
+		}
+	}
 
 	getUser() {
 		this.authService.user$
@@ -65,12 +64,12 @@ export class ProfileComponent
 			.subscribe(user => {
 				this.user = user;
 				this.gamesService.getGameById(user.uid).then(userGames => {
-          this.userGames = userGames.games;
+					this.userGames = userGames.games;
 				});
 				this.authService.getAvatarById(user.uid).then(avatar => {
-          if(avatar.photoUrl){
-            this.userAvatar = avatar.photoUrl;
-          }
+					if (avatar.photoUrl) {
+						this.userAvatar = avatar.photoUrl;
+					}
 					this.spinnerService.proceedSpinnerStatus(false);
 				});
 			});
@@ -118,15 +117,17 @@ export class ProfileComponent
 			if (status) {
 				if (this.user) {
 					this.spinnerService.proceedSpinnerStatus(true);
-          if(localStorage.getItem('user') !== null) {
-            const user = JSON.parse(localStorage.getItem('user') as string)
-            if(user){
-              const userGames: Game[] = user.games;
-              user.games = userGames.filter(userInfo => userInfo.id !== gameInfo.id);
-              localStorage.setItem('user', JSON.stringify(user));
-            }
-          }
-          this.gamesService
+					if (localStorage.getItem('user') !== null) {
+						const user = JSON.parse(localStorage.getItem('user') as string);
+						if (user) {
+							const userGames: Game[] = user.games;
+							user.games = userGames.filter(
+								userInfo => userInfo.id !== gameInfo.id
+							);
+							localStorage.setItem('user', JSON.stringify(user));
+						}
+					}
+					this.gamesService
 						.removeGameFromUser(this.user.uid, gameInfo)
 						.then(() => {
 							if (this.user) {

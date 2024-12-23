@@ -46,20 +46,19 @@ export class GamesCardsComponent implements OnInit {
 		this.userStatus = !!userInfo && !userInfo.length;
 	}
 
-  onCardClick(){
-    if (this.router.url === '/home') {
-      void this.router.navigate([`/games/${this.gameInfo.id}`], {
-        relativeTo: this.activatedRoute,
-      });
-    } else
-      void this.router.navigate([this.gameInfo.id], {
-        relativeTo: this.activatedRoute,
-      });
-  }
-
+	onCardClick() {
+		if (this.router.url === '/home') {
+			void this.router.navigate([`/games/${this.gameInfo.id}`], {
+				relativeTo: this.activatedRoute,
+			});
+		} else
+			void this.router.navigate([this.gameInfo.id], {
+				relativeTo: this.activatedRoute,
+			});
+	}
 
 	buyGame(game: Game, event: Event) {
-    event.stopPropagation();
+		event.stopPropagation();
 		this.boughtedGame.emit(game);
 		this.showLabel = true;
 		if (this.showLabel)
@@ -75,7 +74,7 @@ export class GamesCardsComponent implements OnInit {
 	}
 
 	goToGameDetails(event: Event) {
-    event?.stopPropagation();
+		event?.stopPropagation();
 		if (this.router.url === '/home') {
 			void this.router.navigate([`/games/${this.gameInfo.id}`], {
 				relativeTo: this.activatedRoute,

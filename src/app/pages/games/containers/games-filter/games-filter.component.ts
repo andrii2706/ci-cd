@@ -26,7 +26,7 @@ import {
 })
 export class GamesFilterComponent implements OnInit {
 	filterForm: FormGroup;
-  searchFiledForm: FormGroup;
+	searchFiledForm: FormGroup;
 	dates = '';
 	genres: GenresFilters[] = genresFilter;
 	developers: DevelopersFilters[] = developersFilter;
@@ -34,13 +34,12 @@ export class GamesFilterComponent implements OnInit {
 	orderByInfos: OrderByInfos[] = orderByInfos;
 	metacritics: Metacritics[] = metacriticNumbers;
 
-
 	@Output()
 	filter = new EventEmitter<FilterParams>();
 
 	ngOnInit(): void {
 		this.iniFilterForm();
-    this.initSearchFilter();
+		this.initSearchFilter();
 	}
 
 	private iniFilterForm() {
@@ -53,17 +52,16 @@ export class GamesFilterComponent implements OnInit {
 			dates: new FormControl(''),
 		});
 	}
-  private initSearchFilter(): void {
-    this.searchFiledForm = new FormGroup({
-      search: new FormControl(''),
-    })
-  }
+	private initSearchFilter(): void {
+		this.searchFiledForm = new FormGroup({
+			search: new FormControl(''),
+		});
+	}
 
 	submitFilter() {
 		this.filterForm.value.dates = this.dates;
 		this.filter.emit(this.filterForm.value);
 	}
-
 
 	clearFilterForm() {
 		this.dates = '';
@@ -76,20 +74,19 @@ export class GamesFilterComponent implements OnInit {
 			dates: '',
 		};
 		this.filterForm.patchValue(clearForm);
-    this.filter.emit(this.filterForm.value);
+		this.filter.emit(this.filterForm.value);
 	}
 
-  clearSearchForm(): void {
-    this.searchFiledForm.patchValue({search: ''});
-    this.filter.emit(this.searchFiledForm.value);
-  }
+	clearSearchForm(): void {
+		this.searchFiledForm.patchValue({ search: '' });
+		this.filter.emit(this.searchFiledForm.value);
+	}
 
-  searchGames(){
-    if(this.searchFiledForm.value.search.length > 3){
-      setTimeout(() => {
-        this.filter.emit({search: this.searchFiledForm.value.search})
-      }, 800)
-    }
-  }
-
+	searchGames() {
+		if (this.searchFiledForm.value.search.length > 3) {
+			setTimeout(() => {
+				this.filter.emit({ search: this.searchFiledForm.value.search });
+			}, 800);
+		}
+	}
 }
