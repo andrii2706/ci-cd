@@ -17,9 +17,14 @@
 						<h3>{{ user.displayName }}</h3>
 						<p>{{ user.email }}</p>
 					</div>
-					<button mat-raised-button (click)="changeUserInfo(true)">
-						Update your info
-					</button>
+					<div class="flex-direction-columns gap-1rem">
+						<button mat-raised-button (click)="changeUserInfo(true)">
+							Update your info
+						</button>
+						<button mat-raised-button (click)="deleteAllGames(user.uid)">
+							Delete All Games
+						</button>
+					</div>
 				</div>
 			} @else {
 				<form
