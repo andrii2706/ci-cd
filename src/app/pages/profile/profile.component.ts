@@ -47,7 +47,7 @@ export class ProfileComponent
 	ngOnInit() {
 		this.getUser();
 		this.initUpdateForm();
-    this.clearGamesArr()
+		this.clearGamesArr();
 	}
 
 	getUser() {
@@ -159,21 +159,20 @@ export class ProfileComponent
 		}
 	}
 
-  deleteAllGames(userId: string) {
-    this.gamesService.clearAllGamesFromUser(userId).then(() => {
-     this.clearGamesArr();
-     this.userGames = []
-    })
-  }
+	deleteAllGames(userId: string) {
+		this.gamesService.clearAllGamesFromUser(userId).then(() => {
+			this.clearGamesArr();
+			this.userGames = [];
+		});
+	}
 
-  private clearGamesArr(){
-    if (this.userGames.length === 0 && localStorage.getItem('user') !== null) {
-      const user = JSON.parse(localStorage.getItem('user') as string);
-      if (user) {
-        user.games = [];
-        localStorage.setItem('user', JSON.stringify(user));
-      }
-    }
-  }
-
+	private clearGamesArr() {
+		if (this.userGames.length === 0 && localStorage.getItem('user') !== null) {
+			const user = JSON.parse(localStorage.getItem('user') as string);
+			if (user) {
+				user.games = [];
+				localStorage.setItem('user', JSON.stringify(user));
+			}
+		}
+	}
 }
