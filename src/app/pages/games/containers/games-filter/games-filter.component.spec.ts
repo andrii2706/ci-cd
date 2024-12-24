@@ -24,7 +24,7 @@ describe('GamesFilterComponent', () => {
 		expect(component.filterForm).toBeDefined();
 		expect(component.filterForm.controls['genres']).toBeDefined();
 		expect(component.filterForm.controls['platforms']).toBeDefined();
-		expect(component.filterForm.controls['developers']).toBeDefined(); // No error here now
+		expect(component.filterForm.controls['developers']).toBeDefined();
 		expect(component.filterForm.controls['ordering']).toBeDefined();
 		expect(component.filterForm.controls['metacritic']).toBeDefined();
 		expect(component.filterForm.controls['dates']).toBeDefined();
