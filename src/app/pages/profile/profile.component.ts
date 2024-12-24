@@ -30,7 +30,7 @@ export class ProfileComponent
 	userAvatar = '';
 	showAvatar = false;
 	updateUserInfoStatus = false;
-  isLoading = false;
+	isLoading = false;
 
 	constructor(
 		private gamesService: GamesService,
@@ -67,7 +67,7 @@ export class ProfileComponent
 				this.gamesService.getGameById(user.uid).then(userGames => {
 					this.userGames = userGames.games;
 				});
-        this.spinnerService.proceedSpinnerStatus(true);
+				this.spinnerService.proceedSpinnerStatus(true);
 				this.authService.getAvatarById(user.uid).then(avatar => {
 					if (avatar.photoUrl) {
 						this.userAvatar = avatar.photoUrl;
