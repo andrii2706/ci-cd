@@ -165,4 +165,28 @@ export class GamesService {
 			});
 		}
 	}
+
+  async clearAllGamesFromUser(userId: string) {
+    const userRef = doc(this.fireStore, 'userGame', userId);
+    try {
+      await updateDoc(userRef, {
+        games: [],
+      });
+      this.snackbarComponent.openFromComponent(SnackbarComponent, {
+        duration: 5000,
+        data: { text: `All games have been removed successfully`, status: 'success' },
+        verticalPosition: 'top',
+        horizontalPosition: 'center',
+      });
+    } catch (error) {
+      this.snackbarComponent.openFromComponent(SnackbarComponent, {
+        duration: 5000,
+        data: { text: `Failed to remove all games`, status: 'error' },
+        verticalPosition: 'top',
+        horizontalPosition: 'center',
+      });
+      console.error('Error clearing games:', error);
+    }
+  }
+
 }
