@@ -21,11 +21,11 @@
 						<button mat-raised-button (click)="changeUserInfo(true)">
 							Update your info
 						</button>
-            @if(userGames.length > 0){
-              <button  mat-raised-button (click)="deleteAllGames(user.uid)">
-                Delete All Games
-              </button>
-            }
+						@if (userGames.length > 0) {
+							<button mat-raised-button (click)="deleteAllGames(user.uid)">
+								Delete All Games
+							</button>
+						}
 					</div>
 				</div>
 			} @else {
