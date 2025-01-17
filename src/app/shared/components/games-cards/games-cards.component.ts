@@ -3,7 +3,6 @@ import { Game } from '../../models/games.interface';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AppMaterialModule } from '../../../app-material/app-material.module';
 import { ReplaceNullImgPipe } from '../../pipe/replace-null-img.pipe';
-import { SnackbarComponent } from '../snackbar/snackbar.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SpinnerComponent } from '../spinner/spinner.component';
 
@@ -61,16 +60,6 @@ export class GamesCardsComponent implements OnInit {
 		event.stopPropagation();
 		this.boughtedGame.emit(game);
 		this.showLabel = true;
-		if (this.showLabel)
-			this.snackBar.openFromComponent(SnackbarComponent, {
-				duration: 900,
-				data: {
-					text: 'The game has been added to your list',
-					status: 'success',
-				},
-				verticalPosition: 'bottom',
-				horizontalPosition: 'center',
-			});
 	}
 
 	goToGameDetails(event: Event) {

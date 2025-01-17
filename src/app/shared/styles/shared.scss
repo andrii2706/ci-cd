@@ -4,6 +4,12 @@
 	align-items: center;
 	flex-direction: column;
 }
+.beetween-direction-columns{
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	flex-direction: row;
+}
 .flex-block {
 	display: flex;
 	justify-content: center;
@@ -27,4 +33,7 @@
 }
 .height-60vh {
 	height: 60vh;
+}
+.w-65 {
+	width: 65%;
 }
