@@ -2,7 +2,17 @@
 	@if (isLoading) {
 		<app-spinner></app-spinner>
 	} @else {
-		<div class="w-full">
+		<div class="w-65">
+			<div class="beetween-direction-columns">
+				<div class="flex-block sign-up-block">
+					<button mat-flat-button (click)="signUp()">Sign up</button>
+				</div>
+				<div class="flex-block">
+					<button mat-flat-button (click)="forgotPasswordFormShow()">
+						Forgot your password ?
+					</button>
+				</div>
+			</div>
 			@if (signInForm) {
 				<form class="flex-direction-columns" [formGroup]="registerForm">
 					<mat-form-field class="auth-input">
@@ -65,17 +75,14 @@
 								placeholder="Ex. pat@example.com" />
 							@if (
 								!resetPasswordForm.hasError('email') &&
-								!resetPasswordForm.hasError('required') &&
-								resetPasswordForm.value['email'].length > 0
+								!resetPasswordForm.hasError('required')
 							) {
 								<mat-error>Please enter a valid email address</mat-error>
 							}
-							@if (resetPasswordForm.value['email'].length === 0) {
-								<mat-error>Email is <strong>required</strong></mat-error>
-							}
 						</mat-form-field>
 					</form>
-					<div class="flex-block sign-up-block">
+
+					<div class="flex-block sign-up-block gap-1rem">
 						<button
 							mat-flat-button
 							(click)="showForgotPassword = false; resetPasswordForm.reset()">
@@ -159,14 +166,6 @@
 							</svg>
 						</button>
 					</div>
-				</div>
-				<div class="flex-block sign-up-block">
-					<button mat-flat-button (click)="signUp()">Sign up</button>
-				</div>
-				<div class="flex-block">
-					<button mat-flat-button (click)="forgotPasswordFormShow()">
-						Forgot your password ?
-					</button>
 				</div>
 			}
 		</div>
