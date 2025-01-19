@@ -1,18 +1,17 @@
 import { Component } from '@angular/core';
-import { take } from 'rxjs';
+import { forkJoin, take } from 'rxjs';
 import { SnackbarComponent } from '../snackbar/snackbar.component';
 import { ActivatedRoute } from '@angular/router';
 import { GamesService } from '../../services/games.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { GameDetails, GameTrailers } from '../../models/games.interface';
 import { AppMaterialModule } from '../../../app-material/app-material.module';
-import { SpinnerComponent } from '../spinner/spinner.component';
 import { SpinnerService } from '../../services/spinner.service';
 
 @Component({
 	selector: 'app-games-details',
 	standalone: true,
-	imports: [AppMaterialModule, SpinnerComponent],
+	imports: [AppMaterialModule],
 	templateUrl: './games-details.component.html',
 	styleUrls: ['./games-details.component.scss', '../../styles/shared.scss'],
 })
@@ -43,15 +42,15 @@ export class GamesDetailsComponent {
 	}
 
 	gameDetailsById(id: string) {
-		this.gamesService.getGameMovieById(id).subscribe(gameVideo => {
+		this.spinnerService.proceedSpinnerStatus(true);
+		forkJoin({
+			gameVideo: this.gamesService.getGameMovieById(id),
+			gameDetails: this.gamesService.getGameByIdFromBE(id),
+		}).subscribe(({ gameVideo, gameDetails }) => {
 			this.gameTrailers = gameVideo;
+			this.gameDetails = gameDetails;
+			this.spinnerService.proceedSpinnerStatus(false);
 		});
-		this.gamesService
-			.getGameByIdFromBE(id)
-			.pipe(take(1))
-			.subscribe(gameDetails => {
-				this.gameDetails = gameDetails;
-			});
 	}
 
 	backButton() {

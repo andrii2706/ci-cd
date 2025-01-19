@@ -5,8 +5,7 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ClearObservableDirective, WebSocketChat } from '../../shared/classes';
 import { WebsocketBotService } from '../../shared/services/websocket-bot.service';
 import { NgClass } from '@angular/common';
-import { SnackbarComponent } from '../../shared/components/snackbar/snackbar.component';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { SnackbarService } from '../../shared/services/snackbar.service';
 
 @Component({
 	selector: 'app-bot',
@@ -23,7 +22,7 @@ export class BotComponent extends ClearObservableDirective implements OnInit {
 	constructor(
 		private dialogWindow: MatDialog,
 		private botService: WebsocketBotService,
-		private snackBar: MatSnackBar
+		private snackbarService: SnackbarService
 	) {
 		super();
 	}
@@ -56,12 +55,12 @@ export class BotComponent extends ClearObservableDirective implements OnInit {
 			error: err => {
 				if (err) {
 					this.dialogWindow.closeAll();
-					this.snackBar.openFromComponent(SnackbarComponent, {
-						duration: 5000,
-						data: { text: 'Bot it not responding', status: 'error' },
-						verticalPosition: 'top',
-						horizontalPosition: 'end',
-					});
+					this.snackbarService.message(
+						{ text: 'Bot it not responding', status: 'error' },
+						'top',
+						'end',
+						5000
+					);
 				}
 			},
 		});

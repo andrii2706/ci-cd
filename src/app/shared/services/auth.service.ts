@@ -13,31 +13,30 @@ import {
 	sendPasswordResetEmail,
 	updateProfile,
 } from '@angular/fire/auth';
-import { SnackbarComponent } from '../components/snackbar/snackbar.component';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { SpinnerService } from './spinner.service';
+import { SnackbarService } from './snackbar.service';
 
 @Injectable({
 	providedIn: 'root',
 })
 export class AuthService {
+	userLoginStatus = new BehaviorSubject<boolean>(false);
 	userLoggingWithFireBase = new BehaviorSubject<User | null>(null);
+	userLoginStatus$: Observable<boolean> = this.userLoginStatus.asObservable();
+	userPasswordWithFireBase = new BehaviorSubject<string>('');
+
 	private userLoggingWithFireBase$: Observable<User | null> =
 		this.userLoggingWithFireBase.asObservable();
-	userPasswordWithFireBase = new BehaviorSubject<string>('');
 	private userPasswordWithFireBase$: Observable<string> =
 		this.userPasswordWithFireBase.asObservable();
 	/* eslint-disable  @typescript-eslint/no-explicit-any */
 	private userSubject = new BehaviorSubject<any>(null);
-	public user$ = this.userSubject.asObservable();
-	userLoginStatus = new BehaviorSubject<boolean>(false);
-	userLoginStatus$: Observable<boolean> = this.userLoginStatus.asObservable();
-
 	private loggedInStatus: boolean;
+	public user$ = this.userSubject.asObservable();
 
 	constructor(
 		private afAuth: AngularFireAuth,
-		private snackbarComponent: MatSnackBar,
+		private snackbarService: SnackbarService,
 		private spinnerStatus: SpinnerService,
 		private fireStore: Firestore,
 		private auth: Auth,
@@ -91,12 +90,12 @@ export class AuthService {
 				this.router.navigate(['/home']);
 			})
 			.catch(error => {
-				this.snackbarComponent.openFromComponent(SnackbarComponent, {
-					duration: 5000,
-					data: { text: error.message, status: 'error' },
-					verticalPosition: 'top',
-					horizontalPosition: 'center',
-				});
+				this.snackbarService.error(
+					{ text: error.message, status: 'error' },
+					'top',
+					'center',
+					5000
+				);
 			});
 	}
 
@@ -113,15 +112,15 @@ export class AuthService {
 			})
 			.catch(error => {
 				if (error.message.includes('auth/invalid-credential')) {
-					this.snackbarComponent.openFromComponent(SnackbarComponent, {
-						duration: 5000,
-						data: {
+					this.snackbarService.error(
+						{
 							text: `You have a problem with login please check your credentials. Or Register into app `,
 							status: 'error',
 						},
-						verticalPosition: 'top',
-						horizontalPosition: 'center',
-					});
+						'top',
+						'center',
+						5000
+					);
 					console.log('hello');
 					this.spinnerStatus.proceedSpinnerStatus(false);
 				}
@@ -143,12 +142,12 @@ export class AuthService {
 			})
 			.catch(error => {
 				if (error.message.includes('auth/email-already-in-use')) {
-					this.snackbarComponent.openFromComponent(SnackbarComponent, {
-						duration: 5000,
-						data: { text: 'User is already exist', status: 'error' },
-						verticalPosition: 'top',
-						horizontalPosition: 'center',
-					});
+					this.snackbarService.error(
+						{ text: 'User is already exist', status: 'error' },
+						'top',
+						'center',
+						5000
+					);
 				}
 			});
 	}
@@ -164,12 +163,12 @@ export class AuthService {
 				})
 				/* eslint-disable  @typescript-eslint/no-unused-vars */
 				.catch(error => {
-					this.snackbarComponent.openFromComponent(SnackbarComponent, {
-						duration: 5000,
-						data: { text: 'Error updating user info', status: 'error' },
-						verticalPosition: 'top',
-						horizontalPosition: 'center',
-					});
+					this.snackbarService.error(
+						{ text: 'Error updating user info', status: 'error' },
+						'top',
+						'center',
+						5000
+					);
 				});
 			this.userAvatarUrl(auth.uid, photoUrl).then(() => {
 				noop();
@@ -186,12 +185,12 @@ export class AuthService {
 				this.changeLoginStatus(false, null);
 			})
 			.catch(() => {
-				this.snackbarComponent.openFromComponent(SnackbarComponent, {
-					duration: 5000,
-					data: { text: 'Server is not responding ', status: 'error' },
-					verticalPosition: 'top',
-					horizontalPosition: 'center',
-				});
+				this.snackbarService.error(
+					{ text: 'Server is not responding ', status: 'error' },
+					'top',
+					'center',
+					5000
+				);
 			});
 	}
 
@@ -199,20 +198,20 @@ export class AuthService {
 		const gameRef = doc(this.fireStore, 'userGame', userId);
 		try {
 			await setDoc(gameRef, { games });
-			this.snackbarComponent.openFromComponent(SnackbarComponent, {
-				duration: 5000,
-				data: { text: 'Game is added to user', status: 'success' },
-				verticalPosition: 'top',
-				horizontalPosition: 'center',
-			});
+			this.snackbarService.success(
+				{ text: 'Game is added to user', status: 'success' },
+				'top',
+				'center',
+				5000
+			);
 			/* eslint-disable  @typescript-eslint/no-unused-vars */
 		} catch (error) {
-			this.snackbarComponent.openFromComponent(SnackbarComponent, {
-				duration: 5000,
-				data: { text: 'Game is not added to user', status: 'error' },
-				verticalPosition: 'top',
-				horizontalPosition: 'center',
-			});
+			this.snackbarService.error(
+				{ text: 'Game is not added to user', status: 'error' },
+				'top',
+				'center',
+				5000
+			);
 		}
 	}
 
@@ -220,20 +219,20 @@ export class AuthService {
 		const photoURL = doc(this.fireStore, 'userAvatarUrl', userId);
 		try {
 			await setDoc(photoURL, { photoUrl });
-			this.snackbarComponent.openFromComponent(SnackbarComponent, {
-				duration: 5000,
-				data: { text: 'Avatar is added to user', status: 'error' },
-				verticalPosition: 'top',
-				horizontalPosition: 'center',
-			});
+			this.snackbarService.success(
+				{ text: 'Avatar is added to user', status: 'success' },
+				'top',
+				'center',
+				5000
+			);
 			/* eslint-disable  @typescript-eslint/no-unused-vars */
 		} catch (error) {
-			this.snackbarComponent.openFromComponent(SnackbarComponent, {
-				duration: 5000,
-				data: { text: 'Avatar is not added to user', status: 'error' },
-				verticalPosition: 'top',
-				horizontalPosition: 'center',
-			});
+			this.snackbarService.error(
+				{ text: 'Avatar is not added to user', status: 'error' },
+				'top',
+				'center',
+				5000
+			);
 		}
 	}
 
@@ -263,12 +262,12 @@ export class AuthService {
 			await sendPasswordResetEmail(this.auth, email);
 			/* eslint-disable  @typescript-eslint/no-unused-vars */
 		} catch (error) {
-			this.snackbarComponent.openFromComponent(SnackbarComponent, {
-				duration: 5000,
-				data: { text: 'Password is not updated', status: 'error' },
-				verticalPosition: 'top',
-				horizontalPosition: 'center',
-			});
+			this.snackbarService.error(
+				{ text: 'Password is not updated', status: 'error' },
+				'top',
+				'center',
+				5000
+			);
 		}
 	}
 }
