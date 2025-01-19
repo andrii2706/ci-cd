@@ -18,7 +18,10 @@ import { SnackbarService } from '../../shared/services/snackbar.service';
 	templateUrl: './profile.component.html',
 	styleUrls: ['./profile.component.scss', '../../shared/styles/shared.scss'],
 })
-export class ProfileComponent extends ClearObservableDirective implements OnInit {
+export class ProfileComponent
+	extends ClearObservableDirective
+	implements OnInit
+{
 	updateUserInfoForm: FormGroup;
 	confirmStatus = signal(null);
 	user: User | null;
@@ -107,18 +110,18 @@ export class ProfileComponent extends ClearObservableDirective implements OnInit
 
 		dialogRef.afterClosed().subscribe(status => {
 			if (status && this.user) {
-					this.spinnerService.proceedSpinnerStatus(true);
-					if (localStorage.getItem('user') !== null) {
-						const user = JSON.parse(localStorage.getItem('user') as string);
-						if (user) {
-							const userGames: Game[] = user.games;
-							user.games = userGames.filter(
-								userInfo => userInfo.id !== gameInfo.id
-							);
-							localStorage.setItem('user', JSON.stringify(user));
-						}
+				this.spinnerService.proceedSpinnerStatus(true);
+				if (localStorage.getItem('user') !== null) {
+					const user = JSON.parse(localStorage.getItem('user') as string);
+					if (user) {
+						const userGames: Game[] = user.games;
+						user.games = userGames.filter(
+							userInfo => userInfo.id !== gameInfo.id
+						);
+						localStorage.setItem('user', JSON.stringify(user));
 					}
-					this.removeGamesFromProfile(this.user.uid, gameInfo)
+				}
+				this.removeGamesFromProfile(this.user.uid, gameInfo);
 			} else {
 				dialogRef.close(false);
 			}
@@ -151,17 +154,15 @@ export class ProfileComponent extends ClearObservableDirective implements OnInit
 		});
 	}
 
-	removeGamesFromProfile(uid: string, gameInfo: Game){
-		this.gamesService
-						.removeGameFromUser(uid, gameInfo)
-						.then(() => {
-							if (this.user) {
-								this.gamesService.getGameById(uid).then(userGames => {
-									this.userGames = userGames.games;
-								});
-							}
-							this.spinnerService.proceedSpinnerStatus(false);
-						});
+	removeGamesFromProfile(uid: string, gameInfo: Game) {
+		this.gamesService.removeGameFromUser(uid, gameInfo).then(() => {
+			if (this.user) {
+				this.gamesService.getGameById(uid).then(userGames => {
+					this.userGames = userGames.games;
+				});
+			}
+			this.spinnerService.proceedSpinnerStatus(false);
+		});
 	}
 
 	private clearGamesArr() {

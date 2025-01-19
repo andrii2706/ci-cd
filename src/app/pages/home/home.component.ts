@@ -14,11 +14,7 @@ import { SpinnerService } from '../../shared/services/spinner.service';
 @Component({
 	selector: 'app-home',
 	standalone: true,
-	imports: [
-		AppMaterialModule,
-		GamesCardsComponent,
-		NgxPaginationModule,
-	],
+	imports: [AppMaterialModule, GamesCardsComponent, NgxPaginationModule],
 	templateUrl: './home.component.html',
 	styleUrls: ['./home.component.scss', '../../shared/styles/shared.scss'],
 })

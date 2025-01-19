@@ -19,7 +19,7 @@ export class GamesCardsComponent implements OnInit {
 			this.gameInfo = _game;
 		}
 	}
-	@Output() boughtedGame = new EventEmitter<Game>();	
+	@Output() boughtedGame = new EventEmitter<Game>();
 	@Input() set isGameBought(_isGameBought: Game[]) {
 		_isGameBought.map(gameBoughted => {
 			if (gameBoughted.id === this.gameInfo.id) {

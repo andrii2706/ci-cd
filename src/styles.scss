@@ -53,7 +53,8 @@ p {
 	}
 }
 
-.mat-mdc-tab-body.mat-mdc-tab-body-active, .mat-mdc-tab-body{
+.mat-mdc-tab-body.mat-mdc-tab-body-active,
+.mat-mdc-tab-body {
 	overflow-y: hidden;
 	> .mat-mdc-tab-body-content {
 		overflow: hidden;

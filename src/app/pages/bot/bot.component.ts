@@ -55,7 +55,12 @@ export class BotComponent extends ClearObservableDirective implements OnInit {
 			error: err => {
 				if (err) {
 					this.dialogWindow.closeAll();
-					this.snackbarService.message({ text: 'Bot it not responding', status: 'error' }, 'top', 'end',5000);
+					this.snackbarService.message(
+						{ text: 'Bot it not responding', status: 'error' },
+						'top',
+						'end',
+						5000
+					);
 				}
 			},
 		});

@@ -13,10 +13,10 @@ export class SnackbarService {
 	constructor(private snackbar: MatSnackBar) {}
 
 	message(
-		data: { text: string, status: string } | string,
+		data: { text: string; status: string } | string,
 		verticalPosition: MatSnackBarVerticalPosition,
 		horizontalPosition: MatSnackBarHorizontalPosition,
-    duration?: number
+		duration?: number
 	) {
 		this.snackbar.openFromComponent(SnackbarComponent, {
 			duration,
@@ -27,30 +27,30 @@ export class SnackbarService {
 	}
 
 	success(
-    data: { text: string, status: string } | string,
+		data: { text: string; status: string } | string,
 		verticalPosition: MatSnackBarVerticalPosition,
 		horizontalPosition: MatSnackBarHorizontalPosition,
-    duration?: number,
+		duration?: number
 	) {
 		this.snackbar.openFromComponent(SnackbarComponent, {
-      duration,
-      data,
-      horizontalPosition,
-      verticalPosition
-    });
+			duration,
+			data,
+			horizontalPosition,
+			verticalPosition,
+		});
 	}
 
 	error(
-    data: { text: string, status: string } | string ,
+		data: { text: string; status: string } | string,
 		verticalPosition: MatSnackBarVerticalPosition,
 		horizontalPosition: MatSnackBarHorizontalPosition,
-    duration?: number
+		duration?: number
 	) {
 		this.snackbar.openFromComponent(SnackbarComponent, {
-      duration,
-      data,
-      horizontalPosition,
-      verticalPosition
-    });
+			duration,
+			data,
+			horizontalPosition,
+			verticalPosition,
+		});
 	}
 }

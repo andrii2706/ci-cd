@@ -24,11 +24,11 @@ export class AuthService {
 	userLoggingWithFireBase = new BehaviorSubject<User | null>(null);
 	userLoginStatus$: Observable<boolean> = this.userLoginStatus.asObservable();
 	userPasswordWithFireBase = new BehaviorSubject<string>('');
-	
+
 	private userLoggingWithFireBase$: Observable<User | null> =
-	this.userLoggingWithFireBase.asObservable();
+		this.userLoggingWithFireBase.asObservable();
 	private userPasswordWithFireBase$: Observable<string> =
-	this.userPasswordWithFireBase.asObservable();
+		this.userPasswordWithFireBase.asObservable();
 	/* eslint-disable  @typescript-eslint/no-explicit-any */
 	private userSubject = new BehaviorSubject<any>(null);
 	private loggedInStatus: boolean;
@@ -90,11 +90,10 @@ export class AuthService {
 				this.router.navigate(['/home']);
 			})
 			.catch(error => {
-
 				this.snackbarService.error(
-					 { text: error.message, status: 'error' },
-					 'top',
-					 'center',
+					{ text: error.message, status: 'error' },
+					'top',
+					'center',
 					5000
 				);
 			});
@@ -114,12 +113,12 @@ export class AuthService {
 			.catch(error => {
 				if (error.message.includes('auth/invalid-credential')) {
 					this.snackbarService.error(
-						 {
+						{
 							text: `You have a problem with login please check your credentials. Or Register into app `,
 							status: 'error',
 						},
-						 'top',
-						 'center',
+						'top',
+						'center',
 						5000
 					);
 					console.log('hello');
@@ -144,10 +143,10 @@ export class AuthService {
 			.catch(error => {
 				if (error.message.includes('auth/email-already-in-use')) {
 					this.snackbarService.error(
-						 { text: 'User is already exist', status: 'error' },
-						 'top',
-						 'center',
-						5000,
+						{ text: 'User is already exist', status: 'error' },
+						'top',
+						'center',
+						5000
 					);
 				}
 			});
@@ -165,10 +164,10 @@ export class AuthService {
 				/* eslint-disable  @typescript-eslint/no-unused-vars */
 				.catch(error => {
 					this.snackbarService.error(
-						 { text: 'Error updating user info', status: 'error' },
-						 'top',
-						 'center',
-						5000,
+						{ text: 'Error updating user info', status: 'error' },
+						'top',
+						'center',
+						5000
 					);
 				});
 			this.userAvatarUrl(auth.uid, photoUrl).then(() => {
@@ -187,10 +186,10 @@ export class AuthService {
 			})
 			.catch(() => {
 				this.snackbarService.error(
-					 { text: 'Server is not responding ', status: 'error' },
-					 'top',
-					 'center',
-					5000,
+					{ text: 'Server is not responding ', status: 'error' },
+					'top',
+					'center',
+					5000
 				);
 			});
 	}
@@ -200,17 +199,17 @@ export class AuthService {
 		try {
 			await setDoc(gameRef, { games });
 			this.snackbarService.success(
-				 { text: 'Game is added to user', status: 'success' },
-				 'top',
-				 'center',
-				 5000
+				{ text: 'Game is added to user', status: 'success' },
+				'top',
+				'center',
+				5000
 			);
 			/* eslint-disable  @typescript-eslint/no-unused-vars */
 		} catch (error) {
 			this.snackbarService.error(
-				 { text: 'Game is not added to user', status: 'error' },
-				 'top',
-				 'center',
+				{ text: 'Game is not added to user', status: 'error' },
+				'top',
+				'center',
 				5000
 			);
 		}
@@ -221,17 +220,17 @@ export class AuthService {
 		try {
 			await setDoc(photoURL, { photoUrl });
 			this.snackbarService.success(
-				 { text: 'Avatar is added to user', status: 'success' },
-				 'top',
-				 'center',
+				{ text: 'Avatar is added to user', status: 'success' },
+				'top',
+				'center',
 				5000
 			);
 			/* eslint-disable  @typescript-eslint/no-unused-vars */
 		} catch (error) {
 			this.snackbarService.error(
-				 { text: 'Avatar is not added to user', status: 'error' },
-				 'top',
-				 'center',
+				{ text: 'Avatar is not added to user', status: 'error' },
+				'top',
+				'center',
 				5000
 			);
 		}
@@ -264,9 +263,9 @@ export class AuthService {
 			/* eslint-disable  @typescript-eslint/no-unused-vars */
 		} catch (error) {
 			this.snackbarService.error(
-				 { text: 'Password is not updated', status: 'error' },
-				 'top',
-				 'center',
+				{ text: 'Password is not updated', status: 'error' },
+				'top',
+				'center',
 				5000
 			);
 		}

@@ -28,7 +28,7 @@ export class GamesService {
 
 	newGames = new BehaviorSubject<Games | null>(null);
 	gamesData = new BehaviorSubject<Games | null>(null);
-	
+
 	private newGames$: Observable<Games | null> = this.newGames.asObservable();
 	private gamesData$: Observable<Games | null> = this.gamesData.asObservable();
 
@@ -118,16 +118,16 @@ export class GamesService {
 		try {
 			await updateDoc(userRef, newData);
 			this.snackbarService.success(
-				 { text: `Game is added to bucket`, status: 'success' },
-				 'top',
-				 'center',
+				{ text: `Game is added to bucket`, status: 'success' },
+				'top',
+				'center',
 				5000
 			);
 		} catch {
 			this.snackbarService.error(
-				 { text: `Game is not added`, status: 'error' },
-				 'top',
-				 'center',
+				{ text: `Game is not added`, status: 'error' },
+				'top',
+				'center',
 				5000
 			);
 		}
@@ -151,17 +151,17 @@ export class GamesService {
 				games: arrayRemove(gameId),
 			});
 			this.snackbarService.success(
-				 { text: `Game is removed successfully`, status: 'success' },
-				 'top',
-				 'center',
-				5000,
+				{ text: `Game is removed successfully`, status: 'success' },
+				'top',
+				'center',
+				5000
 			);
 		} catch {
 			this.snackbarService.error(
-				 { text: `Game is not deleted`, status: 'error' },
-				 'top',
-				 'center',
-				5000,
+				{ text: `Game is not deleted`, status: 'error' },
+				'top',
+				'center',
+				5000
 			);
 		}
 	}
@@ -173,20 +173,20 @@ export class GamesService {
 				games: [],
 			});
 			this.snackbarService.success(
-				 {
+				{
 					text: `All games have been removed successfully`,
 					status: 'success',
 				},
-				 'top',
-				 'center',
+				'top',
+				'center',
 				5000
 			);
 		} catch {
 			this.snackbarService.error(
-				 { text: `Failed to remove all games`, status: 'error' },
-				 'top',
-				 'center',
-				5000,
+				{ text: `Failed to remove all games`, status: 'error' },
+				'top',
+				'center',
+				5000
 			);
 		}
 	}
