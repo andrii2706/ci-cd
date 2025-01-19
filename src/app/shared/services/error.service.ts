@@ -5,6 +5,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 	providedIn: 'root',
 })
 export class ErrorService {
+
 	requestError = new BehaviorSubject<boolean>(false);
 	private requestError$: Observable<boolean> = this.requestError.asObservable();
 

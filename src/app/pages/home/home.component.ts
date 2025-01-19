@@ -6,7 +6,6 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { Game } from '../../shared/models/games.interface';
 import { finalize, noop, takeUntil } from 'rxjs';
 import moment from 'moment';
-import { SpinnerComponent } from '../../shared/components/spinner/spinner.component';
 import { ClearObservableDirective } from '../../shared/classes';
 import { ErrorService } from '../../shared/services/error.service';
 import { ActivatedRoute } from '@angular/router';
@@ -19,7 +18,6 @@ import { SpinnerService } from '../../shared/services/spinner.service';
 		AppMaterialModule,
 		GamesCardsComponent,
 		NgxPaginationModule,
-		SpinnerComponent,
 	],
 	templateUrl: './home.component.html',
 	styleUrls: ['./home.component.scss', '../../shared/styles/shared.scss'],

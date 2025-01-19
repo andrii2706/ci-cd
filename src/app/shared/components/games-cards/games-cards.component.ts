@@ -19,13 +19,7 @@ export class GamesCardsComponent implements OnInit {
 			this.gameInfo = _game;
 		}
 	}
-
-	@Output() boughtedGame = new EventEmitter<Game>();
-
-	gameInfo: Game;
-	showLabel: boolean;
-	userStatus: boolean;
-
+	@Output() boughtedGame = new EventEmitter<Game>();	
 	@Input() set isGameBought(_isGameBought: Game[]) {
 		_isGameBought.map(gameBoughted => {
 			if (gameBoughted.id === this.gameInfo.id) {
@@ -33,6 +27,9 @@ export class GamesCardsComponent implements OnInit {
 			}
 		});
 	}
+	showLabel: boolean;
+	userStatus: boolean;
+	gameInfo: Game;
 
 	constructor(
 		public router: Router,

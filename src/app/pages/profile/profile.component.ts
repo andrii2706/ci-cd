@@ -10,19 +10,15 @@ import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationComponent } from '../../shared/components/confirmation/confirmation.component';
 import { SpinnerService } from '../../shared/services/spinner.service';
 import { filter, takeUntil } from 'rxjs';
-import { SnackbarComponent } from '../../shared/components/snackbar/snackbar.component';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import User = firebase.User;
+import { SnackbarService } from '../../shared/services/snackbar.service';
 
 @Component({
 	selector: 'app-profile',
 	templateUrl: './profile.component.html',
 	styleUrls: ['./profile.component.scss', '../../shared/styles/shared.scss'],
 })
-export class ProfileComponent
-	extends ClearObservableDirective
-	implements OnInit
-{
+export class ProfileComponent extends ClearObservableDirective implements OnInit {
 	updateUserInfoForm: FormGroup;
 	confirmStatus = signal(null);
 	user: User | null;
@@ -36,7 +32,7 @@ export class ProfileComponent
 		private gamesService: GamesService,
 		private authService: AuthService,
 		private dialog: MatDialog,
-		private snackbarComponent: MatSnackBar,
+		private snackbarService: SnackbarService,
 		private spinnerService: SpinnerService,
 		private router: Router,
 		private activatedRoute: ActivatedRoute
@@ -110,8 +106,7 @@ export class ProfileComponent
 		});
 
 		dialogRef.afterClosed().subscribe(status => {
-			if (status) {
-				if (this.user) {
+			if (status && this.user) {
 					this.spinnerService.proceedSpinnerStatus(true);
 					if (localStorage.getItem('user') !== null) {
 						const user = JSON.parse(localStorage.getItem('user') as string);
@@ -123,17 +118,7 @@ export class ProfileComponent
 							localStorage.setItem('user', JSON.stringify(user));
 						}
 					}
-					this.gamesService
-						.removeGameFromUser(this.user.uid, gameInfo)
-						.then(() => {
-							if (this.user) {
-								this.gamesService.getGameById(this.user.uid).then(userGames => {
-									this.userGames = userGames.games;
-								});
-							}
-							this.spinnerService.proceedSpinnerStatus(false);
-						});
-				}
+					this.removeGamesFromProfile(this.user.uid, gameInfo)
 			} else {
 				dialogRef.close(false);
 			}
@@ -150,12 +135,12 @@ export class ProfileComponent
 			);
 			this.spinnerService.proceedSpinnerStatus(false);
 		} catch {
-			this.snackbarComponent.openFromComponent(SnackbarComponent, {
-				duration: 5000,
-				data: { text: 'Error updating user info', status: 'error' },
-				verticalPosition: 'top',
-				horizontalPosition: 'center',
-			});
+			this.snackbarService.error(
+				{ text: 'Error updating user info', status: 'error' },
+				'top',
+				'center',
+				5000
+			);
 		}
 	}
 
@@ -164,6 +149,19 @@ export class ProfileComponent
 			this.clearGamesArr();
 			this.userGames = [];
 		});
+	}
+
+	removeGamesFromProfile(uid: string, gameInfo: Game){
+		this.gamesService
+						.removeGameFromUser(uid, gameInfo)
+						.then(() => {
+							if (this.user) {
+								this.gamesService.getGameById(uid).then(userGames => {
+									this.userGames = userGames.games;
+								});
+							}
+							this.spinnerService.proceedSpinnerStatus(false);
+						});
 	}
 
 	private clearGamesArr() {

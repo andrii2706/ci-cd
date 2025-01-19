@@ -16,8 +16,7 @@ import {
 	updateDoc,
 } from '@angular/fire/firestore';
 import { environment } from '../../../environment/environment';
-import { SnackbarComponent } from '../components/snackbar/snackbar.component';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { SnackbarService } from './snackbar.service';
 
 @Injectable({
 	providedIn: 'root',
@@ -28,13 +27,14 @@ export class GamesService {
 	games = '/games';
 
 	newGames = new BehaviorSubject<Games | null>(null);
-	private newGames$: Observable<Games | null> = this.newGames.asObservable();
 	gamesData = new BehaviorSubject<Games | null>(null);
+	
+	private newGames$: Observable<Games | null> = this.newGames.asObservable();
 	private gamesData$: Observable<Games | null> = this.gamesData.asObservable();
 
 	constructor(
 		private httpClient: HttpClient,
-		private snackbarComponent: MatSnackBar,
+		private snackbarService: SnackbarService,
 		private fireStore: Firestore
 	) {}
 
@@ -117,19 +117,19 @@ export class GamesService {
 		const userRef = doc(this.fireStore, 'userGame', userId);
 		try {
 			await updateDoc(userRef, newData);
-			this.snackbarComponent.openFromComponent(SnackbarComponent, {
-				duration: 5000,
-				data: { text: `Game is added to bucket`, status: 'success' },
-				verticalPosition: 'top',
-				horizontalPosition: 'center',
-			});
+			this.snackbarService.success(
+				 { text: `Game is added to bucket`, status: 'success' },
+				 'top',
+				 'center',
+				5000
+			);
 		} catch {
-			this.snackbarComponent.openFromComponent(SnackbarComponent, {
-				duration: 5000,
-				data: { text: `Game is not added`, status: 'error' },
-				verticalPosition: 'top',
-				horizontalPosition: 'center',
-			});
+			this.snackbarService.error(
+				 { text: `Game is not added`, status: 'error' },
+				 'top',
+				 'center',
+				5000
+			);
 		}
 	}
 
@@ -150,19 +150,19 @@ export class GamesService {
 			await updateDoc(userRef, {
 				games: arrayRemove(gameId),
 			});
-			this.snackbarComponent.openFromComponent(SnackbarComponent, {
-				duration: 5000,
-				data: { text: `Game is removed successfully`, status: 'success' },
-				verticalPosition: 'top',
-				horizontalPosition: 'center',
-			});
+			this.snackbarService.success(
+				 { text: `Game is removed successfully`, status: 'success' },
+				 'top',
+				 'center',
+				5000,
+			);
 		} catch {
-			this.snackbarComponent.openFromComponent(SnackbarComponent, {
-				duration: 5000,
-				data: { text: `Game is not deleted`, status: 'error' },
-				verticalPosition: 'top',
-				horizontalPosition: 'center',
-			});
+			this.snackbarService.error(
+				 { text: `Game is not deleted`, status: 'error' },
+				 'top',
+				 'center',
+				5000,
+			);
 		}
 	}
 
@@ -172,23 +172,22 @@ export class GamesService {
 			await updateDoc(userRef, {
 				games: [],
 			});
-			this.snackbarComponent.openFromComponent(SnackbarComponent, {
-				duration: 5000,
-				data: {
+			this.snackbarService.success(
+				 {
 					text: `All games have been removed successfully`,
 					status: 'success',
 				},
-				verticalPosition: 'top',
-				horizontalPosition: 'center',
-			});
-		} catch (error) {
-			this.snackbarComponent.openFromComponent(SnackbarComponent, {
-				duration: 5000,
-				data: { text: `Failed to remove all games`, status: 'error' },
-				verticalPosition: 'top',
-				horizontalPosition: 'center',
-			});
-			console.error('Error clearing games:', error);
+				 'top',
+				 'center',
+				5000
+			);
+		} catch {
+			this.snackbarService.error(
+				 { text: `Failed to remove all games`, status: 'error' },
+				 'top',
+				 'center',
+				5000,
+			);
 		}
 	}
 }

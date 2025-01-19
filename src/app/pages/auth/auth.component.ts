@@ -10,9 +10,8 @@ import {
 import { AuthService } from '../../shared/services/auth.service';
 import { takeUntil } from 'rxjs';
 import { ClearObservableDirective } from '../../shared/classes';
-import { SnackbarComponent } from '../../shared/components/snackbar/snackbar.component';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { SpinnerService } from '../../shared/services/spinner.service';
+import { SnackbarService } from '../../shared/services/snackbar.service';
 
 @Component({
 	selector: 'app-auth',
@@ -30,7 +29,7 @@ export class AuthComponent extends ClearObservableDirective implements OnInit {
 	constructor(
 		private authService: AuthService,
 		private spinnerService: SpinnerService,
-		private snackbarComponent: MatSnackBar
+		private snackbarService: SnackbarService
 	) {
 		super();
 		this.spinnerService.proceedSpinnerStatus(false);
@@ -134,12 +133,12 @@ export class AuthComponent extends ClearObservableDirective implements OnInit {
 				this.signInForm = false;
 			})
 			.catch(() => {
-				this.snackbarComponent.openFromComponent(SnackbarComponent, {
-					duration: 5000,
-					data: { text: 'User update is not responding', status: 'error' },
-					verticalPosition: 'top',
-					horizontalPosition: 'center',
-				});
+				this.snackbarService.error(
+					{ text: 'User update is not responding', status: 'error' },
+					'top',
+					'center',
+					5000
+				);
 			});
 	}
 }

@@ -36,10 +36,10 @@ export class AppComponent implements OnInit, OnDestroy {
 	opened = false;
 	userStatus: Observable<boolean>;
 	isLoading: Observable<boolean>;
+	mobileQuery: MediaQueryList;
 	/* eslint-disable  @typescript-eslint/no-explicit-any */
 	private logoutTimer: any;
 	private readonly timeoutDuration = 8 * 60 * 60 * 1000;
-	mobileQuery: MediaQueryList;
 	private _mobileQueryListener: () => void;
 
 	@HostListener('document:mousemove')
