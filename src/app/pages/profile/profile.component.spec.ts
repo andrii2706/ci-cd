@@ -38,7 +38,7 @@ describe('ProfileComponent', () => {
 		gamesServiceMock = {
 			getGameById: jest.fn().mockResolvedValue({ games: [] }),
 			removeGameFromUser: jest.fn().mockResolvedValue(true),
-			clearAllGamesFromUser: jest.fn().mockResolvedValue([])
+			clearAllGamesFromUser: jest.fn().mockResolvedValue([]),
 		};
 
 		spinnerServiceMock = {
@@ -154,33 +154,41 @@ describe('ProfileComponent', () => {
 		expect(gamesServiceMock.removeGameFromUser).toHaveBeenCalled();
 		expect(gamesServiceMock.getGameById).toHaveBeenCalled();
 	});
-  it('should call gamesService.clearAllGamesFromUser and clear games', async () => {
-    await component.deleteAllGames('user123');
+	it('should call gamesService.clearAllGamesFromUser and clear games', async () => {
+		await component.deleteAllGames('user123');
 
-    expect(gamesServiceMock.clearAllGamesFromUser).toHaveBeenCalledWith('user123');
-    expect(component.userGames).toEqual([]);
-  });
-  describe('clearGamesArr', () => {
-    beforeEach(() => {
-      localStorage.clear();
-    });
+		expect(gamesServiceMock.clearAllGamesFromUser).toHaveBeenCalledWith(
+			'user123'
+		);
+		expect(component.userGames).toEqual([]);
+	});
+	describe('clearGamesArr', () => {
+		beforeEach(() => {
+			localStorage.clear();
+		});
 
-    it('should clear user games in localStorage if userGames is empty and user exists', () => {
-      localStorage.setItem('user', JSON.stringify({ games: ['game1', 'game2'] }));
-      component.userGames = [];
-      component.clearGamesArr();
+		it('should clear user games in localStorage if userGames is empty and user exists', () => {
+			localStorage.setItem(
+				'user',
+				JSON.stringify({ games: ['game1', 'game2'] })
+			);
+			component.userGames = [];
+			component.clearGamesArr();
 
-      const storedUser = JSON.parse(localStorage.getItem('user') as string);
-      expect(storedUser.games).toEqual([]);
-    });
+			const storedUser = JSON.parse(localStorage.getItem('user') as string);
+			expect(storedUser.games).toEqual([]);
+		});
 
-    it('should not modify localStorage if userGames is not empty', () => {
-      localStorage.setItem('user', JSON.stringify({ games: ['game1', 'game2'] }));
-      component.userGames =  [{ id: 1, name: 'Test Game' }];
-      component.clearGamesArr();
+		it('should not modify localStorage if userGames is not empty', () => {
+			localStorage.setItem(
+				'user',
+				JSON.stringify({ games: ['game1', 'game2'] })
+			);
+			component.userGames = [{ id: 1, name: 'Test Game' }];
+			component.clearGamesArr();
 
-      const storedUser = JSON.parse(localStorage.getItem('user') as string);
-      expect(storedUser.games).toEqual(['game1', 'game2']);
-    });
-  });
+			const storedUser = JSON.parse(localStorage.getItem('user') as string);
+			expect(storedUser.games).toEqual(['game1', 'game2']);
+		});
+	});
 });
