@@ -12,7 +12,7 @@ import { SnackbarComponent } from '../components/snackbar/snackbar.component';
 export class SnackbarService {
 	constructor(private snackbar: MatSnackBar) {}
 
-	message(
+	snackBarService(
 		data: { text: string; status: string } | string,
 		verticalPosition: MatSnackBarVerticalPosition,
 		horizontalPosition: MatSnackBarHorizontalPosition,
@@ -23,34 +23,6 @@ export class SnackbarService {
 			data,
 			verticalPosition,
 			horizontalPosition,
-		});
-	}
-
-	success(
-		data: { text: string; status: string } | string,
-		verticalPosition: MatSnackBarVerticalPosition,
-		horizontalPosition: MatSnackBarHorizontalPosition,
-		duration?: number
-	) {
-		this.snackbar.openFromComponent(SnackbarComponent, {
-			duration,
-			data,
-			horizontalPosition,
-			verticalPosition,
-		});
-	}
-
-	error(
-		data: { text: string; status: string } | string,
-		verticalPosition: MatSnackBarVerticalPosition,
-		horizontalPosition: MatSnackBarHorizontalPosition,
-		duration?: number
-	) {
-		this.snackbar.openFromComponent(SnackbarComponent, {
-			duration,
-			data,
-			horizontalPosition,
-			verticalPosition,
 		});
 	}
 }
