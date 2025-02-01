@@ -46,7 +46,6 @@ export class ProfileComponent
 	ngOnInit() {
 		this.getUser();
 		this.initUpdateForm();
-		this.clearGamesArr();
 	}
 
 	getUser() {
@@ -138,7 +137,7 @@ export class ProfileComponent
 			);
 			this.spinnerService.proceedSpinnerStatus(false);
 		} catch {
-			this.snackbarService.error(
+			this.snackbarService.snackBarService(
 				{ text: 'Error updating user info', status: 'error' },
 				'top',
 				'center',
@@ -165,7 +164,7 @@ export class ProfileComponent
 		});
 	}
 
-	private clearGamesArr() {
+	clearGamesArr() {
 		if (this.userGames.length === 0 && localStorage.getItem('user') !== null) {
 			const user = JSON.parse(localStorage.getItem('user') as string);
 			if (user) {
