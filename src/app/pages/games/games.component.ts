@@ -16,7 +16,7 @@ import { SpinnerService } from '../../shared/services/spinner.service';
 export class GamesComponent extends ClearObservableDirective implements OnInit {
 	page = 1;
 	games: Game[] | undefined = [];
-	total: string | number;
+	total: string | number | undefined;
 	boughtGames: Game[] = [];
 	filterParams: FilterParams | null;
 	totalGames: number | undefined;
@@ -130,7 +130,7 @@ export class GamesComponent extends ClearObservableDirective implements OnInit {
 			)
 			.subscribe(
 				games => {
-					this.totalGames = games.count;
+					this.total = games.count;
 					this.games = games.results;
 					this.errorService.fullErrorObject(false);
 					this.cdr.detectChanges();

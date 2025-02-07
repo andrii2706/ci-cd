@@ -205,7 +205,7 @@ describe('GamesComponent', () => {
 			dates: '',
 			genres: '',
 		});
-		expect(component.totalGames).toEqual(mockResponse.count);
+		expect(component.total).toEqual(mockResponse.count);
 		expect(component.games).toEqual(mockResponse.results);
 	});
 });
