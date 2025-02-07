@@ -25,32 +25,4 @@ export class SnackbarService {
 			horizontalPosition,
 		});
 	}
-
-	success(
-		data: { text: string; status: string } | string,
-		verticalPosition: MatSnackBarVerticalPosition,
-		horizontalPosition: MatSnackBarHorizontalPosition,
-		duration?: number
-	) {
-		this.snackbar.openFromComponent(SnackbarComponent, {
-			duration,
-			data,
-			horizontalPosition,
-			verticalPosition,
-		});
-	}
-
-	error(
-		data: { text: string; status: string } | string,
-		verticalPosition: MatSnackBarVerticalPosition,
-		horizontalPosition: MatSnackBarHorizontalPosition,
-		duration?: number
-	) {
-		this.snackbar.openFromComponent(SnackbarComponent, {
-			duration,
-			data,
-			horizontalPosition,
-			verticalPosition,
-		});
-	}
 }

@@ -117,14 +117,14 @@ export class GamesService {
 		const userRef = doc(this.fireStore, 'userGame', userId);
 		try {
 			await updateDoc(userRef, newData);
-			this.snackbarService.success(
+			this.snackbarService.snackBarService(
 				{ text: `Game is added to bucket`, status: 'success' },
 				'top',
 				'center',
 				5000
 			);
 		} catch {
-			this.snackbarService.error(
+			this.snackbarService.snackBarService(
 				{ text: `Game is not added`, status: 'error' },
 				'top',
 				'center',
@@ -150,14 +150,14 @@ export class GamesService {
 			await updateDoc(userRef, {
 				games: arrayRemove(gameId),
 			});
-			this.snackbarService.success(
+			this.snackbarService.snackBarService(
 				{ text: `Game is removed successfully`, status: 'success' },
 				'top',
 				'center',
 				5000
 			);
 		} catch {
-			this.snackbarService.error(
+			this.snackbarService.snackBarService(
 				{ text: `Game is not deleted`, status: 'error' },
 				'top',
 				'center',
@@ -172,7 +172,7 @@ export class GamesService {
 			await updateDoc(userRef, {
 				games: [],
 			});
-			this.snackbarService.success(
+			this.snackbarService.snackBarService(
 				{
 					text: `All games have been removed successfully`,
 					status: 'success',
@@ -182,7 +182,7 @@ export class GamesService {
 				5000
 			);
 		} catch {
-			this.snackbarService.error(
+			this.snackbarService.snackBarService(
 				{ text: `Failed to remove all games`, status: 'error' },
 				'top',
 				'center',

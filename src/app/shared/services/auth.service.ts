@@ -90,7 +90,7 @@ export class AuthService {
 				this.router.navigate(['/home']);
 			})
 			.catch(error => {
-				this.snackbarService.error(
+				this.snackbarService.snackBarService(
 					{ text: error.message, status: 'error' },
 					'top',
 					'center',
@@ -112,7 +112,7 @@ export class AuthService {
 			})
 			.catch(error => {
 				if (error.message.includes('auth/invalid-credential')) {
-					this.snackbarService.error(
+					this.snackbarService.snackBarService(
 						{
 							text: `You have a problem with login please check your credentials. Or Register into app `,
 							status: 'error',
@@ -142,7 +142,7 @@ export class AuthService {
 			})
 			.catch(error => {
 				if (error.message.includes('auth/email-already-in-use')) {
-					this.snackbarService.error(
+					this.snackbarService.snackBarService(
 						{ text: 'User is already exist', status: 'error' },
 						'top',
 						'center',
@@ -163,7 +163,7 @@ export class AuthService {
 				})
 				/* eslint-disable  @typescript-eslint/no-unused-vars */
 				.catch(error => {
-					this.snackbarService.error(
+					this.snackbarService.snackBarService(
 						{ text: 'Error updating user info', status: 'error' },
 						'top',
 						'center',
@@ -185,7 +185,7 @@ export class AuthService {
 				this.changeLoginStatus(false, null);
 			})
 			.catch(() => {
-				this.snackbarService.error(
+				this.snackbarService.snackBarService(
 					{ text: 'Server is not responding ', status: 'error' },
 					'top',
 					'center',
@@ -198,7 +198,7 @@ export class AuthService {
 		const gameRef = doc(this.fireStore, 'userGame', userId);
 		try {
 			await setDoc(gameRef, { games });
-			this.snackbarService.success(
+			this.snackbarService.snackBarService(
 				{ text: 'Game is added to user', status: 'success' },
 				'top',
 				'center',
@@ -206,7 +206,7 @@ export class AuthService {
 			);
 			/* eslint-disable  @typescript-eslint/no-unused-vars */
 		} catch (error) {
-			this.snackbarService.error(
+			this.snackbarService.snackBarService(
 				{ text: 'Game is not added to user', status: 'error' },
 				'top',
 				'center',
@@ -219,7 +219,7 @@ export class AuthService {
 		const photoURL = doc(this.fireStore, 'userAvatarUrl', userId);
 		try {
 			await setDoc(photoURL, { photoUrl });
-			this.snackbarService.success(
+			this.snackbarService.snackBarService(
 				{ text: 'Avatar is added to user', status: 'success' },
 				'top',
 				'center',
@@ -227,7 +227,7 @@ export class AuthService {
 			);
 			/* eslint-disable  @typescript-eslint/no-unused-vars */
 		} catch (error) {
-			this.snackbarService.error(
+			this.snackbarService.snackBarService(
 				{ text: 'Avatar is not added to user', status: 'error' },
 				'top',
 				'center',
@@ -262,7 +262,7 @@ export class AuthService {
 			await sendPasswordResetEmail(this.auth, email);
 			/* eslint-disable  @typescript-eslint/no-unused-vars */
 		} catch (error) {
-			this.snackbarService.error(
+			this.snackbarService.snackBarService(
 				{ text: 'Password is not updated', status: 'error' },
 				'top',
 				'center',
