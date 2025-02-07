@@ -133,7 +133,7 @@ export class AuthComponent extends ClearObservableDirective implements OnInit {
 				this.signInForm = false;
 			})
 			.catch(() => {
-				this.snackbarService.snackBarService(
+				this.snackbarService.message(
 					{ text: 'User update is not responding', status: 'error' },
 					'top',
 					'center',

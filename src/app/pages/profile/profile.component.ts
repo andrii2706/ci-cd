@@ -137,7 +137,7 @@ export class ProfileComponent
 			);
 			this.spinnerService.proceedSpinnerStatus(false);
 		} catch {
-			this.snackbarService.snackBarService(
+			this.snackbarService.message(
 				{ text: 'Error updating user info', status: 'error' },
 				'top',
 				'center',
