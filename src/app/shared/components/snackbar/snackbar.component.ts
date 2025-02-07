@@ -17,7 +17,7 @@ export class SnackbarComponent implements OnInit {
 
 	constructor(
 		public matSnackBarRef: MatSnackBarRef<SnackbarComponent>,
-		@Inject(MAT_SNACK_BAR_DATA) public data: { text: string; status: string }
+		@Inject(MAT_SNACK_BAR_DATA) public data: { text: string; status: "error" | "success" }
 	) {}
 
 	ngOnInit(): void {
