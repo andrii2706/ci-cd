@@ -13,7 +13,7 @@ export class SnackbarService {
 	constructor(private snackbar: MatSnackBar) {}
 
 	message(
-		data: { text: string; status: 'error' | "success" } | string,
+		data: { text: string; status: 'error' | 'success' } | string,
 		verticalPosition: MatSnackBarVerticalPosition,
 		horizontalPosition: MatSnackBarHorizontalPosition,
 		duration?: number
