@@ -12,8 +12,8 @@ import { SnackbarComponent } from '../components/snackbar/snackbar.component';
 export class SnackbarService {
 	constructor(private snackbar: MatSnackBar) {}
 
-	snackBarService(
-		data: { text: string; status: string } | string,
+	message(
+		data: { text: string; status: 'error' | 'success' } | string,
 		verticalPosition: MatSnackBarVerticalPosition,
 		horizontalPosition: MatSnackBarHorizontalPosition,
 		duration?: number
